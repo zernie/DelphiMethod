@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace DelphiMethod
 {
@@ -12,6 +10,22 @@ namespace DelphiMethod
     public class Expert
     {
         public List<decimal> Alternatives;
+
+        public decimal Median
+        {
+            get
+            {
+                var temp = Alternatives.ToArray();
+                Array.Sort(temp);
+                var count = temp.Length;
+
+                if (count % 2 != 0) return temp[count / 2];
+
+                var a = temp[count / 2 - 1];
+                var b = temp[count / 2];
+                return (a + b) / 2m;
+            }
+        }
 
         public Expert(List<decimal> alternatives)
         {
@@ -33,6 +47,7 @@ namespace DelphiMethod
     public class Matrix
     {
         public List<Expert> Experts;
+        public List<decimal> Medians => Experts.Select(x => x.Median).ToList();
 
         public Matrix()
         {
@@ -43,7 +58,6 @@ namespace DelphiMethod
         {
             Experts = experts;
         }
-
 
         public Matrix(int rows, int cols)
         {
