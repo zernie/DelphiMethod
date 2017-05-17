@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace DelphiMethod
 {
-//    using Alternative = List<decimal>;
-
     // Альтернатива
     public class Alternative
     {
         public List<decimal> Values;
+
+        public decimal Average => Math.Round(Values.Sum() / Values.Count, 2);
+
         public decimal Median
         {
             get
@@ -47,6 +49,7 @@ namespace DelphiMethod
     {
         public List<Alternative> Alternatives;
         public List<decimal> Medians => Alternatives.Select(x => x.Median).ToList();
+        public List<decimal> Averages => Alternatives.Select(x => x.Average).ToList();
 
         public Matrix()
         {
@@ -61,15 +64,15 @@ namespace DelphiMethod
         public Matrix(int rows, int cols)
         {
             Alternatives = new List<Alternative>();
-            for (var i = 0; i <= cols; i++)
+            for (var i = 0; i <= rows; i++)
             {
-               Alternatives.Add(new Alternative(rows));
+               Alternatives.Add(new Alternative(cols));
             }
         }
 
-        public decimal this[int x, int y] => Alternatives[x].Values[y];
+        public decimal this[int row, int col] => Alternatives[row].Values[col];
 
-        public override string ToString()
+        public sealed override string ToString()
         {
             return string.Join("\n", Alternatives.Select(Convert.ToString).ToArray());
         }

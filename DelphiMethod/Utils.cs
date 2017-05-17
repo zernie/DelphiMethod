@@ -16,6 +16,7 @@ namespace DelphiMethod
 
             foreach (var line in lines)
             {
+
                 var rows = line.Split(' ').ToList().Select(Convert.ToDecimal).ToList();
 
                 data.Add(new Alternative(rows));
@@ -37,13 +38,13 @@ namespace DelphiMethod
             component.Columns.Clear();
             for (var i = 0; i < cols; i++)
             {
-                component.Columns.Add(i.ToString(), $"Альтернатива №{i + 1}");
+                component.Columns.Add(i.ToString(), $"Эксперт №{i + 1}");
             }
 
             for (var i = 0; i < rows; i++)
             {
                 component.Rows.Add();
-                component.Rows[i].HeaderCell.Value = $"Эксперт №{i + 1}";
+                component.Rows[i].HeaderCell.Value = $"Альтернатива №{i + 1}";
             }
         }
 
@@ -61,7 +62,7 @@ namespace DelphiMethod
                     var values = new List<decimal>();
                     for (var j = 0; j < cols; j++)
                     {
-                        value = component[j, i].Value.ToString();
+                        value = component.Rows[i].Cells[j].Value.ToString();
                         values.Add(Convert.ToDecimal(value));
                     }
                     matrix.Alternatives.Add(new Alternative(values));
@@ -83,7 +84,7 @@ namespace DelphiMethod
             {
                 for (var j = 0; j < cols; j++)
                 {
-                    component[j, i].Value = data[i, j].ToString();
+                    component.Rows[i].Cells[j].Value = data[i, j];
                 }
             }
         }

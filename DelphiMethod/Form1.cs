@@ -22,7 +22,7 @@ namespace DelphiMethod
             var expertsCount = (int)numericUpDown1.Value;
             var alternativesCount = (int)numericUpDown2.Value;
 
-            using (var form = new Form2(expertsCount, alternativesCount))
+            using (var form = new Form2(alternativesCount, expertsCount))
             {
                 form.ShowDialog();
             }

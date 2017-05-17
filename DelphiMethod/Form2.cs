@@ -14,33 +14,34 @@ namespace DelphiMethod
             _alternativesCount, // количество альтернатив
             _tourNumber = 1; // номер текущего тура
         // Матрица оценок из таблицы
-        public Matrix Evaluation => Utils.ExtractData(dataGridView2, _expertsCount, _alternativesCount);
+        public Matrix Evaluation => Utils.ExtractData(dataGridView2,  _alternativesCount, _expertsCount);
 
-        public Form2(int expertsCount, int alternativesCount)
+        public Form2(int alternativesCount, int expertsCount)
         {
-
             InitializeComponent();
 
-            _expertsCount = expertsCount;
             _alternativesCount = alternativesCount;
-            InitForm(new Matrix(expertsCount, alternativesCount));
+            _expertsCount = expertsCount;
+            InitForm(new Matrix(alternativesCount, expertsCount));
         }
 
         public Form2(Matrix data)
         {
             InitializeComponent();
 
-            _expertsCount = data.Alternatives.Count;
-            _alternativesCount = data.Alternatives[0].Values.Count;
+            _expertsCount = data.Alternatives[0].Values.Count; 
+            _alternativesCount = data.Alternatives.Count;
+
             InitForm(data);
         }
 
         private void InitForm(Matrix data)
         {
             AddTourNumber();
-            Utils.InitDataGridView(dataGridView2, _expertsCount, _alternativesCount);
-            Utils.FillDataGridView(dataGridView2, data, _expertsCount, _alternativesCount);
+            Utils.InitDataGridView(dataGridView2,  _alternativesCount, _expertsCount);
+            Utils.FillDataGridView(dataGridView2, data, _alternativesCount, _expertsCount);
 
+            dataGridView2.Columns.Add("average", "Среднее арифметическое");
             dataGridView2.Columns.Add("median", "Медиана");
             dataGridView2.Columns.Add("group", "Групповая оценка");
         }
@@ -72,9 +73,10 @@ namespace DelphiMethod
             {
                 AddTourNumber();
 
-                for (var i = 0; i < _expertsCount; i++)
+                for (var i = 0; i < _alternativesCount; i++)
                 {
                     dataGridView2["median", i].Value = Evaluation.Medians[i];
+                    dataGridView2["average", i].Value = Evaluation.Averages[i];
                 }
             }
             catch (FormatException exception)

@@ -42,17 +42,18 @@
             this.dataGridView2.AllowUserToAddRows = false;
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(7, 117);
+            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridView2.Location = new System.Drawing.Point(0, 232);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView2.RowTemplate.Height = 24;
-            this.dataGridView2.Size = new System.Drawing.Size(962, 343);
+            this.dataGridView2.Size = new System.Drawing.Size(1071, 343);
             this.dataGridView2.TabIndex = 12;
             // 
             // calculateButton
             // 
             this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.calculateButton.Location = new System.Drawing.Point(378, 26);
+            this.calculateButton.Location = new System.Drawing.Point(419, 76);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(237, 58);
             this.calculateButton.TabIndex = 15;
@@ -64,7 +65,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(1, 82);
+            this.label1.Location = new System.Drawing.Point(1, 135);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 32);
             this.label1.TabIndex = 14;
@@ -72,10 +73,10 @@
             // 
             // exportButton
             // 
-            this.exportButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.exportButton.Location = new System.Drawing.Point(832, 466);
+            this.exportButton.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.exportButton.Location = new System.Drawing.Point(481, 140);
             this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(137, 44);
+            this.exportButton.Size = new System.Drawing.Size(109, 38);
             this.exportButton.TabIndex = 18;
             this.exportButton.Text = "Экспорт";
             this.exportButton.UseVisualStyleBackColor = true;
@@ -100,7 +101,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(981, 513);
+            this.ClientSize = new System.Drawing.Size(1071, 575);
             this.Controls.Add(this.tourNumberLabel);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.calculateButton);
