@@ -19,8 +19,8 @@ namespace DelphiMethod
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var expertsCount = Convert.ToInt32(numericUpDown1.Value);
-            var alternativesCount = Convert.ToInt32(numericUpDown2.Value);
+            var expertsCount = (int)numericUpDown1.Value;
+            var alternativesCount = (int)numericUpDown2.Value;
 
             using (var form = new Form2(expertsCount, alternativesCount))
             {

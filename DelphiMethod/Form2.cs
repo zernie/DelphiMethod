@@ -14,7 +14,7 @@ namespace DelphiMethod
             _alternativesCount, // количество альтернатив
             _tourNumber = 1; // номер текущего тура
         // Матрица оценок из таблицы
-        public decimal[,] Evaluation => Utils.ExtractData(dataGridView2, _expertsCount, _alternativesCount);
+        public Matrix Evaluation => Utils.ExtractData(dataGridView2, _expertsCount, _alternativesCount);
 
         public Form2(int expertsCount, int alternativesCount)
         {
@@ -23,41 +23,29 @@ namespace DelphiMethod
 
             _expertsCount = expertsCount;
             _alternativesCount = alternativesCount;
-            InitForm(new decimal[alternativesCount, expertsCount]);
+            InitForm(new Matrix(alternativesCount, expertsCount));
         }
 
-        public Form2(decimal[,] data)
+        public Form2(Matrix data)
         {
             InitializeComponent();
 
-            _expertsCount = data.GetLength(0);
-            _alternativesCount = data.GetLength(1);
+            _expertsCount = data.Experts.Count;
+            _alternativesCount = data.Experts[0].Alternatives.Count;
             InitForm(data);
         }
 
-        private void InitForm(decimal[,] data)
+        private void InitForm(Matrix data)
         {
             AddTourNumber();
-            Utils.InitDataGridView(dataGridView2, _alternativesCount, _expertsCount);
-            Utils.FillDataGridView(dataGridView2, data);
+            Utils.InitDataGridView(dataGridView2, _expertsCount, _alternativesCount);
+            Utils.FillDataGridView(dataGridView2, data, _expertsCount, _alternativesCount);
 
-            dataGridView2.Columns.Add("average", "Среднее");
-            dataGridView2.Columns.Add("median", "Медиана");
-            dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
-        }
+            var index = dataGridView2.Rows.Add(new DataGridViewRow());
+            dataGridView2.Rows[index].HeaderCell.Value = "Медиана";
 
-        // Вычислить и вывести средние
-        private void CalcAverages(DataGridView component, string colname)
-        {
-            var averages = Utils.CalcAverages(Evaluation);
-            Utils.FillColumn(component, averages, colname);
-        }
-
-        // Вычислить и вывести медиану
-        private void CalcMedians(DataGridView component, string colname)
-        {
-            var medians = Utils.CalcMedians(Evaluation);
-            Utils.FillColumn(component, medians, colname);
+             index = dataGridView2.Rows.Add(new DataGridViewRow());
+            dataGridView2.Rows[index].HeaderCell.Value = "Групповая оценка";
         }
 
         // Увеличить счетчик тура
@@ -86,8 +74,6 @@ namespace DelphiMethod
             try
             {
                 AddTourNumber();
-                CalcAverages(dataGridView2, "average");
-                CalcMedians(dataGridView2, "median");
             }
             catch (FormatException exception)
             {

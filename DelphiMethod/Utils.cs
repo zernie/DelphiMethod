@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,86 +10,35 @@ namespace DelphiMethod
     class Utils
     {
         // Считать матрицу из файла
-        public static decimal[,] ReadAsCSV(string filename)
+        public static Matrix ReadAsCSV(string filename)
         {
             var lines = File.ReadAllLines(filename);
-            var firstLineColsCount = lines[0].Split(' ').Length;
-            var data = new decimal[lines.Length, firstLineColsCount];
-
-            var i = 0;
+            var data = new List<Expert>();
 
             foreach (var line in lines)
             {
-                var j = 0;
-                foreach (var row in line.Split(' '))
-                {
-                    data[i, j] = Convert.ToDecimal(row);
-                    j++;
-                }
-                i++;
+                var rows = line.Split(' ').ToList().Select(Convert.ToDecimal).ToList();
+
+                data.Add(new Expert(rows));
             }
 
-            return data;
+            return new Matrix(data);
         }
 
         // Сохранить матрицу в файл
-        public static void SaveAsCsv(decimal[,] data, string filename)
+        public static void SaveAsCsv(Matrix data, string filename)
         {
             var sb = new StringBuilder();
-            for (var i = 0; i < data.GetLength(0); i++)
-            {
-                for (var j = 0; j < data.GetLength(1); j++)
-                {
-                    sb.Append((j == 0 ? "" : " ") + data[i, j]);
-                }
-                sb.AppendLine();
-            }
+            //            for (var i = 0; i < data.GetLength(0); i++)
+            //            {
+            //                for (var j = 0; j < data.GetLength(1); j++)
+            //                {
+            //                    sb.Append((j == 0 ? "" : " ") + data[i, j]);
+            //                }
+            //                sb.AppendLine();
+            //            }
 
             File.WriteAllText(filename, sb.ToString());
-        }
-
-        // Вычислить среднее арифметическое матрицы
-        public static decimal[] CalcAverages(decimal[,] data)
-        {
-            var width = data.GetLength(1);
-            var height = data.GetLength(0);
-
-            var averages = new decimal[height];
-            for (var i = 0; i < height; i++)
-            {
-                var sum = 0.0M;
-                for (var j = 0; j < width; j++)
-                {
-                    sum += data[i, j];
-                }
-
-                averages[i] = Math.Round(sum / width, 2);
-            }
-
-            return averages;
-        }
-
-        // Вычислить медианы матрицы 
-        public static decimal[] CalcMedians(decimal[,] data)
-        {
-            var width = data.GetLength(1);
-            var height = data.GetLength(0);
-
-            var medians = new decimal[height];
-
-            for (var i = 0; i < height; i++)
-            {
-                var temp = new decimal[width];
-                for (var j = 0; j < width; j++)
-                {
-                    temp[j] = data[i, j];
-                }
-                Array.Sort(temp);
-
-                medians[i] = temp[temp.Length / 2];
-            }
-
-            return medians;
         }
 
         // Инициализировать таблицу заданным количеством строк и столбцов
@@ -96,34 +46,39 @@ namespace DelphiMethod
         {
             component.Rows.Clear();
             component.Columns.Clear();
-            for (var i = 1; i <= rows; i++)
+            for (var i = 0; i < cols; i++)
             {
-                component.Columns.Add(i.ToString(), $"Эксперт №{i}");
+                component.Columns.Add(i.ToString(), $"Альтернатива №{i + 1}");
             }
-            component.Rows.Add(cols);
+
+            for (var i = 0; i < rows; i++)
+            {
+                component.Rows.Add();
+                component.Rows[i].HeaderCell.Value = $"Эксперт №{i + 1}";
+            }
         }
-        
+
         // Извлечь матрицу из таблицы
-        public static decimal[,] ExtractData(DataGridView component, int width, int height)
+        public static Matrix ExtractData(DataGridView component, int rows, int cols)
         {
             var value = "";
 
             try
             {
-                var data = new decimal[width, height];
+                var matrix = new Matrix();
 
-                for (var i = 0; i < width; i++)
+                for (var i = 0; i < cols; i++)
                 {
-                    var row = component.Rows[i];
-
-                    for (var j = 0; j < height; j++)
+                    var values = new List<decimal>();
+                    for (var j = 0; j < rows; j++)
                     {
-                        value = row.Cells[j].Value.ToString();
-                        data[i, j] = Convert.ToDecimal(value);
+                        value = component[i, j].Value.ToString();
+                        values.Add(Convert.ToDecimal(value));
+                        matrix.Experts.Add(new Expert(values));
                     }
                 }
 
-                return data;
+                return matrix;
             }
             catch (FormatException e)
             {
@@ -132,27 +87,14 @@ namespace DelphiMethod
             }
         }
 
-        // Заполнить столбец массивом
-        public static void FillColumn(DataGridView component, decimal[] data, string colname)
-        {
-            var index = component.Columns[colname].Index;
-            var i = 0;
-
-            foreach (DataGridViewRow row in component.Rows)
-            {
-                row.Cells[index].Value = data[i++];
-            }
-
-        }
-
         // Заполнить таблицу матрицей
-        public static void FillDataGridView(DataGridView component, decimal[,] data)
+        public static void FillDataGridView(DataGridView component, Matrix data, int rows, int cols)
         {
-            for (var i = 0; i < data.GetLength(0); i++)
+            for (var i = 0; i < rows; i++)
             {
-                for (var j = 0; j < data.GetLength(1); j++)
+                for (var j = 0; j < cols; j++)
                 {
-                    component.Rows[i].Cells[j].Value = data[i, j];
+                    component[j, i].Value = data[i, j].ToString();
                 }
             }
         }

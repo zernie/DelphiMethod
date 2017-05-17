@@ -46,13 +46,13 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView2.RowTemplate.Height = 24;
-            this.dataGridView2.Size = new System.Drawing.Size(880, 250);
+            this.dataGridView2.Size = new System.Drawing.Size(962, 343);
             this.dataGridView2.TabIndex = 12;
             // 
             // calculateButton
             // 
             this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.calculateButton.Location = new System.Drawing.Point(340, 26);
+            this.calculateButton.Location = new System.Drawing.Point(378, 26);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(237, 58);
             this.calculateButton.TabIndex = 15;
@@ -73,7 +73,7 @@
             // exportButton
             // 
             this.exportButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.exportButton.Location = new System.Drawing.Point(392, 373);
+            this.exportButton.Location = new System.Drawing.Point(832, 466);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(137, 44);
             this.exportButton.TabIndex = 18;
@@ -100,7 +100,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(896, 429);
+            this.ClientSize = new System.Drawing.Size(981, 513);
             this.Controls.Add(this.tourNumberLabel);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.calculateButton);
