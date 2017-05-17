@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -13,13 +12,13 @@ namespace DelphiMethod
         public static Matrix ReadAsCsv(string filename)
         {
             var lines = File.ReadAllLines(filename);
-            var data = new List<Expert>();
+            var data = new List<Alternative>();
 
             foreach (var line in lines)
             {
                 var rows = line.Split(' ').ToList().Select(Convert.ToDecimal).ToList();
 
-                data.Add(new Expert(rows));
+                data.Add(new Alternative(rows));
             }
 
             return new Matrix(data);
@@ -65,7 +64,7 @@ namespace DelphiMethod
                         value = component[j, i].Value.ToString();
                         values.Add(Convert.ToDecimal(value));
                     }
-                    matrix.Experts.Add(new Expert(values));
+                    matrix.Alternatives.Add(new Alternative(values));
                 }
 
                 return matrix;

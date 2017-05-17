@@ -6,16 +6,15 @@ namespace DelphiMethod
 {
 //    using Alternative = List<decimal>;
 
-    // Эксперт
-    public class Expert
+    // Альтернатива
+    public class Alternative
     {
-        public List<decimal> Alternatives;
-
+        public List<decimal> Values;
         public decimal Median
         {
             get
             {
-                var temp = Alternatives.ToArray();
+                var temp = Values.ToArray();
                 Array.Sort(temp);
                 var count = temp.Length;
 
@@ -27,52 +26,52 @@ namespace DelphiMethod
             }
         }
 
-        public Expert(List<decimal> alternatives)
+        public Alternative(List<decimal> values)
         {
-            Alternatives = alternatives;
+            Values = values;
         }
 
-        public Expert(int count)
+        public Alternative(int count)
         {
-            Alternatives = new List<decimal>(new decimal[count]);
+            Values = new List<decimal>(new decimal[count]);
         }
 
         public override string ToString()
         {
-            return string.Join(" ", Alternatives.Select(Convert.ToString).ToArray());
+            return string.Join(" ", Values.Select(Convert.ToString).ToArray());
         }
     }
 
     // Матрица оценок
     public class Matrix
     {
-        public List<Expert> Experts;
-        public List<decimal> Medians => Experts.Select(x => x.Median).ToList();
+        public List<Alternative> Alternatives;
+        public List<decimal> Medians => Alternatives.Select(x => x.Median).ToList();
 
         public Matrix()
         {
-            Experts = new List<Expert>();
+            Alternatives = new List<Alternative>();
         }
 
-        public Matrix(List<Expert> experts)
+        public Matrix(List<Alternative> alternatives)
         {
-            Experts = experts;
+            Alternatives = alternatives;
         }
 
         public Matrix(int rows, int cols)
         {
-            Experts = new List<Expert>();
-            for (var i = 0; i <= rows; i++)
+            Alternatives = new List<Alternative>();
+            for (var i = 0; i <= cols; i++)
             {
-               Experts.Add(new Expert(cols));
+               Alternatives.Add(new Alternative(rows));
             }
         }
 
-        public decimal this[int x, int y] => Experts[x].Alternatives[y];
+        public decimal this[int x, int y] => Alternatives[x].Values[y];
 
         public override string ToString()
         {
-            return string.Join("\n", Experts.Select(Convert.ToString).ToArray());
+            return string.Join("\n", Alternatives.Select(Convert.ToString).ToArray());
         }
     }
 }

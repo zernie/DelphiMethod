@@ -30,8 +30,8 @@ namespace DelphiMethod
         {
             InitializeComponent();
 
-            _expertsCount = data.Experts.Count;
-            _alternativesCount = data.Experts[0].Alternatives.Count;
+            _expertsCount = data.Alternatives.Count;
+            _alternativesCount = data.Alternatives[0].Values.Count;
             InitForm(data);
         }
 
@@ -41,11 +41,8 @@ namespace DelphiMethod
             Utils.InitDataGridView(dataGridView2, _expertsCount, _alternativesCount);
             Utils.FillDataGridView(dataGridView2, data, _expertsCount, _alternativesCount);
 
-            var index = dataGridView2.Rows.Add(new DataGridViewRow());
-            dataGridView2.Rows[index].HeaderCell.Value = "Медиана";
-
-             index = dataGridView2.Rows.Add(new DataGridViewRow());
-            dataGridView2.Rows[index].HeaderCell.Value = "Групповая оценка";
+            dataGridView2.Columns.Add("median", "Медиана");
+            dataGridView2.Columns.Add("group", "Групповая оценка");
         }
 
         // Увеличить счетчик тура
@@ -74,6 +71,11 @@ namespace DelphiMethod
             try
             {
                 AddTourNumber();
+
+                for (var i = 0; i < _expertsCount; i++)
+                {
+                    dataGridView2["median", i].Value = Evaluation.Medians[i];
+                }
             }
             catch (FormatException exception)
             {
