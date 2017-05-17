@@ -10,7 +10,7 @@ namespace DelphiMethod
     class Utils
     {
         // Считать матрицу из файла
-        public static Matrix ReadAsCSV(string filename)
+        public static Matrix ReadAsCsv(string filename)
         {
             var lines = File.ReadAllLines(filename);
             var data = new List<Expert>();
@@ -28,17 +28,7 @@ namespace DelphiMethod
         // Сохранить матрицу в файл
         public static void SaveAsCsv(Matrix data, string filename)
         {
-            var sb = new StringBuilder();
-            //            for (var i = 0; i < data.GetLength(0); i++)
-            //            {
-            //                for (var j = 0; j < data.GetLength(1); j++)
-            //                {
-            //                    sb.Append((j == 0 ? "" : " ") + data[i, j]);
-            //                }
-            //                sb.AppendLine();
-            //            }
-
-            File.WriteAllText(filename, sb.ToString());
+            File.WriteAllText(filename, data.ToString());
         }
 
         // Инициализировать таблицу заданным количеством строк и столбцов
@@ -67,15 +57,15 @@ namespace DelphiMethod
             {
                 var matrix = new Matrix();
 
-                for (var i = 0; i < cols; i++)
+                for (var i = 0; i < rows; i++)
                 {
                     var values = new List<decimal>();
-                    for (var j = 0; j < rows; j++)
+                    for (var j = 0; j < cols; j++)
                     {
-                        value = component[i, j].Value.ToString();
+                        value = component[j, i].Value.ToString();
                         values.Add(Convert.ToDecimal(value));
-                        matrix.Experts.Add(new Expert(values));
                     }
+                    matrix.Experts.Add(new Expert(values));
                 }
 
                 return matrix;

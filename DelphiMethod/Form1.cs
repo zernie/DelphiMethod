@@ -33,7 +33,7 @@ namespace DelphiMethod
             try
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
-                var evaluation = Utils.ReadAsCSV(openFileDialog1.FileName);
+                var evaluation = Utils.ReadAsCsv(openFileDialog1.FileName);
 
                 using (var form = new Form2(evaluation))
                 {

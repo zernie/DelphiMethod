@@ -23,7 +23,7 @@ namespace DelphiMethod
 
             _expertsCount = expertsCount;
             _alternativesCount = alternativesCount;
-            InitForm(new Matrix(alternativesCount, expertsCount));
+            InitForm(new Matrix(expertsCount, alternativesCount));
         }
 
         public Form2(Matrix data)

@@ -44,12 +44,13 @@ namespace DelphiMethod
             Experts = experts;
         }
 
-        public Matrix(int alternativesCount, int expertsCount)
+
+        public Matrix(int rows, int cols)
         {
             Experts = new List<Expert>();
-            for (var i = 0; i <= expertsCount; i++)
+            for (var i = 0; i <= rows; i++)
             {
-               Experts.Add(new Expert(alternativesCount));
+               Experts.Add(new Expert(cols));
             }
         }
 
@@ -57,7 +58,7 @@ namespace DelphiMethod
 
         public override string ToString()
         {
-            return string.Join("\n", Experts.Select(x=> x.ToString()).ToArray());
+            return string.Join("\n", Experts.Select(Convert.ToString).ToArray());
         }
     }
 }
