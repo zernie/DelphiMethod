@@ -43,11 +43,11 @@
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 232);
+            this.dataGridView2.Location = new System.Drawing.Point(0, 267);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView2.RowTemplate.Height = 24;
-            this.dataGridView2.Size = new System.Drawing.Size(1071, 343);
+            this.dataGridView2.Size = new System.Drawing.Size(1116, 343);
             this.dataGridView2.TabIndex = 12;
             // 
             // calculateButton
@@ -101,7 +101,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1071, 575);
+            this.ClientSize = new System.Drawing.Size(1116, 610);
             this.Controls.Add(this.tourNumberLabel);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.calculateButton);

@@ -1,27 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace DelphiMethod
 {
     public partial class Form2 : Form
     {
-        private int 
+        private int
             _expertsCount, // количество экспертов
             _alternativesCount, // количество альтернатив
+            _indicatorsCount, // количество альтернатив
             _tourNumber = 1; // номер текущего тура
+
+        private List<decimal> _weightIndicators;
+
         // Матрица оценок из таблицы
         public Matrix Evaluation => Utils.ExtractData(dataGridView2,  _alternativesCount, _expertsCount);
 
-        public Form2(int alternativesCount, int expertsCount)
+        public Form2(int alternativesCount, int expertsCount, int indicatorsCount, List<decimal> weightIndicators)
         {
             InitializeComponent();
 
             _alternativesCount = alternativesCount;
             _expertsCount = expertsCount;
+            _indicatorsCount = indicatorsCount;
+            _weightIndicators = weightIndicators;
+            
             InitForm(new Matrix(alternativesCount, expertsCount));
         }
 
