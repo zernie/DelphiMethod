@@ -10,64 +10,43 @@ namespace DelphiMethod
     {
         public List<decimal> Values;
 
-        public decimal Average => Math.Round(Values.Sum() / Values.Count, 2);
-
-        public decimal Median
+        public Alternative(List<decimal> values) => Values = values;
+        public Alternative(int count) => Values = new List<decimal>(new decimal[count]);
+        public decimal GroupEvaluation(decimal indicator, decimal competenceCoefficient = 0.1M)
         {
-            get
-            {
-                var temp = Values.ToArray();
-                Array.Sort(temp);
-                var count = temp.Length;
-
-                if (count % 2 != 0) return temp[count / 2];
-
-                var a = temp[count / 2 - 1];
-                var b = temp[count / 2];
-                return (a + b) / 2m;
-            }
+            return Values.Select(x => indicator * competenceCoefficient * x).Sum();
         }
 
-        public Alternative(List<decimal> values)
-        {
-            Values = values;
-        }
-
-        public Alternative(int count)
-        {
-            Values = new List<decimal>(new decimal[count]);
-        }
-
-        public override string ToString()
-        {
-            return string.Join(" ", Values.Select(Convert.ToString).ToArray());
-        }
+        public override string ToString() => string.Join(" ", Values.Select(Convert.ToString).ToArray());
     }
 
     // Матрица оценок
     public class Matrix
     {
-        public List<Alternative> Alternatives;
-        public List<decimal> Medians => Alternatives.Select(x => x.Median).ToList();
-        public List<decimal> Averages => Alternatives.Select(x => x.Average).ToList();
+        public int ExpertsCount;                 // m, Количество экспертов
+        public List<Alternative> Alternatives;   // Альтернативы
+        // sum(q_k * K_i * x_i_j^k)
+        public List<decimal> GroupEvaluations => Alternatives.Select(x => x.GroupEvaluation(Indicator)).ToList();
 
-        public Matrix()
+        // q_k, Коэффициент веса
+        public decimal Indicator;
+
+        public Matrix(decimal indicatorNumber)
         {
             Alternatives = new List<Alternative>();
+            Indicator = indicatorNumber;
         }
 
-        public Matrix(List<Alternative> alternatives)
+        public Matrix(List<Alternative> alternatives, decimal indicator)
         {
             Alternatives = alternatives;
+            Indicator = indicator;
         }
 
-        public Matrix(int rows, int cols)
+        public Matrix(decimal indicator, int rows, int cols)
         {
-            Alternatives = new List<Alternative>();
-            for (var i = 0; i <= rows; i++)
-            {
-               Alternatives.Add(new Alternative(cols));
-            }
+            Indicator = indicator;
+            Alternatives = Enumerable.Repeat(new Alternative(cols), rows).ToList();
         }
 
         public decimal this[int row, int col] => Alternatives[row].Values[col];

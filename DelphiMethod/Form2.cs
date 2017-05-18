@@ -16,7 +16,7 @@ namespace DelphiMethod
         private List<decimal> _weightIndicators;
 
         // Матрица оценок из таблицы
-        public Matrix Evaluation => Utils.ExtractData(dataGridView2,  _alternativesCount, _expertsCount);
+        public Matrix Evaluation => Utils.ExtractData(dataGridView2, _weightIndicators[0],_alternativesCount, _expertsCount);
 
         public Form2(int alternativesCount, int expertsCount, int indicatorsCount, List<decimal> weightIndicators)
         {
@@ -27,15 +27,17 @@ namespace DelphiMethod
             _indicatorsCount = indicatorsCount;
             _weightIndicators = weightIndicators;
             
-            InitForm(new Matrix(alternativesCount, expertsCount));
+            InitForm(new Matrix(_weightIndicators[0], alternativesCount, expertsCount));
         }
 
-        public Form2(Matrix data)
+        public Form2(Matrix data, int indicatorsCount, List<decimal> weightIndicators)
         {
             InitializeComponent();
 
             _expertsCount = data.Alternatives[0].Values.Count; 
             _alternativesCount = data.Alternatives.Count;
+            _indicatorsCount = indicatorsCount;
+            _weightIndicators = weightIndicators;
 
             InitForm(data);
         }
@@ -46,9 +48,7 @@ namespace DelphiMethod
             Utils.InitDataGridView(dataGridView2,  _alternativesCount, _expertsCount);
             Utils.FillDataGridView(dataGridView2, data, _alternativesCount, _expertsCount);
 
-            dataGridView2.Columns.Add("average", "Среднее арифметическое");
-            dataGridView2.Columns.Add("median", "Медиана");
-            dataGridView2.Columns.Add("group", "Групповая оценка");
+            dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
         }
 
         // Увеличить счетчик тура
@@ -80,8 +80,7 @@ namespace DelphiMethod
 
                 for (var i = 0; i < _alternativesCount; i++)
                 {
-                    dataGridView2["median", i].Value = Evaluation.Medians[i];
-                    dataGridView2["average", i].Value = Evaluation.Averages[i];
+                    dataGridView2["groupEvaluation", i].Value = Evaluation.GroupEvaluations[i];
                 }
             }
             catch (FormatException exception)

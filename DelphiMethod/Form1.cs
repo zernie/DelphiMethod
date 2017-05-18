@@ -54,7 +54,7 @@ namespace DelphiMethod
                 if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
                 var evaluation = Utils.ReadAsCsv(openFileDialog1.FileName);
 
-                using (var form = new Form2(evaluation))
+                using (var form = new Form2(new Matrix( evaluation, WeightIndicators[0]), IndicatorsCount, WeightIndicators))
                 {
                     form.ShowDialog();
                 }

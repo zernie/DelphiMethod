@@ -9,7 +9,7 @@ namespace DelphiMethod
     class Utils
     {
         // Считать матрицу из файла
-        public static Matrix ReadAsCsv(string filename)
+        public static List<Alternative> ReadAsCsv(string filename)
         {
             var lines = File.ReadAllLines(filename);
             var data = new List<Alternative>();
@@ -22,7 +22,7 @@ namespace DelphiMethod
                 data.Add(new Alternative(rows));
             }
 
-            return new Matrix(data);
+            return data;
         }
 
         // Сохранить матрицу в файл
@@ -49,13 +49,13 @@ namespace DelphiMethod
         }
 
         // Извлечь матрицу из таблицы
-        public static Matrix ExtractData(DataGridView component, int rows, int cols)
+        public static Matrix ExtractData(DataGridView component, decimal indicator, int rows, int cols)
         {
             var value = "";
 
             try
             {
-                var matrix = new Matrix();
+                var matrix = new Matrix(indicator);
 
                 for (var i = 0; i < rows; i++)
                 {
