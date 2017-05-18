@@ -12,17 +12,10 @@ namespace DelphiMethod
         public static List<Alternative> ReadAsCsv(string filename)
         {
             var lines = File.ReadAllLines(filename);
-            var data = new List<Alternative>();
 
-            foreach (var line in lines)
-            {
-
-                var rows = line.Split(' ').ToList().Select(Convert.ToDecimal).ToList();
-
-                data.Add(new Alternative(rows));
-            }
-
-            return data;
+            return lines
+                .Select(line => new Alternative(line.Split(' ').Select(Convert.ToDecimal).ToList()))
+                .ToList();
         }
 
         // Сохранить матрицу в файл
@@ -49,21 +42,28 @@ namespace DelphiMethod
         }
 
         // Извлечь матрицу из таблицы
-        public static Matrix ExtractData(DataGridView component, decimal indicator, int rows, int cols)
+        public static Matrix ExtractData(DataGridView component, InitialData initialData)
         {
             var value = "";
 
             try
             {
-                var matrix = new Matrix(indicator);
+                var matrix = new Matrix(initialData);
 
-                for (var i = 0; i < rows; i++)
+                for (var i = 0; i < initialData.AlternativesCount; i++)
                 {
                     var values = new List<decimal>();
-                    for (var j = 0; j < cols; j++)
+                    for (var j = 0; j < initialData.ExpertsCount; j++)
                     {
                         value = component.Rows[i].Cells[j].Value.ToString();
-                        values.Add(Convert.ToDecimal(value));
+                        var decimalValue = Convert.ToDecimal(value);
+
+                        if (decimalValue < 0 || decimalValue > initialData.MaxEvaluation)
+                        {
+                            throw new FormatException("Оценка вышла за пределы шкалы");
+                        }
+
+                        values.Add(decimalValue);
                     }
                     matrix.Alternatives.Add(new Alternative(values));
                 }

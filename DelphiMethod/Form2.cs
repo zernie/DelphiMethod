@@ -7,46 +7,34 @@ namespace DelphiMethod
 {
     public partial class Form2 : Form
     {
-        private int
-            _expertsCount, // количество экспертов
-            _alternativesCount, // количество альтернатив
-            _indicatorsCount, // количество альтернатив
-            _tourNumber = 1; // номер текущего тура
+        private InitialData _initialData;
 
-        private List<decimal> _weightIndicators;
+        private int _tourNumber;
 
         // Матрица оценок из таблицы
-        public Matrix Evaluation => Utils.ExtractData(dataGridView2, _weightIndicators[0],_alternativesCount, _expertsCount);
+        public Matrix Evaluation => Utils.ExtractData(dataGridView2, _initialData);
 
-        public Form2(int alternativesCount, int expertsCount, int indicatorsCount, List<decimal> weightIndicators)
+        public Form2(InitialData initialData)
         {
             InitializeComponent();
+            _initialData = initialData;
 
-            _alternativesCount = alternativesCount;
-            _expertsCount = expertsCount;
-            _indicatorsCount = indicatorsCount;
-            _weightIndicators = weightIndicators;
-            
-            InitForm(new Matrix(_weightIndicators[0], alternativesCount, expertsCount));
+            InitForm(new Matrix(initialData));
         }
 
-        public Form2(Matrix data, int indicatorsCount, List<decimal> weightIndicators)
+        public Form2(InitialData initialData, Matrix evaluation)
         {
             InitializeComponent();
+            _initialData = initialData;
 
-            _expertsCount = data.Alternatives[0].Values.Count; 
-            _alternativesCount = data.Alternatives.Count;
-            _indicatorsCount = indicatorsCount;
-            _weightIndicators = weightIndicators;
-
-            InitForm(data);
+            InitForm(evaluation);
         }
 
         private void InitForm(Matrix data)
         {
             AddTourNumber();
-            Utils.InitDataGridView(dataGridView2,  _alternativesCount, _expertsCount);
-            Utils.FillDataGridView(dataGridView2, data, _alternativesCount, _expertsCount);
+            Utils.InitDataGridView(dataGridView2, _initialData.AlternativesCount, _initialData.ExpertsCount);
+            Utils.FillDataGridView(dataGridView2, data, _initialData.AlternativesCount, _initialData.ExpertsCount);
 
             dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
         }
@@ -78,7 +66,7 @@ namespace DelphiMethod
             {
                 AddTourNumber();
 
-                for (var i = 0; i < _alternativesCount; i++)
+                for (var i = 0; i < _initialData.AlternativesCount; i++)
                 {
                     dataGridView2["groupEvaluation", i].Value = Evaluation.GroupEvaluations[i];
                 }

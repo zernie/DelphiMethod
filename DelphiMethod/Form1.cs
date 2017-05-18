@@ -10,33 +10,39 @@ namespace DelphiMethod
     {
         public Form1() => InitializeComponent();
 
-        public int AlternativesCount => (int)numericUpDown2.Value; // n, количество альтернатив
-        public int ExpertsCount => (int)numericUpDown1.Value; // m, количество экспертов
-        public int IndicatorsCount => (int)numericUpDown3.Value; // l, количество показателей
-        // коэффициенты веса показателей
-        public List<decimal> WeightIndicators =>
-           richTextBox1
-                .Lines
-                .Select(Convert.ToDecimal)
-                .ToList();
-        public decimal WeightIndicatorsSum => WeightIndicators.Sum();
+        private int _alternativesCount => (int)numericUpDown2.Value; // n, количество альтернатив
+        private int _expertsCount => (int)numericUpDown1.Value; // m, количество экспертов
+        private int _indicatorsCount => (int)numericUpDown3.Value; // l, количество показателей
+        private List<decimal> _weightIndicators => textBox1.Lines.Select(Convert.ToDecimal).ToList(); // коэффициенты весов показателей
+        private decimal _weightIndicatorsSum => _weightIndicators.Sum();
+        private decimal _maxEvaluation => radioButton1.Checked ? 10.0M : 100.0M; // Максимум шкалы 
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                if (WeightIndicatorsSum != 1.0M)
+                if (_weightIndicators.Count != _indicatorsCount)
                 {
-                    MessageBox.Show($"Сумма коэффициенты весов показателей = {WeightIndicatorsSum}, а должна равняться единице");
-                    return;
-                }
-                if (WeightIndicators.Count != IndicatorsCount)
-                {
-                    MessageBox.Show($"Количество коэффициенты весов показателей должно равняться количеству показателей({IndicatorsCount})");
+                    MessageBox.Show($"Количество коэффициентов весов показателей должно равняться количеству показателей({_indicatorsCount})");
                     return;
                 }
 
-                using (var form = new Form2(AlternativesCount, ExpertsCount, IndicatorsCount, WeightIndicators))
+                if (_weightIndicatorsSum != 1.0M)
+                {
+                    MessageBox.Show($"Сумма коэффициентов весов показателей = {_weightIndicatorsSum}, а должна равняться единице");
+                    return;
+                }
+
+                var initialData = new InitialData()
+                {
+                    AlternativesCount = _alternativesCount,
+                    ExpertsCount = _expertsCount,
+                    IndicatorsCount = _indicatorsCount,
+                    MaxEvaluation = _maxEvaluation,
+                    WeightIndicators = _weightIndicators
+                };
+
+                using (var form = new Form2(initialData))
                 {
                     form.ShowDialog();
                 }
@@ -54,7 +60,16 @@ namespace DelphiMethod
                 if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
                 var evaluation = Utils.ReadAsCsv(openFileDialog1.FileName);
 
-                using (var form = new Form2(new Matrix( evaluation, WeightIndicators[0]), IndicatorsCount, WeightIndicators))
+                var initialData = new InitialData
+                {
+                    AlternativesCount = _alternativesCount,
+                    ExpertsCount = _expertsCount,
+                    IndicatorsCount = _indicatorsCount,
+                    MaxEvaluation = _maxEvaluation,
+                    WeightIndicators = _weightIndicators
+                };
+
+                using (var form = new Form2(initialData, new Matrix(evaluation, initialData)))
                 {
                     form.ShowDialog();
                 }
@@ -67,7 +82,7 @@ namespace DelphiMethod
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
-            richTextBox1.AppendText($"\n {1.0M - WeightIndicatorsSum}");
+            textBox1.AppendText($"\n {1.0M - _weightIndicatorsSum}");
         }
     }
 }

@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace DelphiMethod
 {
+    public struct InitialData
+    {
+        public int AlternativesCount;
+        public int ExpertsCount;
+        public int IndicatorsCount;
+        public List<decimal> WeightIndicators;
+        public decimal MaxEvaluation;
+    }
+
     // Альтернатива
     public class Alternative
     {
@@ -12,6 +20,7 @@ namespace DelphiMethod
 
         public Alternative(List<decimal> values) => Values = values;
         public Alternative(int count) => Values = new List<decimal>(new decimal[count]);
+
         public decimal GroupEvaluation(decimal indicator, decimal competenceCoefficient = 0.1M)
         {
             return Values.Select(x => indicator * competenceCoefficient * x).Sum();
@@ -23,30 +32,22 @@ namespace DelphiMethod
     // Матрица оценок
     public class Matrix
     {
-        public int ExpertsCount;                 // m, Количество экспертов
+        public InitialData InitialData;
         public List<Alternative> Alternatives;   // Альтернативы
         // sum(q_k * K_i * x_i_j^k)
-        public List<decimal> GroupEvaluations => Alternatives.Select(x => x.GroupEvaluation(Indicator)).ToList();
+        public List<decimal> GroupEvaluations =>
+            Alternatives.Select(x => x.GroupEvaluation(InitialData.WeightIndicators[0])).ToList();
 
-        // q_k, Коэффициент веса
-        public decimal Indicator;
-
-        public Matrix(decimal indicatorNumber)
-        {
-            Alternatives = new List<Alternative>();
-            Indicator = indicatorNumber;
-        }
-
-        public Matrix(List<Alternative> alternatives, decimal indicator)
+        public Matrix(List<Alternative> alternatives, InitialData initialData)
         {
             Alternatives = alternatives;
-            Indicator = indicator;
+            InitialData = initialData;
         }
 
-        public Matrix(decimal indicator, int rows, int cols)
+        public Matrix(InitialData initialData)
         {
-            Indicator = indicator;
-            Alternatives = Enumerable.Repeat(new Alternative(cols), rows).ToList();
+            InitialData = initialData;
+            Alternatives = Enumerable.Repeat(new Alternative(initialData.AlternativesCount), initialData.ExpertsCount).ToList();
         }
 
         public decimal this[int row, int col] => Alternatives[row].Values[col];
