@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -31,27 +32,13 @@ namespace DelphiMethod
             InitForm();
         }
 
-        public Form2(InitialData initialData, Matrix evaluation)
-        {
-            InitializeComponent();
-            _initialData = initialData;
-            _evaluation = evaluation;
-            _evaluations = Enumerable.Repeat(evaluation, initialData.IndicatorsCount).ToList();
-
-            InitForm();
-        }
-
         private void InitForm()
         {
             AddTourNumber();
             Utils.InitDataGridView(dataGridView2, _initialData);
             Utils.FillDataGridView(dataGridView2, _evaluation, _initialData);
-            dataGridView2.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name= "groupEvaluation", HeaderText= "Групповая оценка", ReadOnly = true
-            });
+            dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
             ratingScaleTextBox.Text = _initialData.RatingScale.ToString();
-
 
             foreach (var weight in _initialData.WeightIndicators)
             {
