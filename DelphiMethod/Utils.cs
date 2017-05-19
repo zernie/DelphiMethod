@@ -51,14 +51,14 @@ namespace DelphiMethod
                     var values = new List<decimal>();
                     for (var j = 0; j < initialData.ExpertsCount; j++)
                     {
-                        var valye = Convert.ToDecimal(component.Rows[i].Cells[j].Value);
+                        var value = Convert.ToDecimal(component.Rows[i].Cells[j].Value);
 
-                        if (valye < 0 || valye > initialData.MaxEvaluation)
+                        if (initialData.RatingScale.Includes(value))
                         {
                             throw new FormatException("Оценка вышла за пределы шкалы");
                         }
 
-                        values.Add(valye);
+                        values.Add(value);
                     }
                     alternatives.Add(new Alternative(values));
                 }

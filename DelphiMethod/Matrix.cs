@@ -4,13 +4,35 @@ using System.Linq;
 
 namespace DelphiMethod
 {
+    public struct Range
+    {
+        public decimal Start;
+        public decimal End;
+
+        public Range(decimal start, decimal end)
+        {
+            Start = start;
+            End = end;
+        }
+
+        public bool Includes(decimal value)
+        {
+            return Start <= value && value <= End;
+        }
+
+        public override string ToString()
+        {
+            return $"{Start} ... {End}";
+        }
+    }
+
     public struct InitialData
     {
         public int AlternativesCount;
         public int ExpertsCount;
         public int IndicatorsCount;
         public List<decimal> WeightIndicators;
-        public decimal MaxEvaluation;
+        public Range RatingScale;
     }
 
     // Альтернатива

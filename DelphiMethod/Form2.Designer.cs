@@ -38,6 +38,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.label3 = new System.Windows.Forms.Label();
+            this.ratingScaleTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -106,7 +108,7 @@
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(459, 26);
+            this.comboBox1.Location = new System.Drawing.Point(483, 26);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(344, 39);
             this.comboBox1.TabIndex = 21;
@@ -138,11 +140,32 @@
             this.openFileDialog1.DefaultExt = "csv";
             this.openFileDialog1.Filter = "CSV файлы|*.csv|Все файлы|*.*";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(301, 141);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(175, 32);
+            this.label3.TabIndex = 24;
+            this.label3.Text = "Шкала оценок";
+            // 
+            // ratingScaleTextBox
+            // 
+            this.ratingScaleTextBox.Enabled = false;
+            this.ratingScaleTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ratingScaleTextBox.Location = new System.Drawing.Point(483, 141);
+            this.ratingScaleTextBox.Name = "ratingScaleTextBox";
+            this.ratingScaleTextBox.Size = new System.Drawing.Size(100, 38);
+            this.ratingScaleTextBox.TabIndex = 25;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1116, 610);
+            this.Controls.Add(this.ratingScaleTextBox);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
@@ -171,5 +194,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox ratingScaleTextBox;
     }
 }

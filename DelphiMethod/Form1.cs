@@ -15,7 +15,9 @@ namespace DelphiMethod
         private int _indicatorsCount => (int)numericUpDown3.Value; // l, количество показателей
         private List<decimal> _weightIndicators => richTextBox1.Lines.Select(Convert.ToDecimal).ToList(); // коэффициенты весов показателей
         private decimal _weightIndicatorsSum => _weightIndicators.Sum();
-        private decimal _maxEvaluation => radioButton1.Checked ? 10.0M : 100.0M; // Максимум шкалы 
+
+        private Range _ratingScale =>
+            radioButton1.Checked ? new Range(0M, 10M) : new Range(0, 100M); // Шкала оценок
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -34,12 +36,12 @@ namespace DelphiMethod
                     return;
                 }
 
-                var initialData = new InitialData()
+                var initialData = new InitialData
                 {
                     AlternativesCount = _alternativesCount,
                     ExpertsCount = _expertsCount,
                     IndicatorsCount = _indicatorsCount,
-                    MaxEvaluation = _maxEvaluation,
+                    RatingScale = _ratingScale,
                     WeightIndicators = _weightIndicators
                 };
 

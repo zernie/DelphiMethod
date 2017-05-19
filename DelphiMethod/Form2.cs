@@ -46,7 +46,12 @@ namespace DelphiMethod
             AddTourNumber();
             Utils.InitDataGridView(dataGridView2, _initialData);
             Utils.FillDataGridView(dataGridView2, _evaluation, _initialData);
-            dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
+            dataGridView2.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name= "groupEvaluation", HeaderText= "Групповая оценка", ReadOnly = true
+            });
+            ratingScaleTextBox.Text = _initialData.RatingScale.ToString();
+
 
             foreach (var weight in _initialData.WeightIndicators)
             {
@@ -109,7 +114,10 @@ namespace DelphiMethod
             }
             catch (FormatException exception)
             {
+                _disableTrigger = true;
+                dataGridView2.CurrentCell.Value = "0";
                 MessageBox.Show($"'{dataGridView2.CurrentCell.Value}': {exception.Message}");
+                _disableTrigger = false;
             }
         }
 
