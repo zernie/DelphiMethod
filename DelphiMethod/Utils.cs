@@ -25,16 +25,16 @@ namespace DelphiMethod
         }
 
         // Инициализировать таблицу заданным количеством строк и столбцов
-        public static void InitDataGridView(DataGridView component, int rows, int cols)
+        public static void InitDataGridView(DataGridView component, InitialData initialData)
         {
             component.Rows.Clear();
             component.Columns.Clear();
-            for (var i = 0; i < cols; i++)
+            for (var i = 0; i < initialData.ExpertsCount; i++)
             {
                 component.Columns.Add(i.ToString(), $"Эксперт №{i + 1}");
             }
 
-            for (var i = 0; i < rows; i++)
+            for (var i = 0; i < initialData.AlternativesCount; i++)
             {
                 component.Rows.Add();
                 component.Rows[i].HeaderCell.Value = $"Альтернатива №{i + 1}";
@@ -48,7 +48,7 @@ namespace DelphiMethod
 
             try
             {
-                var matrix = new Matrix(initialData);
+                var alternatives = new List<Alternative>();
 
                 for (var i = 0; i < initialData.AlternativesCount; i++)
                 {
@@ -65,10 +65,10 @@ namespace DelphiMethod
 
                         values.Add(decimalValue);
                     }
-                    matrix.Alternatives.Add(new Alternative(values));
+                    alternatives.Add(new Alternative(values));
                 }
 
-                return matrix;
+                return new Matrix(alternatives, initialData);
             }
             catch (FormatException e)
             {
@@ -78,11 +78,11 @@ namespace DelphiMethod
         }
 
         // Заполнить таблицу матрицей
-        public static void FillDataGridView(DataGridView component, Matrix data, int rows, int cols)
+        public static void FillDataGridView(DataGridView component, Matrix data, InitialData initialData)
         {
-            for (var i = 0; i < rows; i++)
+            for (var i = 0; i < initialData.AlternativesCount; i++)
             {
-                for (var j = 0; j < cols; j++)
+                for (var j = 0; j < initialData.ExpertsCount; j++)
                 {
                     component.Rows[i].Cells[j].Value = data[i, j];
                 }

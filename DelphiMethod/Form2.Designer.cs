@@ -34,6 +34,8 @@
             this.exportButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tourNumberLabel = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,17 +45,17 @@
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 267);
+            this.dataGridView2.Location = new System.Drawing.Point(0, 185);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView2.RowTemplate.Height = 24;
-            this.dataGridView2.Size = new System.Drawing.Size(1116, 343);
+            this.dataGridView2.Size = new System.Drawing.Size(1116, 425);
             this.dataGridView2.TabIndex = 12;
             // 
             // calculateButton
             // 
             this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.calculateButton.Location = new System.Drawing.Point(419, 76);
+            this.calculateButton.Location = new System.Drawing.Point(867, 26);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(237, 58);
             this.calculateButton.TabIndex = 15;
@@ -74,7 +76,7 @@
             // exportButton
             // 
             this.exportButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.exportButton.Location = new System.Drawing.Point(481, 140);
+            this.exportButton.Location = new System.Drawing.Point(935, 90);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(109, 38);
             this.exportButton.TabIndex = 18;
@@ -97,11 +99,34 @@
             this.tourNumberLabel.TabIndex = 20;
             this.tourNumberLabel.Text = "Номер тура";
             // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(459, 26);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(344, 39);
+            this.comboBox1.TabIndex = 21;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(301, 26);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(141, 32);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Показатель";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1116, 610);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.tourNumberLabel);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.calculateButton);
@@ -123,5 +148,7 @@
         private System.Windows.Forms.Button exportButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Label tourNumberLabel;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label2;
     }
 }

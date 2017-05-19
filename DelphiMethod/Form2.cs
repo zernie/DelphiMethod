@@ -1,42 +1,60 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace DelphiMethod
 {
     public partial class Form2 : Form
     {
-        private InitialData _initialData;
+        private InitialData _initialData; // Исходные данные
 
-        private int _tourNumber;
+        private int _tourNumber; // Номер тура
 
         // Матрица оценок из таблицы
-        public Matrix Evaluation => Utils.ExtractData(dataGridView2, _initialData);
+        private Matrix _evaluation;
+
+        private List<Matrix> _evaluations;
+
+        private bool _disableTrigger = false;
 
         public Form2(InitialData initialData)
         {
             InitializeComponent();
             _initialData = initialData;
+            _evaluation = new Matrix(initialData);
+            _evaluations = Enumerable.Repeat(_evaluation, initialData.IndicatorsCount).ToList();
 
-            InitForm(new Matrix(initialData));
+            InitForm();
         }
 
         public Form2(InitialData initialData, Matrix evaluation)
         {
             InitializeComponent();
             _initialData = initialData;
+            _evaluation = evaluation;
+            _evaluations = Enumerable.Repeat(evaluation, initialData.IndicatorsCount).ToList();
 
-            InitForm(evaluation);
+            InitForm();
         }
 
-        private void InitForm(Matrix data)
+        private void InitForm()
         {
             AddTourNumber();
-            Utils.InitDataGridView(dataGridView2, _initialData.AlternativesCount, _initialData.ExpertsCount);
-            Utils.FillDataGridView(dataGridView2, data, _initialData.AlternativesCount, _initialData.ExpertsCount);
-
+            Utils.InitDataGridView(dataGridView2, _initialData);
+            Utils.FillDataGridView(dataGridView2, _evaluation, _initialData);
             dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
+
+            foreach (var weight in _initialData.WeightIndicators)
+            {
+                comboBox1.Items.Add($"Показатель с весом {weight}");
+            }
+            comboBox1.SelectedIndex = 0;
+
+            dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
         }
 
         // Увеличить счетчик тура
@@ -50,7 +68,7 @@ namespace DelphiMethod
                 if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
                     return;
 
-                Utils.SaveAsCsv(Evaluation, saveFileDialog1.FileName);
+                Utils.SaveAsCsv(_evaluation, saveFileDialog1.FileName);
                 MessageBox.Show("Файл сохранен.");
             }
             catch (IOException exception)
@@ -68,13 +86,31 @@ namespace DelphiMethod
 
                 for (var i = 0; i < _initialData.AlternativesCount; i++)
                 {
-                    dataGridView2["groupEvaluation", i].Value = Evaluation.GroupEvaluations[i];
+                    dataGridView2["groupEvaluation", i].Value = _evaluation.GroupEvaluations[i];
                 }
             }
             catch (FormatException exception)
             {
                 MessageBox.Show($"'{exception.Data["value"]}': {exception.Message}");
             }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _disableTrigger = true;
+            _evaluation = _evaluations[comboBox1.SelectedIndex];
+            Utils.InitDataGridView(dataGridView2, _initialData);
+            Utils.FillDataGridView(dataGridView2, _evaluation, _initialData);
+
+            dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
+            _disableTrigger = false;
+        }
+
+        private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (_disableTrigger) return;
+            _evaluation = Utils.ExtractData(dataGridView2, _initialData);
+            _evaluations[comboBox1.SelectedIndex] = _evaluation;
         }
     }
 }

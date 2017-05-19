@@ -50,6 +50,7 @@ namespace DelphiMethod
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
+                throw;
             }
         }
 
