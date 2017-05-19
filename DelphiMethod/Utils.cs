@@ -44,10 +44,6 @@ namespace DelphiMethod
         // Извлечь матрицу из таблицы
         public static Matrix ExtractData(DataGridView component, InitialData initialData)
         {
-            var value = "";
-
-            try
-            {
                 var alternatives = new List<Alternative>();
 
                 for (var i = 0; i < initialData.AlternativesCount; i++)
@@ -55,26 +51,19 @@ namespace DelphiMethod
                     var values = new List<decimal>();
                     for (var j = 0; j < initialData.ExpertsCount; j++)
                     {
-                        value = component.Rows[i].Cells[j].Value.ToString();
-                        var decimalValue = Convert.ToDecimal(value);
+                        var valye = Convert.ToDecimal(component.Rows[i].Cells[j].Value);
 
-                        if (decimalValue < 0 || decimalValue > initialData.MaxEvaluation)
+                        if (valye < 0 || valye > initialData.MaxEvaluation)
                         {
                             throw new FormatException("Оценка вышла за пределы шкалы");
                         }
 
-                        values.Add(decimalValue);
+                        values.Add(valye);
                     }
                     alternatives.Add(new Alternative(values));
                 }
 
                 return new Matrix(alternatives, initialData);
-            }
-            catch (FormatException e)
-            {
-                e.Data.Add("value", value);
-                throw;
-            }
         }
 
         // Заполнить таблицу матрицей

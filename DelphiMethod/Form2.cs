@@ -19,7 +19,7 @@ namespace DelphiMethod
 
         private List<Matrix> _evaluations;
 
-        private bool _disableTrigger = false;
+        private bool _disableTrigger;
 
         public Form2(InitialData initialData)
         {
@@ -80,18 +80,11 @@ namespace DelphiMethod
         // Следующий тур
         private void calculateButton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                AddTourNumber();
+            AddTourNumber();
 
-                for (var i = 0; i < _initialData.AlternativesCount; i++)
-                {
-                    dataGridView2["groupEvaluation", i].Value = _evaluation.GroupEvaluations[i];
-                }
-            }
-            catch (FormatException exception)
+            for (var i = 0; i < _initialData.AlternativesCount; i++)
             {
-                MessageBox.Show($"'{exception.Data["value"]}': {exception.Message}");
+                dataGridView2["groupEvaluation", i].Value = _evaluation.GroupEvaluations[i];
             }
         }
 
@@ -108,9 +101,32 @@ namespace DelphiMethod
 
         private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (_disableTrigger) return;
-            _evaluation = Utils.ExtractData(dataGridView2, _initialData);
-            _evaluations[comboBox1.SelectedIndex] = _evaluation;
+            try
+            {
+                if (_disableTrigger) return;
+                _evaluation = Utils.ExtractData(dataGridView2, _initialData);
+                _evaluations[comboBox1.SelectedIndex] = _evaluation;
+            }
+            catch (FormatException exception)
+            {
+                MessageBox.Show($"'{dataGridView2.CurrentCell.Value}': {exception.Message}");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
+                var evaluation = Utils.ReadAsCsv(openFileDialog1.FileName);
+
+                _evaluation = new Matrix(evaluation, _initialData);
+                Utils.FillDataGridView(dataGridView2, _evaluation, _initialData);
+            }
+            catch (IOException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
     }
 }
