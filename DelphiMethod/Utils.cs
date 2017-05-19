@@ -42,36 +42,36 @@ namespace DelphiMethod
         }
 
         // Извлечь матрицу из таблицы
-        public static Matrix ExtractData(DataGridView component, InitialData initialData)
+        public static List<Alternative> ExtractData(DataGridView component, InitialData initialData)
         {
-                var alternatives = new List<Alternative>();
+            var alternatives = new List<Alternative>();
 
-                for (var i = 0; i < initialData.AlternativesCount; i++)
+            for (var i = 0; i < initialData.AlternativesCount; i++)
+            {
+                var values = new List<decimal>();
+                for (var j = 0; j < initialData.ExpertsCount; j++)
                 {
-                    var values = new List<decimal>();
-                    for (var j = 0; j < initialData.ExpertsCount; j++)
+                    var value = Convert.ToDecimal(component.Rows[i].Cells[j].Value);
+
+                    if (!initialData.RatingScale.Includes(value))
                     {
-                        var value = Convert.ToDecimal(component.Rows[i].Cells[j].Value);
-
-                        if (!initialData.RatingScale.Includes(value))
-                        {
-                            throw new FormatException("Оценка вышла за пределы шкалы");
-                        }
-
-                        values.Add(value);
+                        throw new FormatException("Оценка вышла за пределы шкалы");
                     }
-                    alternatives.Add(new Alternative(values));
-                }
 
-                return new Matrix(alternatives, initialData);
+                    values.Add(value);
+                }
+                alternatives.Add(new Alternative(values));
+            }
+
+            return alternatives;
         }
 
         // Заполнить таблицу матрицей
-        public static void FillDataGridView(DataGridView component, Matrix data, InitialData initialData)
+        public static void FillDataGridView(DataGridView component, Matrix data)
         {
-            for (var i = 0; i < initialData.AlternativesCount; i++)
+            for (var i = 0; i < data.InitialData.AlternativesCount; i++)
             {
-                for (var j = 0; j < initialData.ExpertsCount; j++)
+                for (var j = 0; j < data.InitialData.ExpertsCount; j++)
                 {
                     component.Rows[i].Cells[j].Value = data[i, j];
                 }

@@ -9,19 +9,24 @@ namespace DelphiMethod
     {
         public InitialData InitialData;
         public List<Alternative> Alternatives;
+        public List<Expert> Experts;
+        public int Indicator;
+
         // sum(q_k * K_i * x_i_j^k)
         public List<decimal> GroupEvaluations =>
-            Alternatives.Select(x => x.GroupEvaluation(InitialData.WeightIndicators[0])).ToList();
+            Alternatives.Select(x => x.GroupEvaluation(InitialData.WeightIndicators[Indicator])).ToList();
 
-        public Matrix(List<Alternative> alternatives, InitialData initialData)
+        public Matrix(List<Alternative> alternatives, InitialData initialData, int indicator)
         {
             Alternatives = alternatives;
             InitialData = initialData;
+            Indicator = indicator;
         }
 
-        public Matrix(InitialData initialData)
+        public Matrix(InitialData initialData, int indicator)
         {
             InitialData = initialData;
+            Indicator = indicator;
             Alternatives = Enumerable.Repeat(new Alternative(initialData.AlternativesCount), initialData.ExpertsCount).ToList();
         }
 
@@ -31,5 +36,9 @@ namespace DelphiMethod
         {
             return string.Join("\n", Alternatives.Select(Convert.ToString).ToArray());
         }
+    }
+
+    public class Expert
+    {
     }
 }

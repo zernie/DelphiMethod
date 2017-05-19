@@ -13,12 +13,19 @@ namespace DelphiMethod
     {
         private InitialData _initialData; // Исходные данные
 
-        private int _tourNumber; // Номер тура
+        private int _tourNumber = 1; // Номер тура
 
-        // Матрица оценок из таблицы
-        private Matrix _evaluation;
+        // Текущая матрица оценок
+        private Matrix _currentRank
+        {
+            get => _ranks[_indicator];
+            set => _ranks[_indicator] = value;
+        }
 
-        private List<Matrix> _evaluations;
+        // Список матриц оценок
+        private List<Matrix> _ranks = new List<Matrix>();
+        // Текущий показатель
+        private int _indicator => comboBox1.SelectedIndex;
 
         private bool _disableTrigger;
 
@@ -26,26 +33,26 @@ namespace DelphiMethod
         {
             InitializeComponent();
             _initialData = initialData;
-            _evaluation = new Matrix(initialData);
-            _evaluations = Enumerable.Repeat(_evaluation, initialData.IndicatorsCount).ToList();
-
-            InitForm();
-        }
-
-        private void InitForm()
-        {
-            AddTourNumber();
-            Utils.InitDataGridView(dataGridView2, _initialData);
-            Utils.FillDataGridView(dataGridView2, _evaluation, _initialData);
-            dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
-            ratingScaleTextBox.Text = _initialData.RatingScale.ToString();
 
             foreach (var weight in _initialData.WeightIndicators)
             {
                 comboBox1.Items.Add($"Показатель с весом {weight}");
             }
+
             comboBox1.SelectedIndex = 0;
 
+            for (var i = 0; i < initialData.IndicatorsCount; i++)
+            {
+                var matrix = new Matrix(initialData, i);
+                _ranks.Add(matrix);
+            }
+
+            Utils.InitDataGridView(dataGridView2, _initialData);
+            Utils.FillDataGridView(dataGridView2, _currentRank);
+            dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
+            ratingScaleTextBox.Text = _initialData.RatingScale.ToString();
+
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
         }
 
@@ -60,7 +67,7 @@ namespace DelphiMethod
                 if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
                     return;
 
-                Utils.SaveAsCsv(_evaluation, saveFileDialog1.FileName);
+                Utils.SaveAsCsv(_currentRank, saveFileDialog1.FileName);
                 MessageBox.Show("Файл сохранен.");
             }
             catch (IOException exception)
@@ -76,16 +83,15 @@ namespace DelphiMethod
 
             for (var i = 0; i < _initialData.AlternativesCount; i++)
             {
-                dataGridView2["groupEvaluation", i].Value = _evaluation.GroupEvaluations[i];
+                dataGridView2["groupEvaluation", i].Value = _currentRank.GroupEvaluations[i];
             }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            _evaluation = _evaluations[comboBox1.SelectedIndex];
             Utils.InitDataGridView(dataGridView2, _initialData);
-            Utils.FillDataGridView(dataGridView2, _evaluation, _initialData);
+            Utils.FillDataGridView(dataGridView2, _currentRank);
 
             dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
             _disableTrigger = false;
@@ -96,8 +102,8 @@ namespace DelphiMethod
             try
             {
                 if (_disableTrigger) return;
-                _evaluation = Utils.ExtractData(dataGridView2, _initialData);
-                _evaluations[comboBox1.SelectedIndex] = _evaluation;
+                _currentRank = new Matrix(Utils.ExtractData(dataGridView2, _initialData), _initialData, _indicator);
+                _ranks[comboBox1.SelectedIndex] = _currentRank;
             }
             catch (FormatException exception)
             {
@@ -113,10 +119,10 @@ namespace DelphiMethod
             try
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
-                var evaluation = Utils.ReadAsCsv(openFileDialog1.FileName);
+                var rank = Utils.ReadAsCsv(openFileDialog1.FileName);
 
-                _evaluation = new Matrix(evaluation, _initialData);
-                Utils.FillDataGridView(dataGridView2, _evaluation, _initialData);
+                _currentRank = new Matrix(rank, _initialData, _indicator);
+                Utils.FillDataGridView(dataGridView2, _currentRank);
             }
             catch (IOException exception)
             {
