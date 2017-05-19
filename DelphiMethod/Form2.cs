@@ -115,8 +115,8 @@ namespace DelphiMethod
             catch (FormatException exception)
             {
                 _disableTrigger = true;
-                dataGridView2.CurrentCell.Value = "0";
                 MessageBox.Show($"'{dataGridView2.CurrentCell.Value}': {exception.Message}");
+                dataGridView2.CurrentCell.Value = _initialData.RatingScale.Start;
                 _disableTrigger = false;
             }
         }

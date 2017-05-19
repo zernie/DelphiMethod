@@ -26,13 +26,14 @@ namespace DelphiMethod
                 if (_weightIndicators.Count != _indicatorsCount)
                 {
                     MessageBox.Show($"Количество коэффициентов весов показателей равно {_weightIndicators.Count}," +
-                                    $" а должно равняться количеству показателей({_indicatorsCount})");
+                                    $" а должно равняться количеству показателей ({_indicatorsCount})");
                     return;
                 }
 
                 if (_weightIndicatorsSum != 1.0M)
                 {
-                    MessageBox.Show($"Сумма коэффициентов весов показателей = {_weightIndicatorsSum}, а должна равняться единице");
+                    MessageBox.Show($"Сумма коэффициентов весов показателей = {_weightIndicatorsSum}," +
+                                    " а должна равняться единице");
                     return;
                 }
 
@@ -53,7 +54,6 @@ namespace DelphiMethod
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
-                throw;
             }
         }
     }

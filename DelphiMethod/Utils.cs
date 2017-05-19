@@ -53,7 +53,7 @@ namespace DelphiMethod
                     {
                         var value = Convert.ToDecimal(component.Rows[i].Cells[j].Value);
 
-                        if (initialData.RatingScale.Includes(value))
+                        if (!initialData.RatingScale.Includes(value))
                         {
                             throw new FormatException("Оценка вышла за пределы шкалы");
                         }
