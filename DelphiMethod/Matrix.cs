@@ -22,6 +22,11 @@ namespace DelphiMethod
         // sum(q_k * K_i * x_i_j^k)
         public List<double> GroupEvaluations => Alternatives.Select(x => x.GroupEvaluation(WeightIndicator, 0.1)).ToList();
 
+        public double Lambda(double competenceCoffiecient) =>
+            Alternatives
+                .Select((x, i) => x.Lambda(x.Xjl(competenceCoffiecient), competenceCoffiecient))
+                .Sum();
+
         public List<double> InitialCompetenceCoefficient => Experts.Select(x => 2.0 / InitialData.ExpertsCount).ToList();
 
         public Matrix(double[,] data, InitialData initialData, int indicatorNumber)
@@ -77,16 +82,6 @@ namespace DelphiMethod
         }
 
         public double this[int row, int col] => Data[row, col];
-
-        private List<double> _xjl(double competenceCoefficient) =>
-            Alternatives
-            .Select(x => x.Xjl(competenceCoefficient))
-            .ToList();
-
-        public double Lambda(double competenceCoffiecient)
-        {
-             return Alternatives.Select((x, i) => x.Lambda(_xjl(competenceCoffiecient)[i], competenceCoffiecient)).Sum();
-        }
 
         private List<double> calcCompetenceCofficient(List<double> competenceCoffiecients)
         {
