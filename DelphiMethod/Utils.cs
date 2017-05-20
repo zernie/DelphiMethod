@@ -9,20 +9,20 @@ namespace DelphiMethod
     class Utils
     {
         // Считать матрицу из файла
-        public static decimal[,] ReadAsCsv(string filename)
+        public static double[,] ReadAsCsv(string filename)
         {
             var lines = File.ReadAllLines(filename);
             var width = lines[0].Split(' ').Length;
             var height = lines.Length;
 
-            var data = new decimal[height, width];
+            var data = new double[height, width];
 
             for (var i = 0; i < lines.Length; i++)
             {
                 var line = lines[i].Split(' ');
                 for (var j = 0; j < width; j++)
                 {
-                   data[i,j] = Convert.ToDecimal(line[j]);
+                   data[i,j] = Convert.ToDouble(line[j]);
                 }
             }
 
@@ -53,17 +53,17 @@ namespace DelphiMethod
         }
 
         // Извлечь матрицу из таблицы
-        public static decimal[,] ExtractData(DataGridView component, InitialData initialData)
+        public static double[,] ExtractData(DataGridView component, InitialData initialData)
         {
             var width = initialData.ExpertsCount;
             var height = initialData.AlternativesCount;
-            var data = new decimal[height, width];
+            var data = new double[height, width];
 
             for (var i = 0; i < height; i++)
             {
                 for (var j = 0; j < width; j++)
                 {
-                    var value = Convert.ToDecimal(component.Rows[i].Cells[j].Value);
+                    var value = Convert.ToDouble(component.Rows[i].Cells[j].Value);
 
                     if (!initialData.RatingScale.Includes(value))
                     {

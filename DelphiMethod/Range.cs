@@ -2,16 +2,16 @@
 {
     public struct Range
     {
-        public decimal Start;
-        public decimal End;
+        public double Start;
+        public double End;
 
-        public Range(decimal start, decimal end)
+        public Range(double start, double end)
         {
             Start = start;
             End = end;
         }
 
-        public bool Includes(decimal value)
+        public bool Includes(double value)
         {
             return Start <= value && value <= End;
         }

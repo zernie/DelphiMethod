@@ -13,11 +13,11 @@ namespace DelphiMethod
         private int _alternativesCount => (int)numericUpDown2.Value; // n, количество альтернатив
         private int _expertsCount => (int)numericUpDown1.Value; // m, количество экспертов
         private int _indicatorsCount => (int)numericUpDown3.Value; // l, количество показателей
-        private List<decimal> _weightIndicators => richTextBox1.Lines.Select(Convert.ToDecimal).ToList(); // коэффициенты весов показателей
-        private decimal _weightIndicatorsSum => _weightIndicators.Sum();
+        private List<double> _weightIndicators => richTextBox1.Lines.Select(Convert.ToDouble).ToList(); // коэффициенты весов показателей
+        private double _weightIndicatorsSum => _weightIndicators.Sum();
 
         private Range _ratingScale =>
-            radioButton1.Checked ? new Range(0M, 10M) : new Range(0, 100M); // Шкала оценок
+            radioButton1.Checked ? new Range(0.0, 10.0) : new Range(0, 100.0); // Шкала оценок
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -30,7 +30,7 @@ namespace DelphiMethod
                     return;
                 }
 
-                if (_weightIndicatorsSum != 1.0M)
+                if (_weightIndicatorsSum != 1.0)
                 {
                     MessageBox.Show($"Сумма коэффициентов весов показателей = {_weightIndicatorsSum}," +
                                     " а должна равняться единице");

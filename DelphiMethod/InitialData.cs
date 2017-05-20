@@ -7,7 +7,7 @@ namespace DelphiMethod
         public int AlternativesCount;
         public int ExpertsCount;
         public int IndicatorsCount;
-        public List<decimal> WeightIndicators;
+        public List<double> WeightIndicators;
         public Range RatingScale;
     }
 }

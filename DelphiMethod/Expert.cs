@@ -6,10 +6,10 @@ namespace DelphiMethod
 {
     public struct Expert
     {
-        public List<decimal> Values;
+        public List<double> Values;
 
-        public Expert(List<decimal> values) => Values = values;
-        public Expert(int count) => Values = new List<decimal>(new decimal[count]);
+        public Expert(List<double> values) => Values = values;
+        public Expert(int count) => Values = new List<double>(new double[count]);
 
         public override string ToString() => string.Join(" ", Values.Select(Convert.ToString).ToArray());
     }

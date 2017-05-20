@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,12 +8,12 @@ namespace DelphiMethod
     // Альтернатива
     public struct Alternative
     {
-        public List<decimal> Values;
+        public List<double> Values;
 
-        public Alternative(List<decimal> values) => Values = values;
-        public Alternative(int count) => Values = new List<decimal>(new decimal[count]);
+        public Alternative(List<double> values) => Values = values;
+        public Alternative(int count) => Values = new List<double>(new double[count]);
 
-        public decimal GroupEvaluation(decimal indicator, decimal competenceCoefficient = 0.1M)
+        public double GroupEvaluation(double indicator, double competenceCoefficient)
         {
             return Values.Select(x => indicator * competenceCoefficient * x).Sum();
         }
