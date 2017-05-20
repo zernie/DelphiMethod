@@ -50,7 +50,7 @@ namespace DelphiMethod
 
             Utils.InitDataGridView(dataGridView2, _initialData);
             Utils.FillDataGridView(dataGridView2, _currentRank);
-            dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
+
             ratingScaleTextBox.Text = _initialData.RatingScale.ToString();
 
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
@@ -85,6 +85,13 @@ namespace DelphiMethod
             for (var i = 0; i < _initialData.AlternativesCount; i++)
             {
                 dataGridView2["groupEvaluation", i].Value = _currentRank.GroupEvaluations[i];
+            }
+
+            var competenceCoefficients = _currentRank.CompetenceCoefficients();
+
+            for (int i = 0; i < _initialData.ExpertsCount; i++)
+            {
+                dataGridView2[ i, _initialData.AlternativesCount].Value = competenceCoefficients[i];
             }
         }
 

@@ -50,6 +50,15 @@ namespace DelphiMethod
                 component.Rows.Add();
                 component.Rows[i].HeaderCell.Value = $"Альтернатива №{i + 1}";
             }
+
+            component.Columns.Add("groupEvaluation", "Групповая оценка");
+            component.Rows.Add(new DataGridViewRow
+            {
+                HeaderCell = new DataGridViewRowHeaderCell
+                {
+                    Value = "Коэффициент компетентности"
+                }
+            });
         }
 
         // Извлечь матрицу из таблицы

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -19,9 +20,9 @@ namespace DelphiMethod
         public double WeightIndicator => InitialData.WeightIndicators[IndicatorNumber]; // вес коэфф. показателя, q_k
 
         // sum(q_k * K_i * x_i_j^k)
-        public List<double> GroupEvaluations => Alternatives.Select(x=> x.GroupEvaluation(WeightIndicator, 0.1)).ToList();
+        public List<double> GroupEvaluations => Alternatives.Select(x => x.GroupEvaluation(WeightIndicator, 0.1)).ToList();
 
-        public double InitialCompetenceCoefficient => 1.0 / InitialData.ExpertsCount;
+        public List<double> InitialCompetenceCoefficient => Experts.Select(x => 2.0 / InitialData.ExpertsCount).ToList();
 
         public Matrix(double[,] data, InitialData initialData, int indicatorNumber)
         {
@@ -52,7 +53,6 @@ namespace DelphiMethod
             _init(Alternatives, Experts);
         }
 
-
         private void _init(List<Alternative> alternatives, List<Expert> experts)
         {
             for (var i = 0; i < Height; i++)
@@ -78,53 +78,50 @@ namespace DelphiMethod
 
         public double this[int row, int col] => Data[row, col];
 
-        private List<double> _xjl
-        {
-            get
-            {
-                var xjl = new List<double>(Height);
-                for (var i = 0; i < Height; i++)
-                {
-                    xjl.Add(Alternatives[i].Values.Sum() * InitialCompetenceCoefficient);
-                }
+        private List<double> _xjl(double competenceCoefficient) =>
+            Alternatives
+            .Select(x => x.Xjl(competenceCoefficient))
+            .ToList();
 
-                return xjl;
-            }
+        public double Lambda(double competenceCoffiecient)
+        {
+             return Alternatives.Select((x, i) => x.Lambda(_xjl(competenceCoffiecient)[i], competenceCoffiecient)).Sum();
         }
 
-        public double Lambda
+        private List<double> calcCompetenceCofficient(List<double> competenceCoffiecients)
         {
-            get
-            {
-                var temp = new List<double>(Height);
-                for (var i = 0; i < Height; i++)
-                {
-                    temp.Add(Alternatives[i].Values.Sum() * _xjl[i]);
-                }
+            var data = new List<double>(Width);
 
-                return temp.Sum();
+            for (var i = 0; i < Height; i++)
+            {
+                var temp = new List<double>();
+                var coefficient = competenceCoffiecients[i];
+
+                for (var j = 0; j < Width - 1; j++)
+                {
+                    temp.Add(Data[j, i] * Alternatives[j].Xjl(coefficient));
+                }
+                data.Add(1.0 / Lambda(coefficient) * temp.Sum());
             }
+
+            data.Add(1.0 - data.Sum());
+
+            return data;
         }
 
-        public List<double> CompetenceCoefficients
+        public List<double> CompetenceCoefficients(int times = 3)
         {
-            get
+            return CompetenceCoefficients(InitialCompetenceCoefficient, times);
+        }
+
+        public List<double> CompetenceCoefficients(List<double> competenceCoefficients, int times)
+        {
+            for (var i = 0; i <= times; i++)
             {
-                var data = new List<double>(Width);
-                for (var i = 0; i < Height; i++)
-                {
-                    var temp = new List<double>();
-                    for (var j = 0; j < Width - 1; j++)
-                    {
-                        temp.Add(Data[j, i] * _xjl[j]);
-                    }
-                    data.Add(1.0/Lambda * temp.Sum());
-                }
-
-                data.Add(1 - data.Sum());
-
-                return data;
+                competenceCoefficients = calcCompetenceCofficient(competenceCoefficients);
             }
+
+            return competenceCoefficients;
         }
 
         public override string ToString()
