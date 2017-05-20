@@ -13,7 +13,7 @@ namespace DelphiMethod
     {
         private InitialData _initialData; // Исходные данные
 
-        private int _tourNumber = 1; // Номер тура
+        private int _tourNumber; // Номер тура
 
         // Текущая матрица оценок
         private Matrix _currentRank
@@ -33,6 +33,7 @@ namespace DelphiMethod
         {
             InitializeComponent();
             _initialData = initialData;
+            AddTourNumber();
 
             foreach (var weight in _initialData.WeightIndicators)
             {
@@ -57,7 +58,7 @@ namespace DelphiMethod
         }
 
         // Увеличить счетчик тура
-        private void AddTourNumber() => tourNumberLabel.Text = $"Номер тура: {_tourNumber++}";
+        private void AddTourNumber() => tourNumberLabel.Text = $"Номер тура: {++_tourNumber}";
 
         // Экспорт из таблицы в файл
         private void exportButton_Click(object sender, EventArgs e)

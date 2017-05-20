@@ -9,13 +9,24 @@ namespace DelphiMethod
     class Utils
     {
         // Считать матрицу из файла
-        public static List<Alternative> ReadAsCsv(string filename)
+        public static decimal[,] ReadAsCsv(string filename)
         {
             var lines = File.ReadAllLines(filename);
+            var width = lines[0].Split(' ').Length;
+            var height = lines.Length;
 
-            return lines
-                .Select(line => new Alternative(line.Split(' ').Select(Convert.ToDecimal).ToList()))
-                .ToList();
+            var data = new decimal[height, width];
+
+            for (var i = 0; i < lines.Length; i++)
+            {
+                var line = lines[i].Split(' ');
+                for (var j = 0; j < width; j++)
+                {
+                   data[i,j] = Convert.ToDecimal(line[j]);
+                }
+            }
+
+            return data;
         }
 
         // Сохранить матрицу в файл
@@ -42,14 +53,15 @@ namespace DelphiMethod
         }
 
         // Извлечь матрицу из таблицы
-        public static List<Alternative> ExtractData(DataGridView component, InitialData initialData)
+        public static decimal[,] ExtractData(DataGridView component, InitialData initialData)
         {
-            var alternatives = new List<Alternative>();
+            var width = initialData.ExpertsCount;
+            var height = initialData.AlternativesCount;
+            var data = new decimal[height, width];
 
-            for (var i = 0; i < initialData.AlternativesCount; i++)
+            for (var i = 0; i < height; i++)
             {
-                var values = new List<decimal>();
-                for (var j = 0; j < initialData.ExpertsCount; j++)
+                for (var j = 0; j < width; j++)
                 {
                     var value = Convert.ToDecimal(component.Rows[i].Cells[j].Value);
 
@@ -58,20 +70,19 @@ namespace DelphiMethod
                         throw new FormatException("Оценка вышла за пределы шкалы");
                     }
 
-                    values.Add(value);
+                    data[i, j] = value;
                 }
-                alternatives.Add(new Alternative(values));
             }
 
-            return alternatives;
+            return data;
         }
 
         // Заполнить таблицу матрицей
         public static void FillDataGridView(DataGridView component, Matrix data)
         {
-            for (var i = 0; i < data.InitialData.AlternativesCount; i++)
+            for (var i = 0; i < data.Height; i++)
             {
-                for (var j = 0; j < data.InitialData.ExpertsCount; j++)
+                for (var j = 0; j < data.Width; j++)
                 {
                     component.Rows[i].Cells[j].Value = data[i, j];
                 }

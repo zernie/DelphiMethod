@@ -5,7 +5,7 @@ using System.Linq;
 namespace DelphiMethod
 {
     // Альтернатива
-    public class Alternative
+    public struct Alternative
     {
         public List<decimal> Values;
 
