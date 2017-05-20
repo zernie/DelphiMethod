@@ -80,6 +80,9 @@ namespace DelphiMethod
         // Следующий тур
         private void calculateButton_Click(object sender, EventArgs e)
         {
+            var decimals = _currentRank.Xjl;
+            MessageBox.Show(string.Join("\n", decimals.Select(x => x.ToString()).ToArray()));
+            MessageBox.Show(_currentRank.Lambda.ToString());
             AddTourNumber();
 
             for (var i = 0; i < _initialData.AlternativesCount; i++)
@@ -119,6 +122,7 @@ namespace DelphiMethod
         {
             try
             {
+                _disableTrigger = true;
                 if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
                 var rank = Utils.ReadAsCsv(openFileDialog1.FileName);
 
@@ -128,6 +132,10 @@ namespace DelphiMethod
             catch (IOException exception)
             {
                 MessageBox.Show(exception.Message);
+            }
+            finally
+            {
+                _disableTrigger = false;
             }
         }
     }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace DelphiMethod
 {
     // Матрица рангов
-    public struct Matrix
+    public class Matrix
     {
         public decimal[,] Data;
         public List<Alternative> Alternatives;
@@ -19,8 +18,9 @@ namespace DelphiMethod
         public decimal WeightIndicator => InitialData.WeightIndicators[Indicator]; // вес коэфф. показателя, q_k
 
         // sum(q_k * K_i * x_i_j^k)
-        public List<decimal> GroupEvaluations => Alternatives.Select(Selector).ToList();
-        private decimal Selector(Alternative x) => x.GroupEvaluation(WeightIndicator);
+        public List<decimal> GroupEvaluations => Alternatives.Select(x=> x.GroupEvaluation(WeightIndicator)).ToList();
+
+        public decimal InitialCompetenceCoefficient => 1.0M / InitialData.ExpertsCount;
 
         public Matrix(decimal[,] data, InitialData initialData, int indicator)
         {
@@ -51,6 +51,7 @@ namespace DelphiMethod
             _init(Alternatives, Experts);
         }
 
+
         private void _init(List<Alternative> alternatives, List<Expert> experts)
         {
             for (var i = 0; i < Height; i++)
@@ -76,19 +77,39 @@ namespace DelphiMethod
 
         public decimal this[int row, int col] => Data[row, col];
 
+        public List<decimal> Xjl
+        {
+            get
+            {
+                var xjl = new List<decimal>(Height);
+                for (var i = 0; i < Height; i++)
+                {
+                    xjl.Add(Alternatives[i].Values.Sum() * InitialCompetenceCoefficient);
+                }
+
+                return xjl;
+            }
+        }
+
+        public decimal Lambda
+        {
+            get
+            {
+                var temp = new List<decimal>(Height);
+                for (var i = 0; i < Height; i++)
+                {
+                    temp.Add(Alternatives[i].Values.Sum() * Xjl[i]);
+                }
+
+                return temp.Sum();
+            }
+        }
+
+        //        public List<decimal> CompetenceCoefficients => 
+
         public override string ToString()
         {
             return string.Join("\n", Alternatives.Select(x => x.ToString()).ToArray());
         }
-    }
-
-    public struct Expert
-    {
-        public List<decimal> Values;
-
-        public Expert(List<decimal> values) => Values = values;
-        public Expert(int count) => Values = new List<decimal>(new decimal[count]);
-
-        public override string ToString() => string.Join(" ", Values.Select(Convert.ToString).ToArray());
     }
 }
