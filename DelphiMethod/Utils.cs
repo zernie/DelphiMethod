@@ -97,5 +97,24 @@ namespace DelphiMethod
                 }
             }
         }
+
+
+        public static void CalculateGroupEvaluation(DataGridView component, Matrix data)
+        {
+            for (var i = 0; i < data.Height; i++)
+            {
+                component["groupEvaluation", i].Value = data.GroupEvaluations[i];
+            }
+        }
+
+        public static void CalculateCoefficients(DataGridView component, Matrix data)
+        {
+            var competenceCoefficients = data.CompetenceCoefficients();
+
+            for (var i = 0; i < data.Width; i++)
+            {
+                component[i, data.Height].Value = competenceCoefficients[i];
+            }
+        }
     }
 }

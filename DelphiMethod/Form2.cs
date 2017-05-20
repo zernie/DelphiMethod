@@ -82,17 +82,8 @@ namespace DelphiMethod
         {
             AddTourNumber();
 
-            for (var i = 0; i < _initialData.AlternativesCount; i++)
-            {
-                dataGridView2["groupEvaluation", i].Value = _currentRank.GroupEvaluations[i];
-            }
-
-            var competenceCoefficients = _currentRank.CompetenceCoefficients();
-
-            for (int i = 0; i < _initialData.ExpertsCount; i++)
-            {
-                dataGridView2[ i, _initialData.AlternativesCount].Value = competenceCoefficients[i];
-            }
+            Utils.CalculateGroupEvaluation(dataGridView2, _currentRank);
+            Utils.CalculateCoefficients(dataGridView2, _currentRank);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -100,8 +91,8 @@ namespace DelphiMethod
             _disableTrigger = true;
             Utils.InitDataGridView(dataGridView2, _initialData);
             Utils.FillDataGridView(dataGridView2, _currentRank);
-
-            dataGridView2.Columns.Add("groupEvaluation", "Групповая оценка");
+            Utils.CalculateGroupEvaluation(dataGridView2, _currentRank);
+            Utils.CalculateCoefficients(dataGridView2, _currentRank);
             _disableTrigger = false;
         }
 
