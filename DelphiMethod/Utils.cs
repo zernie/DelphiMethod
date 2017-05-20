@@ -17,7 +17,7 @@ namespace DelphiMethod
 
             var data = new double[height, width];
 
-            for (var i = 0; i < lines.Length; i++)
+            for (var i = 0; i < height; i++)
             {
                 var line = lines[i].Split(' ');
                 for (var j = 0; j < width; j++)

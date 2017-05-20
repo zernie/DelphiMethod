@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -14,19 +15,19 @@ namespace DelphiMethod
         public int Width;
         public int Height;
 
-        public int Indicator;  // показатель k
-        public double WeightIndicator => InitialData.WeightIndicators[Indicator]; // вес коэфф. показателя, q_k
+        public int IndicatorNumber;  // показатель k
+        public double WeightIndicator => InitialData.WeightIndicators[IndicatorNumber]; // вес коэфф. показателя, q_k
 
         // sum(q_k * K_i * x_i_j^k)
         public List<double> GroupEvaluations => Alternatives.Select(x=> x.GroupEvaluation(WeightIndicator, 0.1)).ToList();
 
         public double InitialCompetenceCoefficient => 1.0 / InitialData.ExpertsCount;
 
-        public Matrix(double[,] data, InitialData initialData, int indicator)
+        public Matrix(double[,] data, InitialData initialData, int indicatorNumber)
         {
             Data = data;
             InitialData = initialData;
-            Indicator = indicator;
+            IndicatorNumber = indicatorNumber;
 
             Width = initialData.ExpertsCount;
             Height = initialData.AlternativesCount;
@@ -37,10 +38,10 @@ namespace DelphiMethod
             _init(Alternatives, Experts);
         }
 
-        public Matrix(InitialData initialData, int indicator)
+        public Matrix(InitialData initialData, int indicatorNumber)
         {
             InitialData = initialData;
-            Indicator = indicator;
+            IndicatorNumber = indicatorNumber;
             Width = initialData.ExpertsCount;
             Height = initialData.AlternativesCount;
 
@@ -77,7 +78,7 @@ namespace DelphiMethod
 
         public double this[int row, int col] => Data[row, col];
 
-        public List<double> Xjl
+        private List<double> _xjl
         {
             get
             {
@@ -98,14 +99,33 @@ namespace DelphiMethod
                 var temp = new List<double>(Height);
                 for (var i = 0; i < Height; i++)
                 {
-                    temp.Add(Alternatives[i].Values.Sum() * Xjl[i]);
+                    temp.Add(Alternatives[i].Values.Sum() * _xjl[i]);
                 }
 
                 return temp.Sum();
             }
         }
 
-        //        public List<double> CompetenceCoefficients => 
+        public List<double> CompetenceCoefficients
+        {
+            get
+            {
+                var data = new List<double>(Width);
+                for (var i = 0; i < Height; i++)
+                {
+                    var temp = new List<double>();
+                    for (var j = 0; j < Width - 1; j++)
+                    {
+                        temp.Add(Data[j, i] * _xjl[j]);
+                    }
+                    data.Add(1.0/Lambda * temp.Sum());
+                }
+
+                data.Add(1 - data.Sum());
+
+                return data;
+            }
+        }
 
         public override string ToString()
         {
