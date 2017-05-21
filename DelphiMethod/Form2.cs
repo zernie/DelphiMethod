@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -37,7 +33,7 @@ namespace DelphiMethod
 
             foreach (var weight in _initialData.WeightIndicators)
             {
-                comboBox1.Items.Add($"Показатель с весом {weight}");
+                comboBox1.Items.Add($"с весом {weight}");
             }
 
             comboBox1.SelectedIndex = 0;
@@ -82,7 +78,7 @@ namespace DelphiMethod
         {
             AddTourNumber();
 
-            Utils.CalculateGroupEvaluation(dataGridView2, _currentRank);
+            Utils.CalculateAverageScores(dataGridView2, _currentRank);
             Utils.CalculateCoefficients(dataGridView2, _currentRank);
         }
 
@@ -91,7 +87,7 @@ namespace DelphiMethod
             _disableTrigger = true;
             Utils.InitDataGridView(dataGridView2, _initialData);
             Utils.FillDataGridView(dataGridView2, _currentRank);
-            Utils.CalculateGroupEvaluation(dataGridView2, _currentRank);
+            Utils.CalculateAverageScores(dataGridView2, _currentRank);
             Utils.CalculateCoefficients(dataGridView2, _currentRank);
             _disableTrigger = false;
         }
@@ -142,6 +138,12 @@ namespace DelphiMethod
             {
                 _disableTrigger = false;
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Utils.CalculateAverageScores(dataGridView2, _currentRank);
+            Utils.CalculateCoefficients(dataGridView2, _currentRank);
         }
     }
 }

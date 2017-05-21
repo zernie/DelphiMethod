@@ -51,7 +51,7 @@ namespace DelphiMethod
                 component.Rows[i].HeaderCell.Value = $"Альтернатива №{i + 1}";
             }
 
-            component.Columns.Add("groupEvaluation", "Групповая оценка");
+            component.Columns.Add("averageScores", "Средние оценки");
             component.Rows.Add(new DataGridViewRow
             {
                 HeaderCell = new DataGridViewRowHeaderCell
@@ -98,22 +98,23 @@ namespace DelphiMethod
             }
         }
 
-
-        public static void CalculateGroupEvaluation(DataGridView component, Matrix data)
+        public static void CalculateAverageScores(DataGridView component, Matrix data)
         {
+            var groupEvaluation = data.AverageScores(data.InitialCompetenceCoefficient);
+
             for (var i = 0; i < data.Height; i++)
             {
-                component["groupEvaluation", i].Value = data.GroupEvaluations(data.InitialCompetenceCoefficient)[i];
+                component["averageScores", i].Value = Math.Round(groupEvaluation[i], 3);
             }
         }
 
         public static void CalculateCoefficients(DataGridView component, Matrix data)
         {
-            var competenceCoefficients = data.CompetenceCoefficients();
+            var coefficients = data.CompetenceCoefficients();
 
             for (var i = 0; i < data.Width; i++)
             {
-                component[i, data.Height].Value = competenceCoefficients[i];
+                component[i, data.Height].Value = Math.Round(coefficients[i], 3);
             }
         }
     }

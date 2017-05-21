@@ -19,17 +19,6 @@ namespace DelphiMethod
         public int IndicatorNumber; // показатель k
         public double WeightIndicator => InitialData.WeightIndicators[IndicatorNumber]; // вес коэфф. показателя, q_k
 
-        // sum(q_k * K_i * x_i_j^k)
-        public List<double> GroupEvaluations(List<double> competenceCoefficients) =>
-            Alternatives
-                .Select((x, i) => x.MultiplyBy(competenceCoefficients[i]))
-                .ToList();
-
-        public double Lambda(double competenceCoffiecient) =>
-            Alternatives
-                .Select(x => x.MultiplyBy(x.MultiplyBy(competenceCoffiecient)))
-                .Sum();
-
         public List<double> InitialCompetenceCoefficient =>
             Experts
                 .Select(x => 1.0 / InitialData.ExpertsCount)
@@ -89,40 +78,58 @@ namespace DelphiMethod
 
         public double this[int row, int col] => Data[row, col];
 
-        private List<double> calcCompetenceCofficient(List<double> competenceCoffiecients)
+//        private List<double> Subtract(List<double> a, List<double> b)
+//        {
+//            var data = new List<double>(a.Count);
+//            for (var i = 0; i < a.Count; i++)
+//            {
+//                data.Add(a[i] - b[i]);
+//            }
+//
+//            return data;
+//        }
+
+//        private double NewMethod(List<double> a, List<double> b)
+//        {
+//            return Math.Abs(Subtract(a, b).Max());
+//        }
+
+        // Средние оценки объектов sum(K_i * x_i_j, i=1..m), j=1..n
+        public List<double> AverageScores(List<double> competenceCoefficients)
+        {
+            return Alternatives
+                .Select((x, i) => x.MultiplyBy(competenceCoefficients[i]))
+                .ToList();
+        }
+
+        // Нормировочный коэффициент sum(sum(x_i * x_i_j, i=1..m), j=1..n)
+        public double Lambda(List<double> competenceCoefficients) =>
+            Alternatives
+                .Select((x, i) => x.MultiplyBy(AverageScores(competenceCoefficients)[i]))
+                .Sum();
+
+        public List<double> CompetenceCoefficients() => 
+            CompetenceCoefficients(InitialCompetenceCoefficient);
+
+        public List<double> CompetenceCoefficients(List<double> competenceCoefficients)
         {
             var data = new List<double>(Width);
 
             for (var i = 0; i < Width - 1; i++)
             {
                 var temp = new List<double>(Height);
-                var coefficient = competenceCoffiecients[i];
+                var coefficient = competenceCoefficients[i];
 
                 for (var j = 0; j < Height; j++)
                 {
                     temp.Add(Data[j, i] * Alternatives[j].MultiplyBy(coefficient));
                 }
-                data.Add(1.0 / Lambda(coefficient) * temp.Sum());
+                data.Add(1.0 / Lambda(competenceCoefficients) * temp.Sum());
             }
 
             data.Add(1.0 - data.Sum());
 
             return data;
-        }
-
-        public List<double> CompetenceCoefficients(int times = 3)
-        {
-            return CompetenceCoefficients(InitialCompetenceCoefficient, times);
-        }
-
-        public List<double> CompetenceCoefficients(List<double> competenceCoefficients, int times)
-        {
-            for (var i = 0; i < times; i++)
-            {
-                competenceCoefficients = calcCompetenceCofficient(competenceCoefficients);
-            }
-
-            return competenceCoefficients;
         }
 
         public override string ToString()
