@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Alternative.cs" />
     <Compile Include="Expert.cs" />
+    <Compile Include="MatrixList.cs" />
     <Compile Include="InitialData.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="Form1.cs">

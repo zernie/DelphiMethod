@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -14,12 +15,12 @@ namespace DelphiMethod
         // Текущая матрица оценок
         private Matrix _currentRank
         {
-            get => _ranks[_indicator];
-            set => _ranks[_indicator] = value;
+            get => _matrixList[_indicator];
+            set => _matrixList[_indicator] = value;
         }
 
         // Список матриц оценок
-        private List<Matrix> _ranks = new List<Matrix>();
+        private MatrixList _matrixList;
         // Текущий показатель
         private int _indicator => comboBox1.SelectedIndex;
 
@@ -29,6 +30,7 @@ namespace DelphiMethod
         {
             InitializeComponent();
             _initialData = initialData;
+            _matrixList = new MatrixList(initialData);
             AddTourNumber();
 
             foreach (var weight in _initialData.WeightIndicators)
@@ -37,11 +39,10 @@ namespace DelphiMethod
             }
 
             comboBox1.SelectedIndex = 0;
-
             for (var i = 0; i < initialData.IndicatorsCount; i++)
             {
                 var matrix = new Matrix(initialData, i);
-                _ranks.Add(matrix);
+                _matrixList.Experts.Add(matrix);
             }
 
             Utils.InitDataGridView(dataGridView2, _initialData);
@@ -51,6 +52,11 @@ namespace DelphiMethod
 
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
+        }
+
+        public Form2(MatrixList matrixList)
+        {
+            _matrixList = matrixList;
         }
 
         // Увеличить счетчик тура
@@ -73,13 +79,17 @@ namespace DelphiMethod
             }
         }
 
+        private void Calculate()
+        {
+            Utils.CalculateAverageScores(dataGridView2, _currentRank);
+            Utils.CalculateCoefficients(dataGridView2, _currentRank);
+        }
+
         // Следующий тур
         private void calculateButton_Click(object sender, EventArgs e)
         {
             AddTourNumber();
-
-            Utils.CalculateAverageScores(dataGridView2, _currentRank);
-            Utils.CalculateCoefficients(dataGridView2, _currentRank);
+            Calculate();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -87,9 +97,8 @@ namespace DelphiMethod
             _disableTrigger = true;
             Utils.InitDataGridView(dataGridView2, _initialData);
             Utils.FillDataGridView(dataGridView2, _currentRank);
-            Utils.CalculateAverageScores(dataGridView2, _currentRank);
-            Utils.CalculateCoefficients(dataGridView2, _currentRank);
-            _disableTrigger = false;
+            Calculate();
+             _disableTrigger = false;
         }
 
         private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -98,7 +107,7 @@ namespace DelphiMethod
             {
                 if (_disableTrigger) return;
                 _currentRank = new Matrix(Utils.ExtractData(dataGridView2, _initialData), _initialData, _indicator);
-                _ranks[comboBox1.SelectedIndex] = _currentRank;
+                _matrixList[comboBox1.SelectedIndex] = _currentRank;
             }
             catch (FormatException exception)
             {
@@ -142,8 +151,7 @@ namespace DelphiMethod
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Utils.CalculateAverageScores(dataGridView2, _currentRank);
-            Utils.CalculateCoefficients(dataGridView2, _currentRank);
+            Calculate();
         }
     }
 }
