@@ -115,18 +115,28 @@ namespace DelphiMethod
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var rank = new double[0, 0];
             try
             {
                 _disableTrigger = true;
                 if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
-                var rank = Utils.ReadAsCsv(openFileDialog1.FileName);
+                rank = Utils.ReadAsCsv(openFileDialog1.FileName);
 
                 _currentRank = new Matrix(rank, _initialData, _indicator);
                 Utils.FillDataGridView(dataGridView2, _currentRank);
             }
             catch (IOException exception)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show(exception.Message, "Ошибка чтения");
+            }
+            catch (IndexOutOfRangeException)
+            {
+                var width = rank.GetLength(1);
+                var height = rank.GetLength(0);
+                MessageBox.Show(
+                    $"Размеры прочитанной матрицы: {height}x{width}," +
+                    $"а ожидалось: {_initialData.AlternativesCount}x{_initialData.ExpertsCount}",
+                    "Ошибка чтения");
             }
             finally
             {

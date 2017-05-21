@@ -20,7 +20,10 @@ namespace DelphiMethod
         public double WeightIndicator => InitialData.WeightIndicators[IndicatorNumber]; // вес коэфф. показателя, q_k
 
         // sum(q_k * K_i * x_i_j^k)
-        public List<double> GroupEvaluations => Alternatives.Select(x => x.GroupEvaluation(WeightIndicator, 0.1)).ToList();
+        public List<double> GroupEvaluations => 
+            Alternatives
+            .Select(x => x.GroupEvaluation(WeightIndicator, 0.1))
+            .ToList();
 
         public double Lambda(double competenceCoffiecient) =>
             Alternatives
@@ -87,12 +90,12 @@ namespace DelphiMethod
         {
             var data = new List<double>(Width);
 
-            for (var i = 0; i < Height; i++)
+            for (var i = 0; i < Width -1; i++)
             {
-                var temp = new List<double>();
+                var temp = new List<double>(Height);
                 var coefficient = competenceCoffiecients[i];
 
-                for (var j = 0; j < Width - 1; j++)
+                for (var j = 0; j < Height; j++)
                 {
                     temp.Add(Data[j, i] * Alternatives[j].Xjl(coefficient));
                 }
@@ -111,7 +114,7 @@ namespace DelphiMethod
 
         public List<double> CompetenceCoefficients(List<double> competenceCoefficients, int times)
         {
-            for (var i = 0; i <= times; i++)
+            for (var i = 0; i < times; i++)
             {
                 competenceCoefficients = calcCompetenceCofficient(competenceCoefficients);
             }
