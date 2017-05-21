@@ -103,7 +103,7 @@ namespace DelphiMethod
         {
             for (var i = 0; i < data.Height; i++)
             {
-                component["groupEvaluation", i].Value = data.GroupEvaluations[i];
+                component["groupEvaluation", i].Value = data.GroupEvaluations(data.InitialCompetenceCoefficient)[i];
             }
         }
 

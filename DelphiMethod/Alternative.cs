@@ -14,8 +14,7 @@ namespace DelphiMethod
 
         public Alternative(int count) => Values = new List<double>(new double[count]);
 
-        public double Lambda(double xjl, double competenceCoffiecient) => Values.Sum() * xjl;
-        public double Xjl(double competenceCoefficient) => Values.Sum() * competenceCoefficient;
+        public double MultiplyBy(double value) => Values.Sum() * value;
 
         public double GroupEvaluation(double indicator, double competenceCoefficient)
         {

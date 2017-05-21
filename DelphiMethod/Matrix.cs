@@ -16,21 +16,24 @@ namespace DelphiMethod
         public int Width;
         public int Height;
 
-        public int IndicatorNumber;  // показатель k
+        public int IndicatorNumber; // показатель k
         public double WeightIndicator => InitialData.WeightIndicators[IndicatorNumber]; // вес коэфф. показателя, q_k
 
         // sum(q_k * K_i * x_i_j^k)
-        public List<double> GroupEvaluations => 
+        public List<double> GroupEvaluations(List<double> competenceCoefficients) =>
             Alternatives
-            .Select(x => x.GroupEvaluation(WeightIndicator, 0.1))
-            .ToList();
+                .Select((x, i) => x.MultiplyBy(competenceCoefficients[i]))
+                .ToList();
 
         public double Lambda(double competenceCoffiecient) =>
             Alternatives
-                .Select((x, i) => x.Lambda(x.Xjl(competenceCoffiecient), competenceCoffiecient))
+                .Select(x => x.MultiplyBy(x.MultiplyBy(competenceCoffiecient)))
                 .Sum();
 
-        public List<double> InitialCompetenceCoefficient => Experts.Select(x => 2.0 / InitialData.ExpertsCount).ToList();
+        public List<double> InitialCompetenceCoefficient =>
+            Experts
+                .Select(x => 1.0 / InitialData.ExpertsCount)
+                .ToList();
 
         public Matrix(double[,] data, InitialData initialData, int indicatorNumber)
         {
@@ -90,14 +93,14 @@ namespace DelphiMethod
         {
             var data = new List<double>(Width);
 
-            for (var i = 0; i < Width -1; i++)
+            for (var i = 0; i < Width - 1; i++)
             {
                 var temp = new List<double>(Height);
                 var coefficient = competenceCoffiecients[i];
 
                 for (var j = 0; j < Height; j++)
                 {
-                    temp.Add(Data[j, i] * Alternatives[j].Xjl(coefficient));
+                    temp.Add(Data[j, i] * Alternatives[j].MultiplyBy(coefficient));
                 }
                 data.Add(1.0 / Lambda(coefficient) * temp.Sum());
             }
