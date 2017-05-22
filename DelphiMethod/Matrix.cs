@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -95,12 +93,10 @@ namespace DelphiMethod
 //        }
 
         // Средние оценки объектов sum(K_i * x_i_j, i=1..m), j=1..n
-        public List<double> AverageScores(List<double> competenceCoefficients)
-        {
-            return Alternatives
-                .Select((x, i) => x.MultiplyBy(competenceCoefficients[i]))
-                .ToList();
-        }
+        public List<double> AverageScores(List<double> competenceCoefficients) => 
+            Alternatives
+            .Select((x, i) => x.MultiplyBy(competenceCoefficients[i]))
+            .ToList();
 
         // Нормировочный коэффициент sum(sum(x_i * x_i_j, i=1..m), j=1..n)
         public double Lambda(List<double> competenceCoefficients) =>

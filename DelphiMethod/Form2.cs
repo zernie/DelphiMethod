@@ -33,10 +33,7 @@ namespace DelphiMethod
             _matrixList = new MatrixList(initialData);
             AddTourNumber();
 
-            foreach (var weight in _initialData.WeightIndicators)
-            {
-                comboBox1.Items.Add($"с весом {weight}");
-            }
+            comboBox1.Items.AddRange(_initialData.WeightIndicators.Titles.ToArray());
 
             comboBox1.SelectedIndex = 0;
             for (var i = 0; i < initialData.IndicatorsCount; i++)
@@ -98,7 +95,7 @@ namespace DelphiMethod
             Utils.InitDataGridView(dataGridView2, _initialData);
             Utils.FillDataGridView(dataGridView2, _currentRank);
             Calculate();
-             _disableTrigger = false;
+            _disableTrigger = false;
         }
 
         private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)

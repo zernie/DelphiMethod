@@ -6,7 +6,8 @@ namespace DelphiMethod
     {
         public InitialData InitialData;
         public List<Matrix> Experts = new List<Matrix>();
-
+        //весовые коэффициенты показателей сравнения альтернатив; 
+        
         public MatrixList(InitialData initialData)
         {
             InitialData = initialData;
