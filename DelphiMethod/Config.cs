@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace DelphiMethod
 {
-    public struct InitialData
+    [Serializable]
+    public struct Config
     {
         public int AlternativesCount;
         public int ExpertsCount;

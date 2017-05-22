@@ -32,15 +32,13 @@
             this.calculateButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.exportButton = new System.Windows.Forms.Button();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tourNumberLabel = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.label3 = new System.Windows.Forms.Label();
             this.ratingScaleTextBox = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,6 +48,7 @@
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView2.Location = new System.Drawing.Point(0, 185);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
@@ -89,11 +88,6 @@
             this.exportButton.UseVisualStyleBackColor = true;
             this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
             // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.FileName = "data.csv";
-            this.saveFileDialog1.Filter = "CSV файлы|*.csv|Все файлы|*.*";
-            // 
             // tourNumberLabel
             // 
             this.tourNumberLabel.AutoSize = true;
@@ -123,22 +117,6 @@
             this.label2.Size = new System.Drawing.Size(141, 32);
             this.label2.TabIndex = 22;
             this.label2.Text = "Показатель";
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.button1.Location = new System.Drawing.Point(880, 141);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(109, 38);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Импорт";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.DefaultExt = "csv";
-            this.openFileDialog1.Filter = "CSV файлы|*.csv|Все файлы|*.*";
             // 
             // label3
             // 
@@ -170,6 +148,11 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.FileName = "data.csv";
+            this.saveFileDialog1.Filter = "Файлы конфигурации|*.bin|Все файлы|*.*";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -178,7 +161,6 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.ratingScaleTextBox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.tourNumberLabel);
@@ -200,14 +182,12 @@
         private System.Windows.Forms.Button calculateButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button exportButton;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Label tourNumberLabel;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox ratingScaleTextBox;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

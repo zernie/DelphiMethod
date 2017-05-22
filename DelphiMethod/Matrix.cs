@@ -1,28 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace DelphiMethod
 {
     // Матрица рангов
+    [Serializable]
     public class Matrix
     {
         public double[,] Data;
         public List<Alternative> Alternatives;
-        public List<Expert> Experts;
-        public InitialData InitialData;
+        public Config InitialData;
         public int Width;
         public int Height;
 
         public int IndicatorNumber; // показатель k
         public double WeightIndicator => InitialData.WeightIndicators[IndicatorNumber]; // вес коэфф. показателя, q_k
 
-        public List<double> InitialCompetenceCoefficient =>
-            Experts
-                .Select(x => 1.0 / InitialData.ExpertsCount)
-                .ToList();
+        public List<double> InitialCompetenceCoefficient => 
+            Enumerable
+            .Repeat(1.0 / InitialData.ExpertsCount,  InitialData.ExpertsCount)
+            .ToList();
 
-        public Matrix(double[,] data, InitialData initialData, int indicatorNumber)
+        public Matrix(double[,] data, Config initialData, int indicatorNumber)
         {
             Data = data;
             InitialData = initialData;
@@ -32,12 +33,11 @@ namespace DelphiMethod
             Height = initialData.AlternativesCount;
 
             Alternatives = new List<Alternative>(Height);
-            Experts = new List<Expert>(Width);
 
-            _init(Alternatives, Experts);
+            _init(Alternatives);
         }
 
-        public Matrix(InitialData initialData, int indicatorNumber)
+        public Matrix(Config initialData, int indicatorNumber)
         {
             InitialData = initialData;
             IndicatorNumber = indicatorNumber;
@@ -46,12 +46,11 @@ namespace DelphiMethod
 
             Data = new double[Height, Width];
             Alternatives = new List<Alternative>(Height);
-            Experts = new List<Expert>(Width);
 
-            _init(Alternatives, Experts);
+            _init(Alternatives);
         }
 
-        private void _init(List<Alternative> alternatives, List<Expert> experts)
+        private void _init(List<Alternative> alternatives)
         {
             for (var i = 0; i < Height; i++)
             {
@@ -63,15 +62,6 @@ namespace DelphiMethod
                 alternatives.Add(new Alternative(temp));
             }
 
-            for (var i = 0; i < Width; i++)
-            {
-                var temp = new List<double>(Height);
-                for (var j = 0; j < Height; j++)
-                {
-                    temp.Add(Data[j, i]);
-                }
-                experts.Add(new Expert(temp));
-            }
         }
 
         public double this[int row, int col] => Data[row, col];
@@ -93,15 +83,15 @@ namespace DelphiMethod
 //        }
 
         // Средние оценки объектов sum(K_i * x_i_j, i=1..m), j=1..n
-        public List<double> AverageScores(List<double> competenceCoefficients) => 
+        public List<double> AverageScores(double competenceCoefficient) => 
             Alternatives
-            .Select((x, i) => x.MultiplyBy(competenceCoefficients[i]))
+            .Select((x, i) => x.MultiplyBy(competenceCoefficient))
             .ToList();
 
         // Нормировочный коэффициент sum(sum(x_i * x_i_j, i=1..m), j=1..n)
-        public double Lambda(List<double> competenceCoefficients) =>
+        public double Lambda(double competenceCoefficient) =>
             Alternatives
-                .Select((x, i) => x.MultiplyBy(AverageScores(competenceCoefficients)[i]))
+                .Select((x, i) => x.MultiplyBy(AverageScores(competenceCoefficient)[i]))
                 .Sum();
 
         public List<double> CompetenceCoefficients() => 
@@ -120,7 +110,7 @@ namespace DelphiMethod
                 {
                     temp.Add(Data[j, i] * Alternatives[j].MultiplyBy(coefficient));
                 }
-                data.Add(1.0 / Lambda(competenceCoefficients) * temp.Sum());
+                data.Add(1.0 / Lambda(coefficient) * temp.Sum());
             }
 
             data.Add(1.0 - data.Sum());

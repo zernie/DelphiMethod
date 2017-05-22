@@ -1,5 +1,8 @@
-﻿namespace DelphiMethod
+﻿using System;
+
+namespace DelphiMethod
 {
+    [Serializable]
     public struct Range
     {
         public double Start;

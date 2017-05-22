@@ -8,35 +8,8 @@ namespace DelphiMethod
 {
     class Utils
     {
-        // Считать матрицу из файла
-        public static double[,] ReadAsCsv(string filename)
-        {
-            var lines = File.ReadAllLines(filename);
-            var width = lines[0].Split(' ').Length;
-            var height = lines.Length;
-
-            var data = new double[height, width];
-
-            for (var i = 0; i < height; i++)
-            {
-                var line = lines[i].Split(' ');
-                for (var j = 0; j < width; j++)
-                {
-                   data[i,j] = Convert.ToDouble(line[j]);
-                }
-            }
-
-            return data;
-        }
-
-        // Сохранить матрицу в файл
-        public static void SaveAsCsv(Matrix data, string filename)
-        {
-            File.WriteAllText(filename, data.ToString());
-        }
-
         // Инициализировать таблицу заданным количеством строк и столбцов
-        public static void InitDataGridView(DataGridView component, InitialData initialData)
+        public static void InitDataGridView(DataGridView component, Config initialData)
         {
             component.Rows.Clear();
             component.Columns.Clear();
@@ -62,7 +35,7 @@ namespace DelphiMethod
         }
 
         // Извлечь матрицу из таблицы
-        public static double[,] ExtractData(DataGridView component, InitialData initialData)
+        public static double[,] ExtractData(DataGridView component, Config initialData)
         {
             var width = initialData.ExpertsCount;
             var height = initialData.AlternativesCount;
@@ -100,12 +73,12 @@ namespace DelphiMethod
 
         public static void CalculateAverageScores(DataGridView component, Matrix data)
         {
-            var groupEvaluation = data.AverageScores(data.InitialCompetenceCoefficient);
+//            var groupEvaluation = data.AverageScores(data.InitialCompetenceCoefficient);
 
-            for (var i = 0; i < data.Height; i++)
-            {
-                component["averageScores", i].Value = Math.Round(groupEvaluation[i], 3);
-            }
+//            for (var i = 0; i < data.Height; i++)
+//            {
+//                component["averageScores", i].Value = Math.Round(groupEvaluation[i], 3);
+//            }
         }
 
         public static void CalculateCoefficients(DataGridView component, Matrix data)

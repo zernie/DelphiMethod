@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace DelphiMethod
 {
     public partial class Form2 : Form
     {
-        private InitialData _initialData; // Исходные данные
+        private Config _config; // Исходные данные
 
         private int _tourNumber; // Номер тура
 
@@ -26,34 +25,41 @@ namespace DelphiMethod
 
         private bool _disableTrigger;
 
-        public Form2(InitialData initialData)
+        public Form2(MatrixList matrixList)
+        {
+            _config = matrixList.Configuration;
+            _matrixList = matrixList;
+            InitForm();
+        }
+
+        public Form2(Config config)
+        {
+            _config = config;
+            _matrixList = new MatrixList(config);
+            InitForm();
+        }
+
+        private void InitForm()
         {
             InitializeComponent();
-            _initialData = initialData;
-            _matrixList = new MatrixList(initialData);
             AddTourNumber();
 
-            comboBox1.Items.AddRange(_initialData.WeightIndicators.Titles.ToArray());
+            comboBox1.Items.AddRange(_config.WeightIndicators.Titles.ToArray());
 
             comboBox1.SelectedIndex = 0;
-            for (var i = 0; i < initialData.IndicatorsCount; i++)
+            for (var i = 0; i < _config.IndicatorsCount; i++)
             {
-                var matrix = new Matrix(initialData, i);
+                var matrix = new Matrix(_config, i);
                 _matrixList.Experts.Add(matrix);
             }
 
-            Utils.InitDataGridView(dataGridView2, _initialData);
+            Utils.InitDataGridView(dataGridView2, _config);
             Utils.FillDataGridView(dataGridView2, _currentRank);
 
-            ratingScaleTextBox.Text = _initialData.RatingScale.ToString();
+            ratingScaleTextBox.Text = _config.RatingScale.ToString();
 
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
-        }
-
-        public Form2(MatrixList matrixList)
-        {
-            _matrixList = matrixList;
         }
 
         // Увеличить счетчик тура
@@ -62,18 +68,24 @@ namespace DelphiMethod
         // Экспорт из таблицы в файл
         private void exportButton_Click(object sender, EventArgs e)
         {
-            try
-            {
+//            try
+//            {
                 if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
                     return;
 
-                Utils.SaveAsCsv(_currentRank, saveFileDialog1.FileName);
+                var x = new BinaryFormatter();
+
+                using (var fs = new FileStream(saveFileDialog1.FileName, FileMode.OpenOrCreate))
+                {
+                    x.Serialize(fs, _matrixList);
+                }
+                //                Utils.SaveAsCsv(_currentRank, saveFileDialog1.FileName);
                 MessageBox.Show("Файл сохранен.");
-            }
-            catch (IOException exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
+//            }
+//            catch (IOException exception)
+//            {
+//                MessageBox.Show(exception.Message);
+//            }
         }
 
         private void Calculate()
@@ -92,7 +104,7 @@ namespace DelphiMethod
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            Utils.InitDataGridView(dataGridView2, _initialData);
+            Utils.InitDataGridView(dataGridView2, _config);
             Utils.FillDataGridView(dataGridView2, _currentRank);
             Calculate();
             _disableTrigger = false;
@@ -103,45 +115,14 @@ namespace DelphiMethod
             try
             {
                 if (_disableTrigger) return;
-                _currentRank = new Matrix(Utils.ExtractData(dataGridView2, _initialData), _initialData, _indicator);
+                _currentRank = new Matrix(Utils.ExtractData(dataGridView2, _config), _config, _indicator);
                 _matrixList[comboBox1.SelectedIndex] = _currentRank;
             }
             catch (FormatException exception)
             {
                 _disableTrigger = true;
                 MessageBox.Show($"'{dataGridView2.CurrentCell.Value}': {exception.Message}");
-                dataGridView2.CurrentCell.Value = _initialData.RatingScale.Start;
-                _disableTrigger = false;
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var rank = new double[0, 0];
-            try
-            {
-                _disableTrigger = true;
-                if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
-                rank = Utils.ReadAsCsv(openFileDialog1.FileName);
-
-                _currentRank = new Matrix(rank, _initialData, _indicator);
-                Utils.FillDataGridView(dataGridView2, _currentRank);
-            }
-            catch (IOException exception)
-            {
-                MessageBox.Show(exception.Message, "Ошибка чтения");
-            }
-            catch (IndexOutOfRangeException)
-            {
-                var width = rank.GetLength(1);
-                var height = rank.GetLength(0);
-                MessageBox.Show(
-                    $"Размеры прочитанной матрицы: {height}x{width}," +
-                    $"а ожидалось: {_initialData.AlternativesCount}x{_initialData.ExpertsCount}",
-                    "Ошибка чтения");
-            }
-            finally
-            {
+                dataGridView2.CurrentCell.Value = _config.RatingScale.Start;
                 _disableTrigger = false;
             }
         }

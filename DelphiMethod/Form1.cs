@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -43,24 +43,10 @@ namespace DelphiMethod
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
-            {
                 var weightIndicators = WeightIndicators;
-                if (weightIndicators.Values.Count != IndicatorsCount)
-                {
-                    MessageBox.Show($"Количество коэффициентов весов показателей равно {weightIndicators.Count}," +
-                                    $" а должно равняться количеству показателей ({IndicatorsCount})");
-                    return;
-                }
-
-                if (weightIndicators.Sum != 1.0)
-                {
-                    MessageBox.Show($"Сумма коэффициентов весов показателей = {weightIndicators.Sum}," +
-                                    " а должна равняться единице");
-                    return;
-                }
-
-                var initialData = new InitialData
+                if(!ValidWeightIndicators(weightIndicators)) return;
+               
+                var initialData = new Config
                 {
                     AlternativesCount = AlternativesCount,
                     ExpertsCount = ExpertsCount,
@@ -73,11 +59,41 @@ namespace DelphiMethod
                 {
                     form.ShowDialog();
                 }
-            }
-            catch (Exception exception)
+        }
+
+        private void importButton_Click(object sender, EventArgs e)
+        {
+            if (configOpenFileDialog.ShowDialog() == DialogResult.Cancel) return;
+
+            var serializer = new BinaryFormatter();
+
+            using (var fs = new FileStream(configOpenFileDialog.FileName, FileMode.OpenOrCreate))
             {
-                MessageBox.Show(exception.Message);
+                var config = (MatrixList)serializer.Deserialize(fs);
+
+                using (var form = new Form2(config))
+                {
+                    form.ShowDialog();
+                }
             }
+        }
+
+        private bool ValidWeightIndicators(WeightIndicators weightIndicators)
+        {
+            if (weightIndicators.Count != IndicatorsCount)
+            {
+                MessageBox.Show($"Количество коэффициентов весов показателей равно {weightIndicators.Count}," +
+                                $" а должно равняться количеству показателей ({IndicatorsCount})");
+                return false;
+            }
+
+            if (weightIndicators.Sum != 1.0)
+            {
+                MessageBox.Show($"Сумма коэффициентов весов показателей = {weightIndicators.Sum}," +
+                                " а должна равняться единице");
+                return false;
+            }
+            return true;
         }
     }
 }
