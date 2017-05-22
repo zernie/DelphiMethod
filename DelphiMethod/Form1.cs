@@ -19,6 +19,7 @@ namespace DelphiMethod
         private int AlternativesCount => (int)numericUpDown2.Value; // n, количество альтернатив
         private int ExpertsCount => (int)numericUpDown1.Value; // m, количество экспертов
         private int IndicatorsCount => (int)numericUpDown3.Value; // l, количество показателей
+        private Config Config;
 
         // коэффициенты весов показателей
         private WeightIndicators WeightIndicators
@@ -43,22 +44,21 @@ namespace DelphiMethod
 
         private void button1_Click(object sender, EventArgs e)
         {
-                var weightIndicators = WeightIndicators;
-                if(!ValidWeightIndicators(weightIndicators)) return;
-               
-                var initialData = new Config
-                {
-                    AlternativesCount = AlternativesCount,
-                    ExpertsCount = ExpertsCount,
-                    IndicatorsCount = IndicatorsCount,
-                    RatingScale = RatingScale,
-                    WeightIndicators = weightIndicators
-                };
+            Config = new Config
+            {
+                AlternativesCount = AlternativesCount,
+                ExpertsCount = ExpertsCount,
+                IndicatorsCount = IndicatorsCount,
+                RatingScale = RatingScale,
+                WeightIndicators = WeightIndicators
+            };
 
-                using (var form = new Form2(initialData))
-                {
-                    form.ShowDialog();
-                }
+            if (!ValidWeightIndicators(Config.WeightIndicators)) return;
+
+            using (var form = new Form2(Config))
+            {
+                form.ShowDialog();
+            }
         }
 
         private void importButton_Click(object sender, EventArgs e)
@@ -66,14 +66,14 @@ namespace DelphiMethod
             if (configOpenFileDialog.ShowDialog() == DialogResult.Cancel) return;
 
             var serializer = new BinaryFormatter();
-            MatrixList config;
+            MatrixList matrixList;
 
             using (var fs = new FileStream(configOpenFileDialog.FileName, FileMode.OpenOrCreate))
             {
-                config = (MatrixList)serializer.Deserialize(fs);
+                matrixList = (MatrixList)serializer.Deserialize(fs);
             }
 
-            using (var form = new Form2(config))
+            using (var form = new Form2(matrixList))
             {
                 form.ShowDialog();
             }

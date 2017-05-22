@@ -73,12 +73,11 @@ namespace DelphiMethod
 
         public static void CalculateAverageScores(DataGridView component, Matrix data)
         {
-//            var groupEvaluation = data.AverageScores(data.InitialCompetenceCoefficient);
-
-//            for (var i = 0; i < data.Height; i++)
-//            {
-//                component["averageScores", i].Value = Math.Round(groupEvaluation[i], 3);
-//            }
+            for (var i = 0; i < data.Height; i++)
+            {
+                var groupEvaluation = data.AverageScores(data.InitialCompetenceCoefficient[i]);
+                component["averageScores", i].Value = Math.Round(groupEvaluation[i], 3);
+            }
         }
 
         public static void CalculateCoefficients(DataGridView component, Matrix data)
