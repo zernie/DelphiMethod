@@ -66,15 +66,16 @@ namespace DelphiMethod
             if (configOpenFileDialog.ShowDialog() == DialogResult.Cancel) return;
 
             var serializer = new BinaryFormatter();
+            MatrixList config;
 
             using (var fs = new FileStream(configOpenFileDialog.FileName, FileMode.OpenOrCreate))
             {
-                var config = (MatrixList)serializer.Deserialize(fs);
+                config = (MatrixList)serializer.Deserialize(fs);
+            }
 
-                using (var form = new Form2(config))
-                {
-                    form.ShowDialog();
-                }
+            using (var form = new Form2(config))
+            {
+                form.ShowDialog();
             }
         }
 

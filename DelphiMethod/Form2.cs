@@ -45,18 +45,17 @@ namespace DelphiMethod
             AddTourNumber();
 
             comboBox1.Items.AddRange(_config.WeightIndicators.Titles.ToArray());
-
             comboBox1.SelectedIndex = 0;
             for (var i = 0; i < _config.IndicatorsCount; i++)
             {
                 var matrix = new Matrix(_config, i);
                 _matrixList.Experts.Add(matrix);
             }
+            ratingScaleTextBox.Text = _config.RatingScale.ToString();
 
             Utils.InitDataGridView(dataGridView2, _config);
             Utils.FillDataGridView(dataGridView2, _currentRank);
-
-            ratingScaleTextBox.Text = _config.RatingScale.ToString();
+            Calculate();
 
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
@@ -65,11 +64,17 @@ namespace DelphiMethod
         // Увеличить счетчик тура
         private void AddTourNumber() => tourNumberLabel.Text = $"Номер тура: {++_tourNumber}";
 
+        private void Calculate()
+        {
+            Utils.CalculateAverageScores(dataGridView2, _currentRank);
+            Utils.CalculateCoefficients(dataGridView2, _currentRank);
+        }
+
         // Экспорт из таблицы в файл
         private void exportButton_Click(object sender, EventArgs e)
         {
-//            try
-//            {
+            try
+            {
                 if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
                     return;
 
@@ -79,26 +84,12 @@ namespace DelphiMethod
                 {
                     x.Serialize(fs, _matrixList);
                 }
-                //                Utils.SaveAsCsv(_currentRank, saveFileDialog1.FileName);
                 MessageBox.Show("Файл сохранен.");
-//            }
-//            catch (IOException exception)
-//            {
-//                MessageBox.Show(exception.Message);
-//            }
-        }
-
-        private void Calculate()
-        {
-            Utils.CalculateAverageScores(dataGridView2, _currentRank);
-            Utils.CalculateCoefficients(dataGridView2, _currentRank);
-        }
-
-        // Следующий тур
-        private void calculateButton_Click(object sender, EventArgs e)
-        {
-            AddTourNumber();
-            Calculate();
+            }
+            catch (IOException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -127,7 +118,13 @@ namespace DelphiMethod
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void nextTourButton_Click(object sender, EventArgs e)
+        {
+            AddTourNumber();
+            Calculate();
+        }
+
+        private void calculateButton_Click_1(object sender, EventArgs e)
         {
             Calculate();
         }

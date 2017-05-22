@@ -55,7 +55,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(444, 410);
+            this.button1.Location = new System.Drawing.Point(166, 232);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(128, 46);
             this.button1.TabIndex = 6;
@@ -67,7 +67,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(6, 179);
+            this.label4.Location = new System.Drawing.Point(6, 140);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(228, 32);
             this.label4.TabIndex = 11;
@@ -77,11 +77,11 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(432, 136);
+            this.radioButton1.Location = new System.Drawing.Point(307, 141);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(85, 36);
             this.radioButton1.TabIndex = 12;
-            this.radioButton1.Text = "0-10";
+            this.radioButton1.Text = "0..10";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // radioButton2
@@ -89,19 +89,19 @@
             this.radioButton2.AutoSize = true;
             this.radioButton2.Checked = true;
             this.radioButton2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(523, 136);
+            this.radioButton2.Location = new System.Drawing.Point(398, 141);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(98, 36);
             this.radioButton2.TabIndex = 13;
             this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "0-100";
+            this.radioButton2.Text = "0..100";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 133);
+            this.label5.Location = new System.Drawing.Point(561, 18);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(398, 32);
             this.label5.TabIndex = 14;
@@ -113,16 +113,17 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Title,
             this.Value});
-            this.dataGridView1.Location = new System.Drawing.Point(18, 237);
+            this.dataGridView1.Location = new System.Drawing.Point(567, 63);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(392, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(382, 327);
             this.dataGridView1.TabIndex = 17;
             // 
             // Title
             // 
             this.Title.HeaderText = "Имя";
             this.Title.Name = "Title";
+            this.Title.Width = 200;
             // 
             // Value
             // 
@@ -132,7 +133,7 @@
             // importButton
             // 
             this.importButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.importButton.Location = new System.Drawing.Point(213, 410);
+            this.importButton.Location = new System.Drawing.Point(307, 232);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(128, 46);
             this.importButton.TabIndex = 20;
@@ -147,14 +148,14 @@
             // numericUpDown3
             // 
             this.numericUpDown3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown3.Location = new System.Drawing.Point(432, 96);
+            this.numericUpDown3.Location = new System.Drawing.Point(307, 101);
             this.numericUpDown3.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(120, 34);
+            this.numericUpDown3.Size = new System.Drawing.Size(85, 34);
             this.numericUpDown3.TabIndex = 9;
             this.numericUpDown3.Value = new decimal(new int[] {
             3,
@@ -165,14 +166,14 @@
             // numericUpDown2
             // 
             this.numericUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown2.Location = new System.Drawing.Point(432, 56);
+            this.numericUpDown2.Location = new System.Drawing.Point(307, 61);
             this.numericUpDown2.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(120, 34);
+            this.numericUpDown2.Size = new System.Drawing.Size(85, 34);
             this.numericUpDown2.TabIndex = 5;
             this.numericUpDown2.Value = new decimal(new int[] {
             2,
@@ -183,14 +184,14 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown1.Location = new System.Drawing.Point(432, 16);
+            this.numericUpDown1.Location = new System.Drawing.Point(307, 21);
             this.numericUpDown1.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 34);
+            this.numericUpDown1.Size = new System.Drawing.Size(85, 34);
             this.numericUpDown1.TabIndex = 4;
             this.numericUpDown1.Value = new decimal(new int[] {
             3,
@@ -230,7 +231,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.importButton);
             this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.label5);
@@ -242,7 +246,7 @@
             this.groupBox1.Controls.Add(this.numericUpDown3);
             this.groupBox1.Location = new System.Drawing.Point(12, 10);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(798, 394);
+            this.groupBox1.Size = new System.Drawing.Size(965, 394);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             // 
@@ -251,10 +255,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(839, 478);
-            this.Controls.Add(this.importButton);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(985, 425);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -276,8 +277,6 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Title;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.Button importButton;
         private System.Windows.Forms.OpenFileDialog configOpenFileDialog;
         private System.Windows.Forms.NumericUpDown numericUpDown3;
@@ -287,6 +286,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Title;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
     }
 }
 

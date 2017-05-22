@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.calculateButton = new System.Windows.Forms.Button();
+            this.nextTourButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.exportButton = new System.Windows.Forms.Button();
             this.tourNumberLabel = new System.Windows.Forms.Label();
@@ -37,7 +37,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.ratingScaleTextBox = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.calculateButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -56,16 +56,16 @@
             this.dataGridView2.Size = new System.Drawing.Size(1132, 425);
             this.dataGridView2.TabIndex = 12;
             // 
-            // calculateButton
+            // nextTourButton
             // 
-            this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.calculateButton.Location = new System.Drawing.Point(867, 26);
-            this.calculateButton.Name = "calculateButton";
-            this.calculateButton.Size = new System.Drawing.Size(237, 58);
-            this.calculateButton.TabIndex = 15;
-            this.calculateButton.Text = "Следующий тур →";
-            this.calculateButton.UseVisualStyleBackColor = true;
-            this.calculateButton.Click += new System.EventHandler(this.calculateButton_Click);
+            this.nextTourButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.nextTourButton.Location = new System.Drawing.Point(867, 26);
+            this.nextTourButton.Name = "nextTourButton";
+            this.nextTourButton.Size = new System.Drawing.Size(237, 58);
+            this.nextTourButton.TabIndex = 15;
+            this.nextTourButton.Text = "Следующий тур →";
+            this.nextTourButton.UseVisualStyleBackColor = true;
+            this.nextTourButton.Click += new System.EventHandler(this.nextTourButton_Click);
             // 
             // label1
             // 
@@ -137,16 +137,16 @@
             this.ratingScaleTextBox.Size = new System.Drawing.Size(151, 38);
             this.ratingScaleTextBox.TabIndex = 25;
             // 
-            // button2
+            // calculateButton
             // 
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(699, 26);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(162, 58);
-            this.button2.TabIndex = 26;
-            this.button2.Text = "Посчитать";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.calculateButton.Location = new System.Drawing.Point(699, 26);
+            this.calculateButton.Name = "calculateButton";
+            this.calculateButton.Size = new System.Drawing.Size(162, 58);
+            this.calculateButton.TabIndex = 26;
+            this.calculateButton.Text = "Посчитать";
+            this.calculateButton.UseVisualStyleBackColor = true;
+            this.calculateButton.Click += new System.EventHandler(this.calculateButton_Click_1);
             // 
             // saveFileDialog1
             // 
@@ -158,14 +158,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1132, 610);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.calculateButton);
             this.Controls.Add(this.ratingScaleTextBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.tourNumberLabel);
             this.Controls.Add(this.exportButton);
-            this.Controls.Add(this.calculateButton);
+            this.Controls.Add(this.nextTourButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView2);
             this.Name = "Form2";
@@ -179,7 +179,7 @@
 
         #endregion
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.Button calculateButton;
+        private System.Windows.Forms.Button nextTourButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button exportButton;
         private System.Windows.Forms.Label tourNumberLabel;
@@ -187,7 +187,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox ratingScaleTextBox;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button calculateButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
