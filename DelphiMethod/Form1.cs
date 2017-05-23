@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -91,7 +89,7 @@ namespace DelphiMethod
                 return false;
             }
 
-            if (weightIndicators.Sum >= 1.0)
+            if (weightIndicators.Sum != 1.0)
             {
                 MessageBox.Show($"Сумма коэффициентов весов показателей = {weightIndicators.Sum}," +
                                 " а должна равняться единице");

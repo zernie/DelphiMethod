@@ -65,5 +65,10 @@ namespace DelphiMethod
 
             return sums;
         }
+
+//        public List<string> Ranks()
+//        {
+//            
+//        }
     }
 }

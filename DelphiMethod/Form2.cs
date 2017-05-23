@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -25,6 +23,7 @@ namespace DelphiMethod
         // Вес коэффициента
         private double _weightIndicator => _config.WeightIndicators[_indicator];
 
+        // Включить проверку введенных значений?
         private bool _disableTrigger;
 
         public Form2(MatrixList matrixList)
@@ -101,6 +100,7 @@ namespace DelphiMethod
             }
         }
 
+        // Следующий тур
         private void nextTourButton_Click(object sender, EventArgs e)
         {
             try
