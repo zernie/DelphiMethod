@@ -13,7 +13,8 @@ namespace DelphiMethod
             InitializeComponent();
             dataGridView1.Rows.Add("Стоимость", 0.2);
             dataGridView1.Rows.Add("Надежность", 0.3);
-            dataGridView1.Rows.Add("Удобство", 0.5);
+            dataGridView1.Rows.Add("Удобство", 0.4);
+            dataGridView1.Rows.Add("Популярность", 0.1);
         }
 
         private int AlternativesCount => (int)numericUpDown2.Value; // n, количество альтернатив

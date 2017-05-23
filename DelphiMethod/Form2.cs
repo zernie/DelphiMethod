@@ -54,7 +54,7 @@ namespace DelphiMethod
             }
             ratingScaleTextBox.Text = _config.RatingScale.ToString();
 
-            Utils.InitDataGridView(dataGridView2, _config);
+            Utils.InitInputDataGridView(dataGridView2, _config.ExpertsCount, _config.AlternativesCount);
             Utils.FillDataGridView(dataGridView2, _currentRank);
             Calculate();
 
@@ -97,7 +97,7 @@ namespace DelphiMethod
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            Utils.InitDataGridView(dataGridView2, _config);
+            Utils.InitInputDataGridView(dataGridView2, _config.ExpertsCount, _config.AlternativesCount);
             Utils.FillDataGridView(dataGridView2, _currentRank);
             Calculate();
             _disableTrigger = false;
@@ -123,8 +123,27 @@ namespace DelphiMethod
 
         private void nextTourButton_Click(object sender, EventArgs e)
         {
+            _disableTrigger = true;
+
             AddTourNumber();
-            Calculate();
+            var z = new double[_config.AlternativesCount, _config.IndicatorsCount];
+
+            for (var i = 0; i < _config.AlternativesCount; i++)
+            {
+                for (var j = 0; j < _config.IndicatorsCount; j++)
+                {
+                    var matrix = _matrixList[j];
+                    var data = matrix.GroupScores(matrix.CompetenceCoefficients());
+                    z[i, j] = data[i];
+                }
+            }
+
+            using (var form = new Result(z, _config))
+            {
+                form.ShowDialog();
+            }
+
+            _disableTrigger = false;
         }
 
         private void calculateButton_Click_1(object sender, EventArgs e)
