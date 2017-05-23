@@ -65,11 +65,11 @@ namespace DelphiMethod
         // Увеличить счетчик тура
         private void AddTourNumber() => tourNumberLabel.Text = $"Номер тура: {++_tourNumber}";
 
+        // Провести анализ
         private void Calculate()
         {
-            Utils.CalculateAverageScores(dataGridView2, _currentRank);
             Utils.CalculateCoefficients(dataGridView2, _currentRank);
-            Utils.CalculateGroupScores(dataGridView2, _currentRank);
+            Utils.FillGroupScores(dataGridView2, _currentRank);
         }
 
         // Экспорт из таблицы в файл
@@ -94,6 +94,7 @@ namespace DelphiMethod
             }
         }
 
+        // Смена показателя
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _disableTrigger = true;
@@ -102,6 +103,7 @@ namespace DelphiMethod
             _disableTrigger = false;
         }
 
+        // Ввод данных в ячейку
         private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -111,15 +113,14 @@ namespace DelphiMethod
                 _currentRank = new Matrix(data, _weightIndicator);
                 _matrixList[comboBox1.SelectedIndex] = _currentRank;
             }
+            // в случае ввода нечисловых данных выдаем ошибку
             catch (FormatException exception)
             {
                 _disableTrigger = true;
                 MessageBox.Show($"'{dataGridView2.CurrentCell.Value}': {exception.Message}");
                 dataGridView2.CurrentCell.Value = _config.RatingScale.Start;
-            }
-            finally
-            {
                 _disableTrigger = false;
+
             }
         }
 
@@ -132,8 +133,9 @@ namespace DelphiMethod
                 AddTourNumber();
 
                 var z = _matrixList.GroupScores();
+                var sums = _matrixList.Sums();
 
-                using (var form = new Result(z, _config))
+                using (var form = new Result(z, sums, _config))
                 {
                     form.ShowDialog();
                 }

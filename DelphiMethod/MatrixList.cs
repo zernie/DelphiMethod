@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DelphiMethod
 {
@@ -42,6 +43,24 @@ namespace DelphiMethod
             }
 
             return groupScores;
+        }
+
+        public List<double> Sums()
+        {
+            var sums = new List<double>(Configuration.AlternativesCount);
+            var groupScores = GroupScores();
+
+            for (var i = 0; i < Configuration.AlternativesCount; i++)
+            {
+                var temp = new List<double>(Configuration.IndicatorsCount);
+                for (var j = 0; j < Configuration.IndicatorsCount; j++)
+                {
+                    temp.Add(groupScores[i, j]);
+                }
+                sums.Add(temp.Sum());
+            }
+
+            return sums;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -22,7 +24,6 @@ namespace DelphiMethod
                 component.Rows[i].HeaderCell.Value = $"Альтернатива №{i + 1}";
             }
 
-            component.Columns.Add("averageScores", "Средние оценки");
             component.Columns.Add("groupScores", "Групповые оценки");
             component.Rows.Add(new DataGridViewRow
             {
@@ -38,13 +39,13 @@ namespace DelphiMethod
         {
             for (var i = 0; i < width; i++)
             {
-                component.Columns.Add(i.ToString(), $"z{i + 1}");
+                component.Columns.Add(i.ToString(), $"Показатель z{i + 1}");
             }
 
             for (var i = 0; i < count; i++)
             {
                 component.Rows.Add();
-                component.Rows[i].HeaderCell.Value = $"x{i + 1}";
+                component.Rows[i].HeaderCell.Value = $"Групповая оценка x{i + 1}";
             }
 
             component.Columns.Add("sum", "Сумма");
@@ -73,6 +74,7 @@ namespace DelphiMethod
             }
         }
 
+
         // Извлечь матрицу из таблицы
         public static double[,] ExtractData(DataGridView component, Config config)
         {
@@ -98,7 +100,8 @@ namespace DelphiMethod
             return data;
         }
 
-        public static void CalculateGroupScores(DataGridView component, Matrix data)
+        // Вычислить групповые оценки и вывести их на форму
+        public static void FillGroupScores(DataGridView component, Matrix data)
         {
             var groupScores = data.GroupScores(data.CompetenceCoefficients());
 
@@ -113,16 +116,7 @@ namespace DelphiMethod
             }
         }
 
-        public static void CalculateAverageScores(DataGridView component, Matrix data)
-        {
-            var averageScores = data.AverageScores(data.InitialCompetenceCoefficient);
-
-            for (var i = 0; i < data.Height; i++)
-            {
-                component["averageScores", i].Value = Math.Round(averageScores[i], 3);
-            }
-        }
-
+        // Вычислить коэффициенты компетентности и вывести их на форму
         public static void CalculateCoefficients(DataGridView component, Matrix data)
         {
             var coefficients = data.CompetenceCoefficients();
@@ -137,6 +131,15 @@ namespace DelphiMethod
                 }
 
                 component[i, data.Height].Value = Math.Round(value, 3);
+            }
+        }
+
+        // Вычислить коэффициенты компетентности и вывести их на форму
+        public static void CalculateGroupScoreSums(DataGridView component, List<double> data)
+        {
+            for (var i = 0; i < data.Count; i++)
+            {
+                component["sum", i].Value = Math.Round(data[i], 3);
             }
         }
     }
