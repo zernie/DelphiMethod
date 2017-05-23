@@ -59,21 +59,37 @@ namespace DelphiMethod
 
         public double this[int row, int col] => Data[row, col];
 
-//        private List<double> Subtract(List<double> a, List<double> b)
-//        {
-//            var data = new List<double>(a.Count);
-//            for (var i = 0; i < a.Count; i++)
-//            {
-//                data.Add(a[i] - b[i]);
-//            }
-//
-//            return data;
-//        }
+        //        private List<double> Subtract(List<double> a, List<double> b)
+        //        {
+        //            var data = new List<double>(a.Count);
+        //            for (var i = 0; i < a.Count; i++)
+        //            {
+        //                data.Add(a[i] - b[i]);
+        //            }
+        //
+        //            return data;
+        //        }
 
-//        private double NewMethod(List<double> a, List<double> b)
-//        {
-//            return Math.Abs(Subtract(a, b).Max());
-//        }
+        //        private double NewMethod(List<double> a, List<double> b)
+        //        {
+        //            return Math.Abs(Subtract(a, b).Max());
+        //        }
+
+        public List<double> GroupScores(List<double> competenceCoefficients)
+        {
+            var groupScores = new List<double>();
+            for (int i = 0; i < Height; i++)
+            {
+                var temp= new List<double>();
+                for (int j = 0; j < Width; j++)
+                {
+                   temp.Add( WeightIndicator * competenceCoefficients[i] * Data[i, j]);
+                }
+                groupScores.Add(temp.Sum());
+            }
+
+            return groupScores;
+        }
 
         // Средние оценки объектов sum(K_i * x_i_j, i=1..m), j=1..n
         public List<double> AverageScores(List<double> competenceCoefficients) => 

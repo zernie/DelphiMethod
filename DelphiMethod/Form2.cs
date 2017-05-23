@@ -69,6 +69,7 @@ namespace DelphiMethod
         {
             Utils.CalculateAverageScores(dataGridView2, _currentRank);
             Utils.CalculateCoefficients(dataGridView2, _currentRank);
+            Utils.CalculateGroupScores(dataGridView2, _currentRank);
         }
 
         // Экспорт из таблицы в файл
