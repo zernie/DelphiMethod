@@ -36,7 +36,10 @@ namespace DelphiMethod
                     var matrix = Matrices[j];
                     var data = matrix.GroupScores(matrix.CompetenceCoefficients());
                     if (double.IsNaN(data[i]))
-                        throw new ArithmeticException($"Данные в {j+1} показателе введены неправильно");
+                    {
+                        var indicator = Configuration.WeightIndicators.Titles[j];
+                        throw new ArithmeticException($"Данные в показателе '{indicator}' введены неправильно");
+                    }
 
                     groupScores[i, j] = data[i];
                 }

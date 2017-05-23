@@ -20,16 +20,27 @@ namespace DelphiMethod
 
             for (var i = 0; i < count; i++)
             {
-                component.Rows.Add();
-                component.Rows[i].HeaderCell.Value = $"Альтернатива №{i + 1}";
+                component.Rows.Add(new DataGridViewRow()
+                {
+                    HeaderCell = new DataGridViewRowHeaderCell
+                    {
+                        Value = $"Альтернатива №{i + 1}"
+                    }
+                });
             }
 
-            component.Columns.Add("groupScores", "Групповые оценки");
+            component.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "groupScores",
+                HeaderText = "Групповые оценки",
+                ReadOnly = true
+            });
             component.Rows.Add(new DataGridViewRow
             {
+                ReadOnly = true,
                 HeaderCell = new DataGridViewRowHeaderCell
                 {
-                    Value = "Коэффициент компетентности"
+                    Value = "Коэффициент компетентности",
                 }
             });
         }
@@ -44,8 +55,14 @@ namespace DelphiMethod
 
             for (var i = 0; i < count; i++)
             {
-                component.Rows.Add();
-                component.Rows[i].HeaderCell.Value = $"Групповая оценка x{i + 1}";
+                component.Rows.Add(new DataGridViewRow()
+                {
+                    ReadOnly = true,
+                    HeaderCell = new DataGridViewRowHeaderCell
+                    {
+                        Value = $"Групповая оценка x{i + 1}"
+                    }
+                });
             }
 
             component.Columns.Add("sum", "Сумма");
