@@ -152,7 +152,7 @@ namespace DelphiMethod
             }
         }
 
-        // Вычислить коэффициенты компетентности и вывести их на форму
+        // Вычислить коэффициенты компетентности и вывести их на форму результатов
         public static void CalculateGroupScoreSums(DataGridView component, List<double> data)
         {
             for (var i = 0; i < data.Count; i++)
@@ -161,6 +161,7 @@ namespace DelphiMethod
             }
         }
 
+        // Импорт из файла
         public static MatrixList ImportFromFile(string filename)
         {
             try
@@ -182,21 +183,23 @@ namespace DelphiMethod
             }
         }
 
+        // Экспорт из файла
         public static void ExportToFile(string filename, MatrixList matrixList)
         {
-            try { 
-            var x = new BinaryFormatter();
-
-            using (var fs = new FileStream(filename, FileMode.OpenOrCreate))
+            try
             {
-                x.Serialize(fs, matrixList);
+                var x = new BinaryFormatter();
+
+                using (var fs = new FileStream(filename, FileMode.OpenOrCreate))
+                {
+                    x.Serialize(fs, matrixList);
+                }
+                MessageBox.Show("Файл сохранен.");
             }
-            MessageBox.Show("Файл сохранен.");
+            catch (IOException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
-        catch (IOException exception)
-        {
-            MessageBox.Show(exception.Message);
-        }
-}
     }
 }

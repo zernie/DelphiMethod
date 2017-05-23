@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -108,13 +109,14 @@ namespace DelphiMethod
                 _disableTrigger = true;
 
                 var z = _matrixList.GroupScores();
-                var sums = _matrixList.Sums();
-                AddTourNumber();
+                var sums = _matrixList.GroupScoresSums(z);
+                var ranks = _matrixList.Ranks(sums);
 
-                using (var form = new Result(z, sums, _config))
+                using (var form = new Result(z, sums, ranks, _config))
                 {
                     form.ShowDialog();
                 }
+                AddTourNumber();
             }
             catch (NotFiniteNumberException exception)
             {
