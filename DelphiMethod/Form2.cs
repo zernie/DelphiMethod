@@ -28,21 +28,11 @@ namespace DelphiMethod
 
         public Form2(MatrixList matrixList)
         {
+            InitializeComponent();
+
             _config = matrixList.Configuration;
             _matrixList = matrixList;
-            InitForm();
-        }
 
-        public Form2(Config config)
-        {
-            _config = config;
-            _matrixList = new MatrixList(config);
-            InitForm();
-        }
-
-        private void InitForm()
-        {
-            InitializeComponent();
             AddTourNumber();
 
             comboBox1.Items.AddRange(_config.WeightIndicators.Titles.ToArray());

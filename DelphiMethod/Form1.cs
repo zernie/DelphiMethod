@@ -18,12 +18,13 @@ namespace DelphiMethod
             dataGridView1.Rows.Add("Наличие", 0.1);
         }
 
+        private Config Configuration;
+
         private int AlternativesCount => (int)numericUpDown2.Value; // n, количество альтернатив
         private int ExpertsCount => (int)numericUpDown1.Value; // m, количество экспертов
         private int IndicatorsCount => (int)numericUpDown3.Value; // l, количество показателей
-        private Config Configuration;
 
-        // коэффициенты весов показателей
+        // коэффициенты весов показателей q^k
         private WeightIndicators WeightIndicators
         {
             get
@@ -41,9 +42,10 @@ namespace DelphiMethod
             }
         }
 
-        private Range RatingScale =>
-            radioButton1.Checked ? new Range(0.0, 10.0) : new Range(0, 100.0); // Шкала оценок
+        // Шкала оценок
+        private Range RatingScale => new Range(0.0, radioButton1.Checked ? 10.0 : 100.0);
 
+        // Пуск
         private void button1_Click(object sender, EventArgs e)
         {
             Configuration = new Config
@@ -57,13 +59,16 @@ namespace DelphiMethod
 
             if (!ValidWeightIndicators(Configuration.WeightIndicators)) return;
 
-            using (var form = new Form2(Configuration))
+            var matrixList = new MatrixList(Configuration);
+
+            using (var form = new Form2(matrixList))
             {
                 form.Owner = this;
                 form.ShowDialog();
             }
         }
 
+        // Импорт из файла
         private void importButton_Click(object sender, EventArgs e)
         {
             if (configOpenFileDialog.ShowDialog() == DialogResult.Cancel) return;
@@ -82,6 +87,7 @@ namespace DelphiMethod
             }
         }
 
+        // Проверка на верность введенных данных
         private bool ValidWeightIndicators(WeightIndicators weightIndicators)
         {
             if (weightIndicators.Count != IndicatorsCount)
