@@ -91,7 +91,7 @@ namespace DelphiMethod
                 return false;
             }
 
-            if (weightIndicators.Sum != 1.0)
+            if (weightIndicators.Sum >= 1.0)
             {
                 MessageBox.Show($"Сумма коэффициентов весов показателей = {weightIndicators.Sum}," +
                                 " а должна равняться единице");
