@@ -8,8 +8,11 @@ namespace DelphiMethod
     [Serializable]
     public class Matrix
     {
+        // матрица рангов
         public double[,] Data;
+        // ширина (кол-во экспертов)
         public int Width;
+        // высота (кол-во альтернатив)
         public int Height;
 
         public double WeightIndicator; // вес коэфф. показателя, q_k

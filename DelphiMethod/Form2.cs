@@ -50,7 +50,7 @@ namespace DelphiMethod
             for (var i = 0; i < _config.IndicatorsCount; i++)
             {
                 var matrix = new Matrix(_config.ExpertsCount, _config.AlternativesCount, _config.WeightIndicators[i]);
-                _matrixList.Experts.Add(matrix);
+                _matrixList.Matrices.Add(matrix);
             }
             ratingScaleTextBox.Text = _config.RatingScale.ToString();
 

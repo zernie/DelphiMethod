@@ -3,9 +3,10 @@ using System.Windows.Forms;
 
 namespace DelphiMethod
 {
+    // Вспомогательный класс для вывода значений на форму
     class Utils
     {
-        // Инициализировать таблицу заданным количеством строк и столбцов
+        // Инициализировать таблицу рангов заданным количеством строк и столбцов
         public static void InitInputDataGridView(DataGridView component, int width, int count)
         {
             component.Rows.Clear();
@@ -32,6 +33,7 @@ namespace DelphiMethod
             });
         }
 
+        // Инициализировать таблицу групповых оценок заданным количеством строк и столбцов
         public static void InitResultDataGridView(DataGridView component, int width, int count)
         {
             for (var i = 0; i < width; i++)
@@ -66,6 +68,7 @@ namespace DelphiMethod
             {
                 for (var j = 0; j < data.GetLength(1); j++)
                 {
+                    if (Double.IsNaN(data[i, j])) throw new FormatException();
                     component[j, i].Value = Math.Round(data[i, j], 3);
                 }
             }

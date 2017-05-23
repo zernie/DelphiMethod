@@ -11,8 +11,7 @@ namespace DelphiMethod
         {
             InitializeComponent();
 
-            Utils.InitResultDataGridView(dataGridView1, config.IndicatorsCount, config.AlternativesCount);
-            Utils.FillDataGridView(dataGridView1, data);
+            FillDataGridView(data, config);
 
             var sums = new List<double>(config.AlternativesCount);
             for (var i = 0; i < config.AlternativesCount; i++)
@@ -23,6 +22,19 @@ namespace DelphiMethod
                     temp.Add(data[i, j]);
                 }
                 dataGridView1["sum", i].Value = Math.Round(temp.Sum(),3);
+            }
+        }
+
+        public void FillDataGridView(double[,] data, Config config)
+        {
+            try
+            {
+                Utils.InitResultDataGridView(dataGridView1, config.IndicatorsCount, config.AlternativesCount);
+                Utils.FillDataGridView(dataGridView1, data);
+            }
+            catch (FormatException e)
+            {
+                MessageBox.Show(e.Message);
             }
         }
     }
