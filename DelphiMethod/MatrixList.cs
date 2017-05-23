@@ -38,7 +38,7 @@ namespace DelphiMethod
                     if (double.IsNaN(data[i]))
                     {
                         var indicator = Configuration.WeightIndicators.Titles[j];
-                        throw new ArithmeticException($"Данные в показателе '{indicator}' введены неправильно");
+                        throw new NotFiniteNumberException($"Данные в показателе '{indicator}' введены неправильно");
                     }
 
                     groupScores[i, j] = data[i];

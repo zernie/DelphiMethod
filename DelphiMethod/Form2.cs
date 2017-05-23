@@ -22,6 +22,7 @@ namespace DelphiMethod
         private MatrixList _matrixList;
         // Текущий показатель
         private int _indicator => comboBox1.SelectedIndex;
+        // Вес коэффициента
         private double _weightIndicator => _config.WeightIndicators[_indicator];
 
         private bool _disableTrigger;
@@ -65,22 +66,9 @@ namespace DelphiMethod
         // Экспорт из таблицы в файл
         private void exportButton_Click(object sender, EventArgs e)
         {
-            try
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
-                    return;
-
-                var x = new BinaryFormatter();
-
-                using (var fs = new FileStream(saveFileDialog1.FileName, FileMode.OpenOrCreate))
-                {
-                    x.Serialize(fs, _matrixList);
-                }
-                MessageBox.Show("Файл сохранен.");
-            }
-            catch (IOException exception)
-            {
-                MessageBox.Show(exception.Message);
+                Utils.ExportToFile(saveFileDialog1.FileName, _matrixList);
             }
         }
 
@@ -110,7 +98,6 @@ namespace DelphiMethod
                 MessageBox.Show($"'{dataGridView2.CurrentCell.Value}': {exception.Message}");
                 dataGridView2.CurrentCell.Value = _config.RatingScale.Start;
                 _disableTrigger = false;
-
             }
         }
 
@@ -129,7 +116,7 @@ namespace DelphiMethod
                     form.ShowDialog();
                 }
             }
-            catch (ArithmeticException exception)
+            catch (NotFiniteNumberException exception)
             {
                 MessageBox.Show(exception.Message);
             }

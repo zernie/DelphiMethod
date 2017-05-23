@@ -259,6 +259,7 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(985, 425);
             this.Controls.Add(this.groupBox1);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Групповая оценка альтернатив";

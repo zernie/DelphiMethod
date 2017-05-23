@@ -15,7 +15,7 @@ namespace DelphiMethod
         // Сумма значений
         public double Sum => Values.Sum();
         // Кол-во элементов
-        public double Count => Values.Count;
+        public int Count => Values.Count;
         
         public WeightIndicators(List<string> titles, List<double> values)
         {

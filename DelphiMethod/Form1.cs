@@ -63,7 +63,6 @@ namespace DelphiMethod
 
             using (var form = new Form2(matrixList))
             {
-                form.Owner = this;
                 form.ShowDialog();
             }
         }
@@ -72,14 +71,9 @@ namespace DelphiMethod
         private void importButton_Click(object sender, EventArgs e)
         {
             if (configOpenFileDialog.ShowDialog() == DialogResult.Cancel) return;
-
-            var serializer = new BinaryFormatter();
-            MatrixList matrixList;
-
-            using (var fs = new FileStream(configOpenFileDialog.FileName, FileMode.OpenOrCreate))
-            {
-                matrixList = (MatrixList)serializer.Deserialize(fs);
-            }
+            
+            var matrixList = Utils.ImportFromFile(configOpenFileDialog.FileName);
+            if (matrixList == null) return;
 
             using (var form = new Form2(matrixList))
             {

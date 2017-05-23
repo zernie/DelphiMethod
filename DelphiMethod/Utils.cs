@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -159,5 +161,43 @@ namespace DelphiMethod
                 component["sum", i].Value = Math.Round(data[i], 3);
             }
         }
+
+        public static MatrixList ImportFromFile(string filename)
+        {
+            try
+            {
+                var serializer = new BinaryFormatter();
+                MatrixList matrixList;
+
+                using (var fs = new FileStream(filename, FileMode.OpenOrCreate))
+                {
+                    matrixList = (MatrixList)serializer.Deserialize(fs);
+                }
+
+                return matrixList;
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show(e.Message);
+                return null;
+            }
+        }
+
+        public static void ExportToFile(string filename, MatrixList matrixList)
+        {
+            try { 
+            var x = new BinaryFormatter();
+
+            using (var fs = new FileStream(filename, FileMode.OpenOrCreate))
+            {
+                x.Serialize(fs, matrixList);
+            }
+            MessageBox.Show("Файл сохранен.");
+        }
+        catch (IOException exception)
+        {
+            MessageBox.Show(exception.Message);
+        }
+}
     }
 }
