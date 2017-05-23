@@ -62,7 +62,7 @@
             // nextTourButton
             // 
             this.nextTourButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.nextTourButton.Location = new System.Drawing.Point(870, 14);
+            this.nextTourButton.Location = new System.Drawing.Point(1013, 21);
             this.nextTourButton.Name = "nextTourButton";
             this.nextTourButton.Size = new System.Drawing.Size(237, 58);
             this.nextTourButton.TabIndex = 15;
@@ -82,10 +82,10 @@
             // 
             // exportButton
             // 
-            this.exportButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.exportButton.Location = new System.Drawing.Point(998, 129);
+            this.exportButton.Font = new System.Drawing.Font("Segoe UI", 14F);
+            this.exportButton.Location = new System.Drawing.Point(1013, 96);
             this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(109, 38);
+            this.exportButton.Size = new System.Drawing.Size(237, 58);
             this.exportButton.TabIndex = 18;
             this.exportButton.Text = "Экспорт";
             this.exportButton.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(342, 25);
+            this.comboBox1.Location = new System.Drawing.Point(413, 21);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(289, 39);
             this.comboBox1.TabIndex = 21;
@@ -105,7 +105,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(195, 28);
+            this.label2.Location = new System.Drawing.Point(241, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(141, 32);
             this.label2.TabIndex = 22;
@@ -115,7 +115,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(5, 102);
+            this.label3.Location = new System.Drawing.Point(6, 96);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(175, 32);
             this.label3.TabIndex = 24;
@@ -125,7 +125,7 @@
             // 
             this.ratingScaleTextBox.Enabled = false;
             this.ratingScaleTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ratingScaleTextBox.Location = new System.Drawing.Point(185, 102);
+            this.ratingScaleTextBox.Location = new System.Drawing.Point(247, 93);
             this.ratingScaleTextBox.Name = "ratingScaleTextBox";
             this.ratingScaleTextBox.Size = new System.Drawing.Size(151, 38);
             this.ratingScaleTextBox.TabIndex = 25;
@@ -133,7 +133,7 @@
             // calculateButton
             // 
             this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.calculateButton.Location = new System.Drawing.Point(702, 14);
+            this.calculateButton.Location = new System.Drawing.Point(845, 21);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(162, 58);
             this.calculateButton.TabIndex = 26;
@@ -169,7 +169,7 @@
             // 
             this.tourNumberLabel.AutoSize = true;
             this.tourNumberLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tourNumberLabel.Location = new System.Drawing.Point(6, 25);
+            this.tourNumberLabel.Location = new System.Drawing.Point(12, 25);
             this.tourNumberLabel.Name = "tourNumberLabel";
             this.tourNumberLabel.Size = new System.Drawing.Size(145, 32);
             this.tourNumberLabel.TabIndex = 20;
@@ -177,10 +177,10 @@
             // 
             // clearButton
             // 
-            this.clearButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.clearButton.Location = new System.Drawing.Point(702, 129);
+            this.clearButton.Font = new System.Drawing.Font("Segoe UI", 14F);
+            this.clearButton.Location = new System.Drawing.Point(845, 96);
             this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(109, 38);
+            this.clearButton.Size = new System.Drawing.Size(162, 58);
             this.clearButton.TabIndex = 27;
             this.clearButton.Text = "Очистить";
             this.clearButton.UseVisualStyleBackColor = true;
