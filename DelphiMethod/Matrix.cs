@@ -65,7 +65,7 @@ namespace DelphiMethod
                 var temp = new List<double>(Width);
                 for (var j = 0; j < Width; j++)
                 {
-                    temp.Add(WeightIndicator * competenceCoefficients[i] * Data[i, j]);
+                    temp.Add(WeightIndicator * competenceCoefficients[j] * Data[i, j]);
                 }
                 groupScores.Add(temp.Sum());
             }

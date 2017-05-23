@@ -12,15 +12,16 @@ namespace DelphiMethod
         {
             InitializeComponent();
             dataGridView1.Rows.Add("Стоимость", 0.2);
-            dataGridView1.Rows.Add("Надежность", 0.3);
+            dataGridView1.Rows.Add("Надежность", 0.2);
             dataGridView1.Rows.Add("Удобство", 0.4);
             dataGridView1.Rows.Add("Популярность", 0.1);
+            dataGridView1.Rows.Add("Наличие", 0.1);
         }
 
         private int AlternativesCount => (int)numericUpDown2.Value; // n, количество альтернатив
         private int ExpertsCount => (int)numericUpDown1.Value; // m, количество экспертов
         private int IndicatorsCount => (int)numericUpDown3.Value; // l, количество показателей
-        private Config Config;
+        private Config Configuration;
 
         // коэффициенты весов показателей
         private WeightIndicators WeightIndicators
@@ -30,7 +31,7 @@ namespace DelphiMethod
                 var names = new List<string>(dataGridView1.RowCount);
                 var values = new List<double>(dataGridView1.RowCount);
 
-                for (var i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                for (var i = 0; i < dataGridView1.RowCount; i++)
                 {
                     names.Add(Convert.ToString(dataGridView1["Title", i].Value));
                     values.Add(Convert.ToDouble(dataGridView1["Value", i].Value));
@@ -45,7 +46,7 @@ namespace DelphiMethod
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Config = new Config
+            Configuration = new Config
             {
                 AlternativesCount = AlternativesCount,
                 ExpertsCount = ExpertsCount,
@@ -54,9 +55,9 @@ namespace DelphiMethod
                 WeightIndicators = WeightIndicators
             };
 
-            if (!ValidWeightIndicators(Config.WeightIndicators)) return;
+            if (!ValidWeightIndicators(Configuration.WeightIndicators)) return;
 
-            using (var form = new Form2(Config))
+            using (var form = new Form2(Configuration))
             {
                 form.Owner = this;
                 form.ShowDialog();
@@ -97,6 +98,11 @@ namespace DelphiMethod
                 return false;
             }
             return true;
+        }
+
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+            dataGridView1.RowCount = (int)numericUpDown3.Value;
         }
     }
 }

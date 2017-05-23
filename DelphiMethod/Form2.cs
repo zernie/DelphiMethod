@@ -97,7 +97,6 @@ namespace DelphiMethod
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            Utils.InitInputDataGridView(dataGridView2, _config.ExpertsCount, _config.AlternativesCount);
             Utils.FillDataGridView(dataGridView2, _currentRank);
             Calculate();
             _disableTrigger = false;
@@ -117,33 +116,36 @@ namespace DelphiMethod
                 _disableTrigger = true;
                 MessageBox.Show($"'{dataGridView2.CurrentCell.Value}': {exception.Message}");
                 dataGridView2.CurrentCell.Value = _config.RatingScale.Start;
+            }
+            finally
+            {
                 _disableTrigger = false;
             }
         }
 
         private void nextTourButton_Click(object sender, EventArgs e)
         {
-            _disableTrigger = true;
-
-            AddTourNumber();
-            var z = new double[_config.AlternativesCount, _config.IndicatorsCount];
-
-            for (var i = 0; i < _config.AlternativesCount; i++)
+            try
             {
-                for (var j = 0; j < _config.IndicatorsCount; j++)
+                _disableTrigger = true;
+
+                AddTourNumber();
+
+                var z = _matrixList.GroupScores();
+
+                using (var form = new Result(z, _config))
                 {
-                    var matrix = _matrixList[j];
-                    var data = matrix.GroupScores(matrix.CompetenceCoefficients());
-                    z[i, j] = data[i];
+                    form.ShowDialog();
                 }
             }
-
-            using (var form = new Result(z, _config))
+            catch (ArithmeticException exception)
             {
-                form.ShowDialog();
+                MessageBox.Show(exception.Message);
             }
-
-            _disableTrigger = false;
+            finally
+            {
+                _disableTrigger = false;
+            }
         }
 
         private void calculateButton_Click_1(object sender, EventArgs e)

@@ -109,6 +109,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Title,
@@ -158,10 +159,11 @@
             this.numericUpDown3.Size = new System.Drawing.Size(85, 34);
             this.numericUpDown3.TabIndex = 9;
             this.numericUpDown3.Value = new decimal(new int[] {
-            4,
+            5,
             0,
             0,
             0});
+            this.numericUpDown3.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
             // 
             // numericUpDown2
             // 

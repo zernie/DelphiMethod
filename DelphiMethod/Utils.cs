@@ -68,7 +68,6 @@ namespace DelphiMethod
             {
                 for (var j = 0; j < data.GetLength(1); j++)
                 {
-                    if (Double.IsNaN(data[i, j])) throw new FormatException();
                     component[j, i].Value = Math.Round(data[i, j], 3);
                 }
             }

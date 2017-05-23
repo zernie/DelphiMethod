@@ -23,5 +23,25 @@ namespace DelphiMethod
             get => Matrices[index];
             set => Matrices[index] = value;
         }
+
+        public double[,] GroupScores()
+        {
+            var groupScores = new double[Configuration.AlternativesCount, Configuration.IndicatorsCount];
+
+            for (var i = 0; i < Configuration.AlternativesCount; i++)
+            {
+                for (var j = 0; j < Configuration.IndicatorsCount; j++)
+                {
+                    var matrix = Matrices[j];
+                    var data = matrix.GroupScores(matrix.CompetenceCoefficients());
+                    if (double.IsNaN(data[i]))
+                        throw new ArithmeticException($"Данные в {j+1} показателе введены неправильно");
+
+                    groupScores[i, j] = data[i];
+                }
+            }
+
+            return groupScores;
+        }
     }
 }
