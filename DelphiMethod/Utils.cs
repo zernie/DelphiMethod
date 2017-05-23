@@ -25,7 +25,7 @@ namespace DelphiMethod
                     HeaderCell = new DataGridViewRowHeaderCell
                     {
                         Value = $"Альтернатива №{i + 1}"
-                    }
+                    },
                 });
             }
 
@@ -33,7 +33,7 @@ namespace DelphiMethod
             {
                 Name = "groupScores",
                 HeaderText = "Групповые оценки",
-                ReadOnly = true
+                ReadOnly = true,
             });
             component.Rows.Add(new DataGridViewRow
             {

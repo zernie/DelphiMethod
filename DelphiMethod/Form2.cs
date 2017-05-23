@@ -130,10 +130,9 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
 
-                AddTourNumber();
-
                 var z = _matrixList.GroupScores();
                 var sums = _matrixList.Sums();
+                AddTourNumber();
 
                 using (var form = new Result(z, sums, _config))
                 {
@@ -150,8 +149,17 @@ namespace DelphiMethod
             }
         }
 
+        // Высчитать групповые коэффициенты
         private void calculateButton_Click_1(object sender, EventArgs e)
         {
+            Calculate();
+        }
+
+        // Очистить таблицу
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            _currentRank = new Matrix(_config.ExpertsCount, _config.AlternativesCount, _weightIndicator);
+            Utils.FillDataGridView(dataGridView2, _currentRank);
             Calculate();
         }
     }

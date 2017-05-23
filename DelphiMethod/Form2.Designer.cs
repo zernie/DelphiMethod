@@ -32,7 +32,6 @@
             this.nextTourButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.exportButton = new System.Windows.Forms.Button();
-            this.tourNumberLabel = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,7 +39,8 @@
             this.calculateButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.tourNumberLabel = new System.Windows.Forms.Label();
+            this.clearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -83,23 +83,13 @@
             // exportButton
             // 
             this.exportButton.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.exportButton.Location = new System.Drawing.Point(998, 123);
+            this.exportButton.Location = new System.Drawing.Point(998, 129);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(109, 38);
             this.exportButton.TabIndex = 18;
             this.exportButton.Text = "Экспорт";
             this.exportButton.UseVisualStyleBackColor = true;
             this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
-            // 
-            // tourNumberLabel
-            // 
-            this.tourNumberLabel.AutoSize = true;
-            this.tourNumberLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tourNumberLabel.Location = new System.Drawing.Point(5, 14);
-            this.tourNumberLabel.Name = "tourNumberLabel";
-            this.tourNumberLabel.Size = new System.Drawing.Size(145, 32);
-            this.tourNumberLabel.TabIndex = 20;
-            this.tourNumberLabel.Text = "Номер тура";
             // 
             // comboBox1
             // 
@@ -158,8 +148,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.clearButton);
             this.groupBox1.Controls.Add(this.calculateButton);
-            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.tourNumberLabel);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.ratingScaleTextBox);
@@ -175,15 +165,26 @@
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
             // 
-            // label4
+            // tourNumberLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(6, 28);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(145, 32);
-            this.label4.TabIndex = 20;
-            this.label4.Text = "Номер тура";
+            this.tourNumberLabel.AutoSize = true;
+            this.tourNumberLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tourNumberLabel.Location = new System.Drawing.Point(6, 25);
+            this.tourNumberLabel.Name = "tourNumberLabel";
+            this.tourNumberLabel.Size = new System.Drawing.Size(145, 32);
+            this.tourNumberLabel.TabIndex = 20;
+            this.tourNumberLabel.Text = "Номер тура";
+            // 
+            // clearButton
+            // 
+            this.clearButton.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.clearButton.Location = new System.Drawing.Point(702, 129);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(109, 38);
+            this.clearButton.TabIndex = 27;
+            this.clearButton.Text = "Очистить";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // Form2
             // 
@@ -208,7 +209,6 @@
         private System.Windows.Forms.Button nextTourButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button exportButton;
-        private System.Windows.Forms.Label tourNumberLabel;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -216,6 +216,7 @@
         private System.Windows.Forms.Button calculateButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label tourNumberLabel;
+        private System.Windows.Forms.Button clearButton;
     }
 }
