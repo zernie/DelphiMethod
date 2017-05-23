@@ -11,39 +11,32 @@ namespace DelphiMethod
     {
         public double[,] Data;
         public List<Alternative> Alternatives;
-        public Config InitialData;
         public int Width;
         public int Height;
 
-        public int IndicatorNumber; // показатель k
-        public double WeightIndicator => InitialData.WeightIndicators[IndicatorNumber]; // вес коэфф. показателя, q_k
+        public double WeightIndicator; // вес коэфф. показателя, q_k
 
         public List<double> InitialCompetenceCoefficient => 
             Enumerable
-            .Repeat(1.0 / InitialData.ExpertsCount,  InitialData.ExpertsCount)
+            .Repeat(1.0 / Width,  Width)
             .ToList();
 
-        public Matrix(double[,] data, Config initialData, int indicatorNumber)
+        public Matrix(double[,] data, double weightIndicator)
         {
             Data = data;
-            InitialData = initialData;
-            IndicatorNumber = indicatorNumber;
-
-            Width = initialData.ExpertsCount;
-            Height = initialData.AlternativesCount;
-
+            Height = data.GetLength(0);
+            Width = data.GetLength(1);
+            WeightIndicator = weightIndicator;
             Alternatives = new List<Alternative>(Height);
 
             _init(Alternatives);
         }
 
-        public Matrix(Config initialData, int indicatorNumber)
+        public Matrix(int width, int height, double weightIndicator)
         {
-            InitialData = initialData;
-            IndicatorNumber = indicatorNumber;
-            Width = initialData.ExpertsCount;
-            Height = initialData.AlternativesCount;
-
+            Width = width;
+            Height = height;
+            WeightIndicator = weightIndicator;
             Data = new double[Height, Width];
             Alternatives = new List<Alternative>(Height);
 
@@ -83,15 +76,15 @@ namespace DelphiMethod
 //        }
 
         // Средние оценки объектов sum(K_i * x_i_j, i=1..m), j=1..n
-        public List<double> AverageScores(double competenceCoefficient) => 
+        public List<double> AverageScores(List<double> competenceCoefficients) => 
             Alternatives
-            .Select((x, i) => x.MultiplyBy(competenceCoefficient))
+            .Select((x, i) => x.MultiplyBy(competenceCoefficients[i]))
             .ToList();
 
         // Нормировочный коэффициент sum(sum(x_i * x_i_j, i=1..m), j=1..n)
-        public double Lambda(double competenceCoefficient) =>
+        public double Lambda(List<double> competenceCoefficients) =>
             Alternatives
-                .Select((x, i) => x.MultiplyBy(AverageScores(competenceCoefficient)[i]))
+                .Select((x, i) => x.MultiplyBy(AverageScores(competenceCoefficients)[i]))
                 .Sum();
 
         public List<double> CompetenceCoefficients() => 
@@ -110,7 +103,7 @@ namespace DelphiMethod
                 {
                     temp.Add(Data[j, i] * Alternatives[j].MultiplyBy(coefficient));
                 }
-                data.Add(1.0 / Lambda(coefficient) * temp.Sum());
+                data.Add(1.0 / Lambda(competenceCoefficients) * temp.Sum());
             }
 
             data.Add(1.0 - data.Sum());

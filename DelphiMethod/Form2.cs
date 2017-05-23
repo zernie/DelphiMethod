@@ -22,6 +22,7 @@ namespace DelphiMethod
         private MatrixList _matrixList;
         // Текущий показатель
         private int _indicator => comboBox1.SelectedIndex;
+        private double _weightIndicator => _config.WeightIndicators[_indicator];
 
         private bool _disableTrigger;
 
@@ -48,7 +49,7 @@ namespace DelphiMethod
             comboBox1.SelectedIndex = 0;
             for (var i = 0; i < _config.IndicatorsCount; i++)
             {
-                var matrix = new Matrix(_config, i);
+                var matrix = new Matrix(_config.ExpertsCount, _config.AlternativesCount, _config.WeightIndicators[i]);
                 _matrixList.Experts.Add(matrix);
             }
             ratingScaleTextBox.Text = _config.RatingScale.ToString();
@@ -106,7 +107,8 @@ namespace DelphiMethod
             try
             {
                 if (_disableTrigger) return;
-                _currentRank = new Matrix(Utils.ExtractData(dataGridView2, _config), _config, _indicator);
+                var data = Utils.ExtractData(dataGridView2, _config);
+                _currentRank = new Matrix(data, _weightIndicator);
                 _matrixList[comboBox1.SelectedIndex] = _currentRank;
             }
             catch (FormatException exception)
@@ -127,10 +129,6 @@ namespace DelphiMethod
         private void calculateButton_Click_1(object sender, EventArgs e)
         {
             Calculate();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
         }
     }
 }

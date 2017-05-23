@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -34,20 +31,32 @@ namespace DelphiMethod
             });
         }
 
-        // Извлечь матрицу из таблицы
-        public static double[,] ExtractData(DataGridView component, Config initialData)
+        // Заполнить таблицу матрицей
+        public static void FillDataGridView(DataGridView component, Matrix data)
         {
-            var width = initialData.ExpertsCount;
-            var height = initialData.AlternativesCount;
+            for (var i = 0; i < data.Height; i++)
+            {
+                for (var j = 0; j < data.Width; j++)
+                {
+                    component[j, i].Value = data[i, j];
+                }
+            }
+        }
+
+        // Извлечь матрицу из таблицы
+        public static double[,] ExtractData(DataGridView component, Config config)
+        {
+            var width = config.ExpertsCount;
+            var height = config.AlternativesCount;
             var data = new double[height, width];
 
             for (var i = 0; i < height; i++)
             {
                 for (var j = 0; j < width; j++)
                 {
-                    var value = Convert.ToDouble(component.Rows[i].Cells[j].Value);
+                    var value = Convert.ToDouble(component[j, i].Value);
 
-                    if (!initialData.RatingScale.Includes(value))
+                    if (!config.RatingScale.Includes(value))
                     {
                         throw new FormatException("Оценка вышла за пределы шкалы");
                     }
@@ -59,23 +68,12 @@ namespace DelphiMethod
             return data;
         }
 
-        // Заполнить таблицу матрицей
-        public static void FillDataGridView(DataGridView component, Matrix data)
-        {
-            for (var i = 0; i < data.Height; i++)
-            {
-                for (var j = 0; j < data.Width; j++)
-                {
-                    component.Rows[i].Cells[j].Value = data[i, j];
-                }
-            }
-        }
-
         public static void CalculateAverageScores(DataGridView component, Matrix data)
         {
+            var groupEvaluation = data.AverageScores(data.InitialCompetenceCoefficient);
+
             for (var i = 0; i < data.Height; i++)
             {
-                var groupEvaluation = data.AverageScores(data.InitialCompetenceCoefficient[i]);
                 component["averageScores", i].Value = Math.Round(groupEvaluation[i], 3);
             }
         }
@@ -86,7 +84,14 @@ namespace DelphiMethod
 
             for (var i = 0; i < data.Width; i++)
             {
-                component[i, data.Height].Value = Math.Round(coefficients[i], 3);
+                var value = coefficients[i];
+                if (double.IsNaN(value))
+                {
+                    component[i, data.Height].Value = "-";
+                    continue;
+                }
+
+                component[i, data.Height].Value = Math.Round(value, 3);
             }
         }
     }

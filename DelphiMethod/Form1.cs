@@ -57,6 +57,7 @@ namespace DelphiMethod
 
             using (var form = new Form2(Config))
             {
+                form.Owner = this;
                 form.ShowDialog();
             }
         }
