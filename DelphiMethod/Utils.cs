@@ -47,14 +47,16 @@ namespace DelphiMethod
         }
 
         // Инициализировать таблицу групповых оценок заданным количеством строк и столбцов
-        public static void InitResultDataGridView(DataGridView component, int width, int count)
+        public static void InitResultDataGridView(DataGridView component, Config configuration)
         {
-            for (var i = 0; i < width; i++)
+
+            for (var i = 0; i < configuration.IndicatorsCount; i++)
             {
-                component.Columns.Add(i.ToString(), $"Показатель z{i + 1}");
+                var indicator = configuration.WeightIndicators.Titles[i];
+                component.Columns.Add(i.ToString(), $"z{i + 1} ({indicator})");
             }
 
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < configuration.AlternativesCount; i++)
             {
                 component.Rows.Add(new DataGridViewRow()
                 {

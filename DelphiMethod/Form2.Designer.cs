@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.nextTourButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,8 +40,9 @@
             this.calculateButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tourNumberLabel = new System.Windows.Forms.Label();
             this.clearButton = new System.Windows.Forms.Button();
+            this.tourNumberLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -56,8 +57,8 @@
             this.dataGridView2.Location = new System.Drawing.Point(0, 173);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.Size = new System.Drawing.Size(1262, 500);
             this.dataGridView2.TabIndex = 12;
@@ -65,9 +66,9 @@
             // nextTourButton
             // 
             this.nextTourButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.nextTourButton.Location = new System.Drawing.Point(1013, 21);
+            this.nextTourButton.Location = new System.Drawing.Point(987, 21);
             this.nextTourButton.Name = "nextTourButton";
-            this.nextTourButton.Size = new System.Drawing.Size(237, 58);
+            this.nextTourButton.Size = new System.Drawing.Size(263, 58);
             this.nextTourButton.TabIndex = 15;
             this.nextTourButton.Text = "Следующий тур →";
             this.nextTourButton.UseVisualStyleBackColor = true;
@@ -86,9 +87,9 @@
             // exportButton
             // 
             this.exportButton.Font = new System.Drawing.Font("Segoe UI", 14F);
-            this.exportButton.Location = new System.Drawing.Point(1013, 96);
+            this.exportButton.Location = new System.Drawing.Point(1129, 96);
             this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(237, 58);
+            this.exportButton.Size = new System.Drawing.Size(121, 58);
             this.exportButton.TabIndex = 18;
             this.exportButton.Text = "Экспорт";
             this.exportButton.UseVisualStyleBackColor = true;
@@ -136,9 +137,9 @@
             // calculateButton
             // 
             this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.calculateButton.Location = new System.Drawing.Point(845, 21);
+            this.calculateButton.Location = new System.Drawing.Point(797, 21);
             this.calculateButton.Name = "calculateButton";
-            this.calculateButton.Size = new System.Drawing.Size(162, 58);
+            this.calculateButton.Size = new System.Drawing.Size(184, 58);
             this.calculateButton.TabIndex = 26;
             this.calculateButton.Text = "Посчитать";
             this.calculateButton.UseVisualStyleBackColor = true;
@@ -151,6 +152,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.clearButton);
             this.groupBox1.Controls.Add(this.calculateButton);
             this.groupBox1.Controls.Add(this.tourNumberLabel);
@@ -168,6 +170,17 @@
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
             // 
+            // clearButton
+            // 
+            this.clearButton.Font = new System.Drawing.Font("Segoe UI", 14F);
+            this.clearButton.Location = new System.Drawing.Point(987, 96);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(136, 58);
+            this.clearButton.TabIndex = 27;
+            this.clearButton.Text = "Очистить";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
             // tourNumberLabel
             // 
             this.tourNumberLabel.AutoSize = true;
@@ -178,16 +191,16 @@
             this.tourNumberLabel.TabIndex = 20;
             this.tourNumberLabel.Text = "Номер тура";
             // 
-            // clearButton
+            // button1
             // 
-            this.clearButton.Font = new System.Drawing.Font("Segoe UI", 14F);
-            this.clearButton.Location = new System.Drawing.Point(845, 96);
-            this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(162, 58);
-            this.clearButton.TabIndex = 27;
-            this.clearButton.Text = "Очистить";
-            this.clearButton.UseVisualStyleBackColor = true;
-            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.button1.Location = new System.Drawing.Point(797, 93);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(184, 61);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "Заполнить случ. значениями";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form2
             // 
@@ -221,5 +234,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label tourNumberLabel;
         private System.Windows.Forms.Button clearButton;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -36,15 +36,7 @@ namespace DelphiMethod
             Height = height;
             WeightIndicator = weightIndicator;
             // заполняем нулями
-            var rand = new Random();
             Data = new double[Height, Width];
-            for (int i = 0; i < Height; i++)
-            {
-                for (int j = 0; j < Width; j++)
-                {
-                    Data[i, j] = Math.Round(rand.NextDouble() * 10, 1);
-                }
-            }
         }
 
         public double this[int row, int col] => Data[row, col];
@@ -140,6 +132,18 @@ namespace DelphiMethod
             data.Add(1.0 - data.Sum());
 
             return data;
+        }
+
+        public void FillWithRandomValues()
+        {
+            var rand = new Random();
+            for (var i = 0; i < Height; i++)
+            {
+                for (var j = 0; j < Width; j++)
+                {
+                    Data[i, j] = Math.Round(rand.NextDouble() * 10, 1);
+                }
+            }
         }
     }
 }

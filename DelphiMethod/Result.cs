@@ -12,7 +12,7 @@ namespace DelphiMethod
 
             try
             {
-                Utils.InitResultDataGridView(dataGridView1, config.IndicatorsCount, config.AlternativesCount);
+                Utils.InitResultDataGridView(dataGridView1, config);
                 Utils.FillDataGridView(dataGridView1, data);
                 Utils.CalculateGroupScoreSums(dataGridView1, sums);
 

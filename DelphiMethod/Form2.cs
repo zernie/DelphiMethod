@@ -141,5 +141,12 @@ namespace DelphiMethod
             Utils.FillDataGridView(dataGridView2, _currentRank);
             Calculate();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _currentRank.FillWithRandomValues();
+            Utils.FillDataGridView(dataGridView2, _currentRank);
+            Calculate();
+        }
     }
 }
