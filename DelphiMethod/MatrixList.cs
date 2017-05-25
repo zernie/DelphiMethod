@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace DelphiMethod
 {
@@ -10,7 +11,7 @@ namespace DelphiMethod
     {
         // Конфигурация
         public Config Configuration;
-        
+
         // Матрицы рангов
         public List<Matrix> Matrices = new List<Matrix>();
         //весовые коэффициенты показателей сравнения альтернатив; 
@@ -68,22 +69,32 @@ namespace DelphiMethod
         }
 
         // Ранжирование альтернатив
-        public string[] Ranks(List<double> groupScoresSums)
+        public List<string> Ranks(List<double> groupScoresSums)
         {
             var sum = groupScoresSums.Sum();
-
-            var list = groupScoresSums.Select(x =>  x / sum).ToArray();
+            var list = groupScoresSums.Select(x => x / sum).ToArray();
             var indexes = list.Select((x, i) => i).ToArray();
 
             Array.Sort(list, indexes);
             Array.Reverse(list);
             Array.Reverse(indexes);
-            var ranks = new string[list.Length];
 
+            var ranks = new List<string>();
+
+            var k = 1;
             for (var i = 0; i < list.Length; i++)
             {
-                var index = indexes[i];
-                ranks[i] = $"{i+1}. x{index+1}";
+                var s = new List<int> {indexes[i] + 1};
+
+                for (var j = i+1; j < list.Length; j++)
+                {
+                    if (list[i] == list[j])
+                    {
+                        s.Add(indexes[j]+1);
+                        i++;
+                    }
+                }
+                ranks.Add($"{k++}. {string.Join(" ", s.Select(x=> $"x{x}").ToArray())}");
             }
 
             return ranks;

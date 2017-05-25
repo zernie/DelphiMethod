@@ -41,21 +41,21 @@ namespace DelphiMethod
 
         public double this[int row, int col] => Data[row, col];
 
-        //        private List<double> Subtract(List<double> a, List<double> b)
-        //        {
-        //            var data = new List<double>(a.Count);
-        //            for (var i = 0; i < a.Count; i++)
-        //            {
-        //                data.Add(a[i] - b[i]);
-        //            }
-        //
-        //            return data;
-        //        }
-
-        //        private double NewMethod(List<double> a, List<double> b)
-        //        {
-        //            return Math.Abs(Subtract(a, b).Max());
-        //        }
+//        private List<double> Subtract(List<double> a, List<double> b)
+//        {
+//            var data = new List<double>(a.Count);
+//            for (var i = 0; i < a.Count; i++)
+//            {
+//                data.Add(a[i] - b[i]);
+//            }
+//
+//            return data;
+//        }
+//
+//        private double NewMethod(List<double> a, List<double> b)
+//        {
+//            return Math.Abs(Subtract(a, b).Max());
+//        }
 
         // Групповые оценки x_j^k=sum(q^k*K_i*x_i_j^k), i=1..m), j=1..n
         public List<double> GroupScores(List<double> competenceCoefficients)
@@ -78,7 +78,6 @@ namespace DelphiMethod
         public List<double> AverageScores(List<double> competenceCoefficients)
         {
             var list = new List<double>(Height);
-
             for (var i = 0; i < Height; i++)
             {
                 var temp = new List<double>(Width);
@@ -128,7 +127,7 @@ namespace DelphiMethod
                 data.Add(1.0 / Lambda(competenceCoefficients) * temp.Sum());
             }
 
-            // k^m= 1 - sum(k^i, i=1..m-1)
+            // K_m = 1 - sum(K_i, i=1..m-1)
             data.Add(1.0 - data.Sum());
 
             return data;
