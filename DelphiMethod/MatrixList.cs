@@ -19,6 +19,16 @@ namespace DelphiMethod
         public MatrixList(Config configuration)
         {
             Configuration = configuration;
+
+            for (var i = 0; i < configuration.IndicatorsCount; i++)
+            {
+                var matrix = new Matrix(
+                    configuration.ExpertsCount,
+                    configuration.AlternativesCount,
+                    configuration.Indicators[i]
+                    );
+                Matrices.Add(matrix);
+            }
         }
 
         public Matrix this[int index]
@@ -38,12 +48,6 @@ namespace DelphiMethod
                 {
                     var matrix = Matrices[j];
                     var data = matrix.GroupScores(matrix.CompetenceCoefficients());
-                    if (double.IsNaN(data[i]))
-                    {
-                        var indicator = Configuration.WeightIndicators.Titles[j];
-                        throw new NotFiniteNumberException($"Данные в показателе '{indicator}' введены неправильно");
-                    }
-
                     groupScores[i, j] = data[i];
                 }
             }
@@ -84,17 +88,17 @@ namespace DelphiMethod
             var k = 1;
             for (var i = 0; i < list.Length; i++)
             {
-                var s = new List<int> {indexes[i] + 1};
+                var s = new List<int> { indexes[i] + 1 };
 
-                for (var j = i+1; j < list.Length; j++)
+                for (var j = i + 1; j < list.Length; j++)
                 {
                     if (list[i] == list[j])
                     {
-                        s.Add(indexes[j]+1);
+                        s.Add(indexes[j] + 1);
                         i++;
                     }
                 }
-                ranks.Add($"{k++}. {string.Join(" ", s.Select(x=> $"x{x}").ToArray())}");
+                ranks.Add($"{k++}. {string.Join(" ", s.Select(x => $"x{x}").ToArray())}");
             }
 
             return ranks;

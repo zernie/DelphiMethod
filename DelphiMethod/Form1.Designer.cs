@@ -34,8 +34,6 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.importButton = new System.Windows.Forms.Button();
             this.configOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
@@ -45,6 +43,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -113,23 +113,12 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Title,
-            this.Value});
+            this.Weight});
             this.dataGridView1.Location = new System.Drawing.Point(567, 63);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(382, 327);
             this.dataGridView1.TabIndex = 17;
-            // 
-            // Title
-            // 
-            this.Title.HeaderText = "Имя";
-            this.Title.Name = "Title";
-            this.Title.Width = 200;
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "Значение";
-            this.Value.Name = "Value";
             // 
             // importButton
             // 
@@ -252,6 +241,17 @@
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             // 
+            // Title
+            // 
+            this.Title.HeaderText = "Имя";
+            this.Title.Name = "Title";
+            this.Title.Width = 200;
+            // 
+            // Weight
+            // 
+            this.Weight.HeaderText = "Вес";
+            this.Weight.Name = "Weight";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -290,7 +290,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Weight;
     }
 }
 

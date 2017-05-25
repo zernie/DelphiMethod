@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace DelphiMethod
@@ -23,20 +24,20 @@ namespace DelphiMethod
         private int IndicatorsCount => (int)numericUpDown3.Value; // l, количество показателей
 
         // коэффициенты весов показателей q^k
-        private WeightIndicators WeightIndicators
+        private List<Indicator> Indicators
         {
             get
             {
-                var names = new List<string>(dataGridView1.RowCount);
-                var values = new List<double>(dataGridView1.RowCount);
+                var indicators = new List<Indicator>(dataGridView1.RowCount);
 
                 for (var i = 0; i < dataGridView1.RowCount; i++)
                 {
-                    names.Add(Convert.ToString(dataGridView1["Title", i].Value));
-                    values.Add(Convert.ToDouble(dataGridView1["Value", i].Value));
+                    var title = Convert.ToString(dataGridView1["Title", i].Value);
+                    var weight = Convert.ToDouble(dataGridView1["Weight", i].Value);
+                    indicators.Add(new Indicator(title, weight));
                 }
 
-                return new WeightIndicators(names, values);
+                return indicators;
             }
         }
 
@@ -52,10 +53,10 @@ namespace DelphiMethod
                 ExpertsCount = ExpertsCount,
                 IndicatorsCount = IndicatorsCount,
                 RatingScale = RatingScale,
-                WeightIndicators = WeightIndicators
+                Indicators = Indicators
             };
 
-            if (!ValidWeightIndicators(Configuration.WeightIndicators)) return;
+            if (!ValidWeightIndicators(Configuration.Indicators)) return;
 
             var matrixList = new MatrixList(Configuration);
 
@@ -73,25 +74,27 @@ namespace DelphiMethod
             var matrixList = Utils.ImportFromFile(configOpenFileDialog.FileName);
             if (matrixList == null) return;
 
-            using (var form = new Form2(matrixList))
+            using (var form = new Form2(matrixList, true))
             {
                 form.ShowDialog();
             }
         }
 
         // Проверка на верность введенных данных
-        private bool ValidWeightIndicators(WeightIndicators weightIndicators)
+        private bool ValidWeightIndicators(List<Indicator> indicators)
         {
-            if (weightIndicators.Count != IndicatorsCount)
+            if (indicators.Count != IndicatorsCount)
             {
-                MessageBox.Show($"Количество коэффициентов весов показателей равно {weightIndicators.Count}," +
+                MessageBox.Show($"Количество коэффициентов весов показателей равно {indicators.Count}," +
                                 $" а должно равняться количеству показателей ({IndicatorsCount})");
                 return false;
             }
 
-            if (weightIndicators.Sum != 1.0)
+            var sumIndicatorsWeight = indicators.Select(x => x.Weight).Sum();
+
+            if (sumIndicatorsWeight != 1.0)
             {
-                MessageBox.Show($"Сумма коэффициентов весов показателей = {weightIndicators.Sum}," +
+                MessageBox.Show($"Сумма коэффициентов весов показателей = {sumIndicatorsWeight}," +
                                 " а должна равняться единице");
                 return false;
             }

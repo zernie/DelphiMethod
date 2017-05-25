@@ -15,27 +15,27 @@ namespace DelphiMethod
         public int Width;
         // высота (кол-во альтернатив)
         public int Height;
-        // вес коэфф. показателя, q_k
-        public double WeightIndicator;
+        // Показатель
+        public Indicator Indicator;
 
         // Начальные коэффициенты компетентности экспертов K_i^0=1/m
         public List<double> InitialCompetenceCoefficient =>
             Enumerable.Repeat(1.0 / Width, Width)
             .ToList();
 
-        public Matrix(double[,] data, double weightIndicator)
+        public Matrix(double[,] data, Indicator indicator)
         {
             Data = data;
             Height = data.GetLength(0);
             Width = data.GetLength(1);
-            WeightIndicator = weightIndicator;
+            Indicator = indicator;
         }
 
-        public Matrix(int width, int height, double weightIndicator)
+        public Matrix(int width, int height, Indicator indicator)
         {
             Width = width;
             Height = height;
-            WeightIndicator = weightIndicator;
+            Indicator = indicator;
             // заполняем нулями
             Data = new double[Height, Width];
         }
@@ -63,7 +63,7 @@ namespace DelphiMethod
                 var temp = new List<double>(Width);
                 for (var j = 0; j < Width; j++)
                 {
-                    temp.Add(WeightIndicator * competenceCoefficients[j] * Data[i, j]);
+                    temp.Add(Indicator.Weight * competenceCoefficients[j] * Data[i, j]);
                 }
                 groupScores.Add(temp.Sum());
             }
@@ -82,13 +82,20 @@ namespace DelphiMethod
                 {
                     temp.Add(Data[i, j] * competenceCoefficients[j]);
                 }
-                list.Add(temp.Sum());
+                var sum = temp.Sum();
+
+                if (sum == 0.0)
+                    throw new NotFiniteNumberException(
+                        $"Данные в показателе '{Indicator.Title}' введены неправильно");
+
+
+                list.Add(sum);
             }
             return list;
         }
 
         // Нормировочный коэффициент lambda=sum(sum(x_i * x_i_j, i=1..m), j=1..n)
-        public double Lambda(List<double> competenceCoefficients)
+        public double Lambda(List<double> averageScores)
         {
             var sum = 0.0;
             for (var i = 0; i < Height; i++)
@@ -96,7 +103,7 @@ namespace DelphiMethod
                 var temp = new List<double>(Width);
                 for (var j = 0; j < Width; j++)
                 {
-                    temp.Add(Data[i, j] * AverageScores(competenceCoefficients)[i]);
+                    temp.Add(Data[i, j] * averageScores[i]);
                 }
                 sum += temp.Sum();
             }
@@ -110,9 +117,9 @@ namespace DelphiMethod
         // Коэффициенты компетентности K_i=(1/lambda)*sum(x_j*x_i_j, j=1..n)
         public List<double> CompetenceCoefficients(List<double> competenceCoefficients, double e = 0.001)
         {
-
             var data = new List<double>(Width);
             var averageScores = AverageScores(competenceCoefficients);
+
             while(true)
             {
                 data.Clear();
@@ -125,7 +132,7 @@ namespace DelphiMethod
                     {
                         temp.Add(Data[j, i] * averageScores[j]);
                     }
-                    data.Add(1.0 / Lambda(competenceCoefficients) * temp.Sum());
+                    data.Add(1.0 / Lambda(averageScores) * temp.Sum());
                 }
 
                 // K_m = 1 - sum(K_i, i=1..m-1)
@@ -137,8 +144,9 @@ namespace DelphiMethod
                 averageScores = AverageScores(data);
                 // Признак окончания итерационного процесса
                 // max(|x_i^t - x_i^t-1|) < e
-                if (Math.Abs(Subtract(averageScores, previousAverageScores).Max()) < e) break;
-            } 
+                var max = Subtract(averageScores, previousAverageScores).Max();
+                if (Math.Abs(max) < e) break;
+            }
             return data;
         }
 

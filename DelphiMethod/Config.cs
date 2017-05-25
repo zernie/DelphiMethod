@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DelphiMethod
 {
@@ -13,7 +14,7 @@ namespace DelphiMethod
         // Кол-во показателей k
         public int IndicatorsCount;
         // Весовые коэффиценты q_k
-        public WeightIndicators WeightIndicators;
+        public List<Indicator> Indicators;
         // Шкала оценок
         public Range RatingScale;
     }

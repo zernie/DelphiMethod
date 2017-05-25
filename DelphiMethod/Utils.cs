@@ -12,8 +12,6 @@ namespace DelphiMethod
         // Инициализировать таблицу рангов заданным количеством строк и столбцов
         public static void InitInputDataGridView(DataGridView component, int width, int count)
         {
-            component.Rows.Clear();
-            component.Columns.Clear();
             for (var i = 0; i < width; i++)
             {
                 component.Columns.Add(i.ToString(), $"Эксперт №{i + 1}");
@@ -32,7 +30,7 @@ namespace DelphiMethod
 
             component.Columns.Add(new DataGridViewTextBoxColumn()
             {
-                Name = "groupScores",
+                Name = "groupScore",
                 HeaderText = "Групповые оценки",
                 ReadOnly = true,
             });
@@ -52,7 +50,7 @@ namespace DelphiMethod
 
             for (var i = 0; i < configuration.IndicatorsCount; i++)
             {
-                var indicator = configuration.WeightIndicators.Titles[i];
+                var indicator = configuration.Indicators[i].Title;
                 component.Columns.Add(i.ToString(), $"z{i + 1} ({indicator})");
             }
 
@@ -71,18 +69,6 @@ namespace DelphiMethod
             component.Columns.Add("sum", "Сумма");
         }
 
-        // Заполнить таблицу матрицей
-        public static void FillDataGridView(DataGridView component, Matrix data)
-        {
-            for (var i = 0; i < data.Height; i++)
-            {
-                for (var j = 0; j < data.Width; j++)
-                {
-                    component[j, i].Value = data[i, j];
-                }
-            }
-        }
-
         public static void FillDataGridView(DataGridView component, double[,] data)
         {
             for (var i = 0; i < data.GetLength(0); i++)
@@ -91,6 +77,19 @@ namespace DelphiMethod
                 {
                     component[j, i].Value = Math.Round(data[i, j], 3);
                 }
+            }
+        }
+
+        public static void ClearCalculatedValues(DataGridView component)
+        {
+            for (var i = 0; i < component.RowCount; i++)
+            {
+                component["groupScore", i].Value = "";
+            }
+
+            for (var i = 0; i < component.ColumnCount; i++)
+            {
+                component[i, component.RowCount-1].Value = "";
             }
         }
 
@@ -127,12 +126,7 @@ namespace DelphiMethod
 
             for (var i = 0; i < data.Height; i++)
             {
-                if (double.IsNaN(groupScores[i]))
-                {
-                    component["groupScores", i].Value = "-";
-                    continue;
-                }
-                component["groupScores", i].Value = Math.Round(groupScores[i], 3);
+                component["groupScore", i].Value = Math.Round(groupScores[i], 3);
             }
         }
 
@@ -143,14 +137,7 @@ namespace DelphiMethod
 
             for (var i = 0; i < data.Width; i++)
             {
-                var value = coefficients[i];
-                if (double.IsNaN(value))
-                {
-                    component[i, data.Height].Value = "-";
-                    continue;
-                }
-
-                component[i, data.Height].Value = Math.Round(value, 3);
+                component[i, data.Height].Value = Math.Round(coefficients[i], 3);
             }
         }
 

@@ -13,21 +13,21 @@ namespace DelphiMethod
         // Текущая матрица оценок
         private Matrix _currentRank
         {
-            get => _matrixList[_indicator];
-            set => _matrixList[_indicator] = value;
+            get => _matrixList[_indicatorIndex];
+            set => _matrixList[_indicatorIndex] = value;
         }
 
         // Список матриц оценок
         private MatrixList _matrixList;
         // Текущий показатель
-        private int _indicator => comboBox1.SelectedIndex;
+        private int _indicatorIndex => comboBox1.SelectedIndex;
         // Вес коэффициента
-        private double _weightIndicator => _config.WeightIndicators[_indicator];
+        private Indicator _indicator => _config.Indicators[_indicatorIndex];
 
         // Включить проверку введенных значений?
         private bool _disableTrigger;
 
-        public Form2(MatrixList matrixList)
+        public Form2(MatrixList matrixList, bool calculate = false)
         {
             InitializeComponent();
 
@@ -36,18 +36,14 @@ namespace DelphiMethod
 
             AddTourNumber();
 
-            comboBox1.Items.AddRange(_config.WeightIndicators.Titles.ToArray());
+            comboBox1.Items.AddRange(_config.Indicators.Select(x => x.Title).ToArray());
             comboBox1.SelectedIndex = 0;
-            for (var i = 0; i < _config.IndicatorsCount; i++)
-            {
-                var matrix = new Matrix(_config.ExpertsCount, _config.AlternativesCount, _config.WeightIndicators[i]);
-                _matrixList.Matrices.Add(matrix);
-            }
+
             ratingScaleTextBox.Text = _config.RatingScale.ToString();
 
             Utils.InitInputDataGridView(dataGridView2, _config.ExpertsCount, _config.AlternativesCount);
-            Utils.FillDataGridView(dataGridView2, _currentRank);
-            Calculate();
+            Utils.FillDataGridView(dataGridView2, _currentRank.Data);
+            if (calculate) Calculate();
 
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
@@ -76,8 +72,8 @@ namespace DelphiMethod
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            Utils.FillDataGridView(dataGridView2, _currentRank);
-            Calculate();
+            Utils.FillDataGridView(dataGridView2, _currentRank.Data);
+            Utils.ClearCalculatedValues(dataGridView2);
             _disableTrigger = false;
         }
 
@@ -88,7 +84,7 @@ namespace DelphiMethod
             {
                 if (_disableTrigger) return;
                 var data = Utils.ExtractData(dataGridView2, _config);
-                _currentRank = new Matrix(data, _weightIndicator);
+                _currentRank = new Matrix(data, _indicator);
                 _matrixList[comboBox1.SelectedIndex] = _currentRank;
             }
             // в случае ввода нечисловых данных выдаем ошибку
@@ -118,7 +114,7 @@ namespace DelphiMethod
                 }
                 AddTourNumber();
             }
-            catch (NotFiniteNumberException exception)
+            catch (ArithmeticException exception)
             {
                 MessageBox.Show(exception.Message);
             }
@@ -131,22 +127,35 @@ namespace DelphiMethod
         // Высчитать групповые коэффициенты
         private void calculateButton_Click_1(object sender, EventArgs e)
         {
-            Calculate();
+            try
+            {
+                Calculate();
+
+            }
+            catch (ArithmeticException)
+            {
+                MessageBox.Show("Заполните матрицу рангов");
+            }
         }
 
         // Очистить таблицу
         private void clearButton_Click(object sender, EventArgs e)
         {
-            _currentRank = new Matrix(_config.ExpertsCount, _config.AlternativesCount, _weightIndicator);
-            Utils.FillDataGridView(dataGridView2, _currentRank);
-            Calculate();
+            _disableTrigger = true;
+            _currentRank = new Matrix(_config.ExpertsCount, _config.AlternativesCount, _indicator);
+            Utils.FillDataGridView(dataGridView2, _currentRank.Data);
+            Utils.ClearCalculatedValues(dataGridView2);
+            _disableTrigger = false;
         }
 
+        // Заполнить случ. значениями
         private void button1_Click(object sender, EventArgs e)
         {
+            _disableTrigger = true;
             _currentRank.FillWithRandomValues();
-            Utils.FillDataGridView(dataGridView2, _currentRank);
+            Utils.FillDataGridView(dataGridView2, _currentRank.Data);
             Calculate();
+            _disableTrigger = false;
         }
     }
 }
