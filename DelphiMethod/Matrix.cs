@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace DelphiMethod
 {
@@ -41,21 +42,17 @@ namespace DelphiMethod
 
         public double this[int row, int col] => Data[row, col];
 
-//        private List<double> Subtract(List<double> a, List<double> b)
-//        {
-//            var data = new List<double>(a.Count);
-//            for (var i = 0; i < a.Count; i++)
-//            {
-//                data.Add(a[i] - b[i]);
-//            }
-//
-//            return data;
-//        }
-//
-//        private double NewMethod(List<double> a, List<double> b)
-//        {
-//            return Math.Abs(Subtract(a, b).Max());
-//        }
+        // Вычесть список из списка
+        private List<double> Subtract(List<double> a, List<double> b)
+        {
+            var data = new List<double>(a.Count);
+            for (var i = 0; i < a.Count; i++)
+            {
+                data.Add(a[i] - b[i]);
+            }
+
+            return data;
+        }
 
         // Групповые оценки x_j^k=sum(q^k*K_i*x_i_j^k), i=1..m), j=1..n
         public List<double> GroupScores(List<double> competenceCoefficients)
@@ -111,25 +108,37 @@ namespace DelphiMethod
             CompetenceCoefficients(InitialCompetenceCoefficient);
 
         // Коэффициенты компетентности K_i=(1/lambda)*sum(x_j*x_i_j, j=1..n)
-        public List<double> CompetenceCoefficients(List<double> competenceCoefficients)
+        public List<double> CompetenceCoefficients(List<double> competenceCoefficients, double e = 0.001)
         {
+
             var data = new List<double>(Width);
             var averageScores = AverageScores(competenceCoefficients);
-
-            for (var i = 0; i < Width - 1; i++)
+            while(true)
             {
-                var temp = new List<double>(Height);
+                data.Clear();
 
-                for (var j = 0; j < Height; j++)
+                for (var i = 0; i < Width - 1; i++)
                 {
-                    temp.Add(Data[j, i] * averageScores[j]);
+                    var temp = new List<double>(Height);
+
+                    for (var j = 0; j < Height; j++)
+                    {
+                        temp.Add(Data[j, i] * averageScores[j]);
+                    }
+                    data.Add(1.0 / Lambda(competenceCoefficients) * temp.Sum());
                 }
-                data.Add(1.0 / Lambda(competenceCoefficients) * temp.Sum());
-            }
 
-            // K_m = 1 - sum(K_i, i=1..m-1)
-            data.Add(1.0 - data.Sum());
+                // K_m = 1 - sum(K_i, i=1..m-1)
+                data.Add(1.0 - data.Sum());
 
+                // x_i^t-1
+                var previousAverageScores = averageScores;
+                // x_i^t
+                averageScores = AverageScores(data);
+                // Признак окончания итерационного процесса
+                // max(|x_i^t - x_i^t-1|) < e
+                if (Math.Abs(Subtract(averageScores, previousAverageScores).Max()) < e) break;
+            } 
             return data;
         }
 
