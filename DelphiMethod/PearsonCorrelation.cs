@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace DelphiMethod
 {
-    // Распределение пирсона
+    // Распределение Пирсона
     [Serializable]
-    public class PearsonCorrelation
+    public struct PearsonCorrelation
     {
         // Таблица значений
         public double[,] P;
@@ -16,10 +16,8 @@ namespace DelphiMethod
         // Количество строк
         public int Length;
 
-        public PearsonCorrelation(string filename = "P.csv")
+        public PearsonCorrelation(string[] lines)
         {
-            var path = Path.Combine(Path.GetFullPath(@"..\..\"), filename);
-            var lines = File.ReadAllLines(path);
             var height = lines.Length;
             var width = lines[1].Split(' ').Length;
             Length = lines.Length - 1;

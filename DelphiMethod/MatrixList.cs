@@ -83,22 +83,36 @@ namespace DelphiMethod
             var k = 1;
             for (var i = 0; i < list.Length; i++)
             {
-                var s = new List<int> { indexes[i] + 1 };
+                var s = new List<int> {indexes[i] + 1};
 
                 for (var j = i + 1; j < list.Length; j++)
                 {
-                    if (list[i] == list[j]) 
+                    if (list[i] == list[j])
                     {
                         s.Add(indexes[j]);
                         i++;
                     }
                 }
-                
+
                 var strings = s.Select(x => $"x{x}").ToArray();
                 ranks.Add($"{k++}. {string.Join(", ", strings)}");
             }
 
             return ranks;
+        }
+
+        public List<int> DisabledRanks(int alphaIndex)
+        {
+            var disabledRanks = new List<int>();
+            for (var i = 0; i < Matrices.Count; i++)
+            {
+                var rank = Matrices[i];
+                if (rank.IsConsensusReached(Configuration.PearsonCorrelationTable, alphaIndex))
+                {
+                    disabledRanks.Add(i);
+                }
+            }
+            return disabledRanks;
         }
     }
 }

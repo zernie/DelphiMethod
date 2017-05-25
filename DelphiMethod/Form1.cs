@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -16,8 +17,10 @@ namespace DelphiMethod
             dataGridView1.Rows.Add("Популярность", 0.1);
             dataGridView1.Rows.Add("Наличие", 0.1);
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
-            PearsonCorrelationTable = new PearsonCorrelation();
 
+            var path = Path.Combine(Path.GetFullPath(@"..\..\"), "P.csv");
+            var lines = File.ReadAllLines(path);
+            PearsonCorrelationTable = new PearsonCorrelation(lines);
             numericUpDown2.Maximum = PearsonCorrelationTable.Length;
         }
 

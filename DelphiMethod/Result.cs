@@ -6,13 +6,13 @@ namespace DelphiMethod
 {
     public partial class Result : Form
     {
-        public Result(double [,] data, List<double> sums, List<string> ranks, Config config)
+        public Result(double [,] data, List<double> sums, List<string> ranks, List<int> disabled, Config config)
         {
             InitializeComponent();
 
             try
             {
-                Utils.InitResultDataGridView(dataGridView1, config);
+                Utils.InitResultDataGridView(dataGridView1, config, disabled);
                 Utils.FillDataGridView(dataGridView1, data);
                 Utils.CalculateGroupScoreSums(dataGridView1, sums);
 

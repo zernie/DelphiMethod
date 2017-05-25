@@ -57,12 +57,20 @@ namespace DelphiMethod
         }
 
         // Инициализировать таблицу групповых оценок заданным количеством строк и столбцов
-        public static void InitResultDataGridView(DataGridView component, Config configuration)
+        public static void InitResultDataGridView(DataGridView component, Config configuration, List<int> disabled)
         {
             for (var i = 0; i < configuration.IndicatorsCount; i++)
             {
                 var indicator = configuration.Indicators[i].Title;
-                component.Columns.Add(i.ToString(), $"z{i + 1} ({indicator})");
+                component.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    HeaderText = $"z{i + 1} ({indicator})",
+                    ReadOnly = true,
+                    DefaultCellStyle =
+                    {
+                        BackColor = disabled.Contains(i)? Color.LawnGreen : Color.White,
+                    }
+                });
             }
 
             for (var i = 0; i < configuration.AlternativesCount; i++)
@@ -111,7 +119,7 @@ namespace DelphiMethod
 
             for (var i = 0; i < component.ColumnCount; i++)
             {
-                component[i, component.RowCount-1].Value = "";
+                component[i, component.RowCount - 1].Value = "";
             }
         }
 
@@ -152,14 +160,14 @@ namespace DelphiMethod
             try
             {
                 var serializer = new BinaryFormatter();
-                MatrixList matrixList;
+                MatrixList ranks;
 
                 using (var fs = new FileStream(filename, FileMode.OpenOrCreate))
                 {
-                    matrixList = (MatrixList)serializer.Deserialize(fs);
+                    ranks = (MatrixList)serializer.Deserialize(fs);
                 }
 
-                return matrixList;
+                return ranks;
             }
             catch (IOException e)
             {

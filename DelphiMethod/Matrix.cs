@@ -210,19 +210,16 @@ namespace DelphiMethod
         }
 
         // Согласованы ли мнения?
-        public bool IsConsensusReached(PearsonCorrelation PearsonCorrelationTable, int alphaIndex)
+        public bool IsConsensusReached(PearsonCorrelation pearsonCorrelationTable, int alphaIndex)
         {
-            var d = PearsonCorrelationTable.P[N - 2, alphaIndex];
+            var d = pearsonCorrelationTable.P[N - 2, alphaIndex];
 
-            var x2alpha = X2();
-            return x2alpha > d;
+            var x2Alpha = X2();
+            return x2Alpha > d;
         }
 
         // Критерий согласования Пирсона
-        public double X2()
-        {
-            return M * (N - 1) * W();
-        }
+        public double X2() => M * (N - 1) * W();
 
         // Заполнить матрицу случайными значениями
         public void FillWithRandomValues()
