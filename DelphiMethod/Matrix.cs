@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace DelphiMethod
 {
@@ -97,18 +96,16 @@ namespace DelphiMethod
         // Нормировочный коэффициент lambda=sum(sum(x_i * x_i_j, i=1..m), j=1..n)
         public double Lambda(List<double> averageScores)
         {
-            var sum = 0.0;
+            var lambda = 0.0;
             for (var i = 0; i < Height; i++)
             {
-                var temp = new List<double>(Width);
                 for (var j = 0; j < Width; j++)
                 {
-                    temp.Add(Data[i, j] * averageScores[i]);
+                    lambda += Data[i, j] * averageScores[i];
                 }
-                sum += temp.Sum();
             }
 
-            return sum;
+            return lambda;
         }
 
         public List<double> CompetenceCoefficients() =>
@@ -126,13 +123,13 @@ namespace DelphiMethod
 
                 for (var i = 0; i < Width - 1; i++)
                 {
-                    var temp = new List<double>(Height);
+                    var sum = 0.0;
 
                     for (var j = 0; j < Height; j++)
                     {
-                        temp.Add(Data[j, i] * averageScores[j]);
+                        sum += Data[j, i] * averageScores[j];
                     }
-                    data.Add(1.0 / Lambda(averageScores) * temp.Sum());
+                    data.Add(1.0 / Lambda(averageScores) * sum);
                 }
 
                 // K_m = 1 - sum(K_i, i=1..m-1)
@@ -147,6 +144,23 @@ namespace DelphiMethod
                 var max = Subtract(averageScores, previousAverageScores).Max();
                 if (Math.Abs(max) < e) break;
             }
+            return data;
+        }
+
+        // Сумма рангов
+        public List<double> RanksSum()
+        {
+            var data = new List<double>(Height); 
+            for (var i = 0; i < Height; i++)
+            {
+                var temp = 0.0;
+                for (var j = 0; j < Width; j++)
+                {
+                    temp += Data[i, j];
+                }
+                data.Add(temp);
+            }
+
             return data;
         }
 

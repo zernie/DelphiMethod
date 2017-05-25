@@ -60,12 +60,12 @@ namespace DelphiMethod
 
             for (var i = 0; i < Configuration.AlternativesCount; i++)
             {
-                var temp = new List<double>(Configuration.IndicatorsCount);
+                var sum = 0.0;
                 for (var j = 0; j < Configuration.IndicatorsCount; j++)
                 {
-                    temp.Add(groupScores[i, j]);
+                    sum += groupScores[i, j];
                 }
-                sums.Add(temp.Sum());
+                sums.Add(sum);
             }
 
             return sums;
