@@ -34,6 +34,9 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
             this.importButton = new System.Windows.Forms.Button();
             this.configOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
@@ -41,9 +44,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -99,11 +99,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(513, 18);
+            this.label5.Location = new System.Drawing.Point(537, 18);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(398, 32);
+            this.label5.Size = new System.Drawing.Size(143, 32);
             this.label5.TabIndex = 14;
-            this.label5.Text = "Коэффициенты весов показателей";
+            this.label5.Text = "Показатели";
             // 
             // dataGridView1
             // 
@@ -120,6 +120,25 @@
             this.dataGridView1.Size = new System.Drawing.Size(447, 327);
             this.dataGridView1.TabIndex = 17;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // Title
+            // 
+            this.Title.HeaderText = "Имя";
+            this.Title.Name = "Title";
+            this.Title.Width = 200;
+            // 
+            // Weight
+            // 
+            this.Weight.HeaderText = "Вес";
+            this.Weight.Name = "Weight";
+            // 
+            // Remove
+            // 
+            this.Remove.HeaderText = "";
+            this.Remove.Name = "Remove";
+            this.Remove.Text = "Удалить";
+            this.Remove.UseColumnTextForButtonValue = true;
+            this.Remove.Width = 80;
             // 
             // importButton
             // 
@@ -197,38 +216,19 @@
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.importButton);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.numericUpDown2);
+            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Location = new System.Drawing.Point(12, 10);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1001, 403);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
-            // 
-            // Title
-            // 
-            this.Title.HeaderText = "Имя";
-            this.Title.Name = "Title";
-            this.Title.Width = 200;
-            // 
-            // Weight
-            // 
-            this.Weight.HeaderText = "Вес";
-            this.Weight.Name = "Weight";
-            // 
-            // Remove
-            // 
-            this.Remove.HeaderText = "";
-            this.Remove.Name = "Remove";
-            this.Remove.Text = "Удалить";
-            this.Remove.UseColumnTextForButtonValue = true;
-            this.Remove.Width = 80;
             // 
             // Form1
             // 

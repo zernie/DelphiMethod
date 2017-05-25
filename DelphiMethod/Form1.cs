@@ -15,6 +15,7 @@ namespace DelphiMethod
             dataGridView1.Rows.Add("Удобство", 0.4);
             dataGridView1.Rows.Add("Популярность", 0.1);
             dataGridView1.Rows.Add("Наличие", 0.1);
+            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
         }
 
         private Config Configuration;
@@ -23,14 +24,14 @@ namespace DelphiMethod
         private int ExpertsCount => (int)numericUpDown1.Value; // m, количество экспертов
         private int IndicatorsCount => Indicators.Count; // l, количество показателей
 
-        // коэффициенты весов показателей q^k
+        // Показатели, их названия и веса q^k
         private List<Indicator> Indicators
         {
             get
             {
                 var indicators = new List<Indicator>(dataGridView1.RowCount);
 
-                for (var i = 0; i < dataGridView1.RowCount -1; i++)
+                for (var i = 0; i < dataGridView1.RowCount - 1; i++)
                 {
                     var title = Convert.ToString(dataGridView1["Title", i].Value);
                     var weight = Convert.ToDouble(dataGridView1["Weight", i].Value);
@@ -47,22 +48,29 @@ namespace DelphiMethod
         // Пуск
         private void button1_Click(object sender, EventArgs e)
         {
-            Configuration = new Config
+            try
             {
-                AlternativesCount = AlternativesCount,
-                ExpertsCount = ExpertsCount,
-                IndicatorsCount = IndicatorsCount,
-                RatingScale = RatingScale,
-                Indicators = Indicators
-            };
+                Configuration = new Config
+                {
+                    AlternativesCount = AlternativesCount,
+                    ExpertsCount = ExpertsCount,
+                    IndicatorsCount = IndicatorsCount,
+                    RatingScale = RatingScale,
+                    Indicators = Indicators
+                };
 
-            if (!ValidWeightIndicators(Configuration.Indicators)) return;
+                if (!ValidWeightIndicators()) return;
 
-            var matrixList = new MatrixList(Configuration);
+                var matrixList = new MatrixList(Configuration);
 
-            using (var form = new Form2(matrixList))
+                using (var form = new Form2(matrixList))
+                {
+                    form.ShowDialog();
+                }
+            }
+            catch (Exception exception)
             {
-                form.ShowDialog();
+                MessageBox.Show(exception.Message);
             }
         }
 
@@ -70,7 +78,7 @@ namespace DelphiMethod
         private void importButton_Click(object sender, EventArgs e)
         {
             if (configOpenFileDialog.ShowDialog() == DialogResult.Cancel) return;
-            
+
             var matrixList = Utils.ImportFromFile(configOpenFileDialog.FileName);
             if (matrixList == null) return;
 
@@ -81,25 +89,17 @@ namespace DelphiMethod
         }
 
         // Проверка на верность введенных данных
-        private bool ValidWeightIndicators(List<Indicator> indicators)
+        private bool ValidWeightIndicators()
         {
-            if (indicators.Count != IndicatorsCount)
-            {
-                MessageBox.Show($"Количество коэффициентов весов показателей равно {indicators.Count}," +
-                                $" а должно равняться количеству показателей ({IndicatorsCount})");
-                return false;
-            }
+            if (indicatorsWeightSum == 1.0) return true;
 
-            var sumIndicatorsWeight = indicators.Select(x => x.Weight).Sum();
-
-            if (sumIndicatorsWeight != 1.0)
-            {
-                MessageBox.Show($"Сумма коэффициентов весов показателей = {sumIndicatorsWeight}," +
-                                " а должна равняться единице");
-                return false;
-            }
-            return true;
+            MessageBox.Show($"Сумма коэффициентов весов показателей = {indicatorsWeightSum}," +
+                            " а должна равняться единице");
+            return false;
         }
+
+        private double indicatorsWeightSum
+            => Indicators.Select(x => x.Weight).Sum();
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -111,6 +111,15 @@ namespace DelphiMethod
             {
                 dataGridView1.Rows.RemoveAt(e.RowIndex);
             }
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.CurrentCell.ColumnIndex != 1) return;
+            if (double.TryParse(dataGridView1.CurrentCell.Value.ToString(), out double value) && value >= 0.0 && value <= 1.0) return;
+
+            dataGridView1.CurrentCell.Value = 0.1;
+            MessageBox.Show("Введите число от 0 до 1");
         }
     }
 }
