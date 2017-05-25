@@ -16,6 +16,14 @@ namespace DelphiMethod
             dataGridView1.Rows.Add("Популярность", 0.1);
             dataGridView1.Rows.Add("Наличие", 0.1);
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
+            PearsonCorrelationTable = new PearsonCorrelation();
+
+            foreach (var alpha in PearsonCorrelationTable.alphas)
+            {
+                pearsonCorrelationComboBox.Items.Add(alpha);
+            }
+
+            pearsonCorrelationComboBox.SelectedIndex = 0;
         }
 
         private Config Configuration;
@@ -38,6 +46,8 @@ namespace DelphiMethod
             return indicators;
         }
 
+        private PearsonCorrelation PearsonCorrelationTable;
+
         // Шкала оценок
         private Range RatingScale => new Range(0.0, radioButton1.Checked ? 10.0 : 100.0);
 
@@ -56,7 +66,9 @@ namespace DelphiMethod
                     AlternativesCount = AlternativesCount,
                     ExpertsCount = ExpertsCount,
                     RatingScale = RatingScale,
-                    Indicators = Indicators()
+                    Indicators = Indicators(),
+                    AlphaIndex = pearsonCorrelationComboBox.SelectedIndex,
+                    PearsonCorrelationTable = PearsonCorrelationTable,
                 };
 
                 if (!CheckWeightIndicators()) return;

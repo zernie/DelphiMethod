@@ -209,6 +209,20 @@ namespace DelphiMethod
                 (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * t);
         }
 
+        public bool IsConsensusReached(PearsonCorrelation PearsonCorrelationTable, int alphaIndex)
+        {
+            var d = PearsonCorrelationTable.P[N - 2, alphaIndex];
+
+            var x2 = X2();
+                return x2 > d;
+        }
+
+        // Критерий согласования Пирсона
+        public double X2()
+        {
+            return M * (N - 1) * W();
+        }
+
         // Заполнить матрицу случайными значениями
         public void FillWithRandomValues()
         {
@@ -221,5 +235,6 @@ namespace DelphiMethod
                 }
             }
         }
+        
     }
 }

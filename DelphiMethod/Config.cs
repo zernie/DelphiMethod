@@ -17,5 +17,7 @@ namespace DelphiMethod
         public int IndicatorsCount => Indicators.Count;
         // Шкала оценок
         public Range RatingScale;
+        public PearsonCorrelation PearsonCorrelationTable;
+        public int AlphaIndex;
     }
 }

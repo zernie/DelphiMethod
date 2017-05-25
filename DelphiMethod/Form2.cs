@@ -57,7 +57,8 @@ namespace DelphiMethod
         {
             Utils.CalculateCoefficients(dataGridView2, _currentRank);
             Utils.FillGroupScores(dataGridView2, _currentRank);
-            cendallCoefficientLabel.Text = Math.Round(_currentRank.W(), 4).ToString();
+            var isConsensusReached = _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, _config.AlphaIndex);
+            isConsensusReachedLabel.Text = isConsensusReached ? "Да" : "Нет";
         }
 
         // Экспорт из таблицы в файл
@@ -82,7 +83,7 @@ namespace DelphiMethod
             catch (ArithmeticException)
             {
                 Utils.ClearCalculatedValues(dataGridView2);
-                cendallCoefficientLabel.Text = "...";
+                isConsensusReachedLabel.Text = "...";
             }
             _disableTrigger = false;
         }

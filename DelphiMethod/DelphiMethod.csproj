@@ -60,6 +60,7 @@
     <Compile Include="Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
+    <Compile Include="PearsonCorrelation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Range.cs" />
@@ -90,6 +91,7 @@
     <EmbeddedResource Include="Result.resx">
       <DependentUpon>Result.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="P.csv" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
