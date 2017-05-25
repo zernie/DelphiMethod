@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace DelphiMethod
 {
+    // Список матриц рангов
     [Serializable]
     public class MatrixList
     {
@@ -66,7 +67,8 @@ namespace DelphiMethod
             return sums;
         }
 
-        public List<string> Ranks(List<double> groupScoresSums)
+        // Ранжирование альтернатив
+        public string[] Ranks(List<double> groupScoresSums)
         {
             var sum = groupScoresSums.Sum();
 
@@ -76,13 +78,12 @@ namespace DelphiMethod
             Array.Sort(list, indexes);
             Array.Reverse(list);
             Array.Reverse(indexes);
-            var ranks = new List<string>();
+            var ranks = new string[list.Length];
 
             for (var i = 0; i < list.Length; i++)
             {
                 var index = indexes[i];
-                var item = Math.Round(groupScoresSums[index],3);
-                ranks.Add($"{i+1}. x{index+1} = {item}");
+                ranks[i] = $"{i+1}. x{index+1}";
             }
 
             return ranks;

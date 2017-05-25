@@ -14,10 +14,10 @@ namespace DelphiMethod
         public int Width;
         // высота (кол-во альтернатив)
         public int Height;
+        // вес коэфф. показателя, q_k
+        public double WeightIndicator;
 
-        public double WeightIndicator; // вес коэфф. показателя, q_k
-
-        // Начальные коэффициент компетентности экспертов K_i^0=1/m
+        // Начальные коэффициенты компетентности экспертов K_i^0=1/m
         public List<double> InitialCompetenceCoefficient =>
             Enumerable.Repeat(1.0 / Width, Width)
             .ToList();
@@ -128,12 +128,13 @@ namespace DelphiMethod
                 data.Add(1.0 / Lambda(competenceCoefficients) * temp.Sum());
             }
 
-            // k^m=1 - sum(k^i, i=1..m-1)
+            // k^m= 1 - sum(k^i, i=1..m-1)
             data.Add(1.0 - data.Sum());
 
             return data;
         }
 
+        // Заполнить матрицу случайными значениями
         public void FillWithRandomValues()
         {
             var rand = new Random();

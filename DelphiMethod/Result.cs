@@ -6,7 +6,7 @@ namespace DelphiMethod
 {
     public partial class Result : Form
     {
-        public Result(double [,] data, List<double> sums, List<string> ranks, Config config)
+        public Result(double [,] data, List<double> sums, string[] ranks, Config config)
         {
             InitializeComponent();
 
@@ -16,7 +16,7 @@ namespace DelphiMethod
                 Utils.FillDataGridView(dataGridView1, data);
                 Utils.CalculateGroupScoreSums(dataGridView1, sums);
 
-                richTextBox1.Lines = ranks.ToArray();
+                richTextBox1.Lines = ranks;
             }
             catch (FormatException e)
             {
