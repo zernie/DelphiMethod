@@ -174,7 +174,7 @@ namespace DelphiMethod
                     .Select(g => g.Count())   // берем количество элементов в группе
                     .ToList();
 
-                var Ti = H.Sum(hk => (int) Math.Pow(hk, 3) - hk);
+                var Ti = H.Sum(hk => (int)Math.Pow(hk, 3) - hk);
 
                 T += Ti;
             }
@@ -209,12 +209,13 @@ namespace DelphiMethod
                 (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * t);
         }
 
+        // Согласованы ли мнения?
         public bool IsConsensusReached(PearsonCorrelation PearsonCorrelationTable, int alphaIndex)
         {
             var d = PearsonCorrelationTable.P[N - 2, alphaIndex];
 
-            var x2 = X2();
-                return x2 > d;
+            var x2alpha = X2();
+            return x2alpha > d;
         }
 
         // Критерий согласования Пирсона
@@ -235,6 +236,6 @@ namespace DelphiMethod
                 }
             }
         }
-        
+
     }
 }

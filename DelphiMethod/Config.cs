@@ -18,6 +18,5 @@ namespace DelphiMethod
         // Шкала оценок
         public Range RatingScale;
         public PearsonCorrelation PearsonCorrelationTable;
-        public int AlphaIndex;
     }
 }

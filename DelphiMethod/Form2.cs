@@ -40,25 +40,38 @@ namespace DelphiMethod
             comboBox1.SelectedIndex = 0;
 
             ratingScaleTextBox.Text = _config.RatingScale.ToString();
+            foreach (var alpha in _config.PearsonCorrelationTable.Alphas)
+                alphaComboBox.Items.Add(alpha);
+            alphaComboBox.SelectedIndex = 0;
 
             Utils.InitInputDataGridView(dataGridView2, _config.ExpertsCount, _config.AlternativesCount);
             Utils.FillDataGridView(dataGridView2, _currentRank.X);
+
+
             if (calculate) Calculate();
 
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
+            alphaComboBox.SelectedIndexChanged += alphaComboBox_SelectedIndexChanged;
         }
 
         // Увеличить счетчик тура
         private void AddTourNumber() => tourNumberLabel.Text = $"Номер тура: {++_tourNumber}";
+
+
+        // Проверить, достигнут ли консенсус
+        private void checkConsensus()
+        {
+            var isConsensusReached = _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, alphaComboBox.SelectedIndex);
+            isConsensusReachedLabel.Text = isConsensusReached ? "достигнута" : "не достигнута";
+        }
 
         // Провести анализ
         private void Calculate()
         {
             Utils.CalculateCoefficients(dataGridView2, _currentRank);
             Utils.FillGroupScores(dataGridView2, _currentRank);
-            var isConsensusReached = _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, _config.AlphaIndex);
-            isConsensusReachedLabel.Text = isConsensusReached ? "Да" : "Нет";
+            checkConsensus();
         }
 
         // Экспорт из таблицы в файл
@@ -86,6 +99,12 @@ namespace DelphiMethod
                 isConsensusReachedLabel.Text = "...";
             }
             _disableTrigger = false;
+        }
+
+        // Смена уровня значимости критерия α
+        private void alphaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checkConsensus();
         }
 
         // Ввод данных в ячейку

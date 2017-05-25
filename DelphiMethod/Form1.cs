@@ -18,12 +18,7 @@ namespace DelphiMethod
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
             PearsonCorrelationTable = new PearsonCorrelation();
 
-            foreach (var alpha in PearsonCorrelationTable.alphas)
-            {
-                pearsonCorrelationComboBox.Items.Add(alpha);
-            }
-
-            pearsonCorrelationComboBox.SelectedIndex = 0;
+            numericUpDown2.Maximum = PearsonCorrelationTable.Length;
         }
 
         private Config Configuration;
@@ -67,7 +62,6 @@ namespace DelphiMethod
                     ExpertsCount = ExpertsCount,
                     RatingScale = RatingScale,
                     Indicators = Indicators(),
-                    AlphaIndex = pearsonCorrelationComboBox.SelectedIndex,
                     PearsonCorrelationTable = PearsonCorrelationTable,
                 };
 

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.nextTourButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,6 +41,8 @@
             this.calculateButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.alphaComboBox = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.isConsensusReachedLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -56,24 +58,24 @@
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.BackgroundColor = System.Drawing.Color.PaleGoldenrod;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView2.GridColor = System.Drawing.Color.DimGray;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 173);
+            this.dataGridView2.Location = new System.Drawing.Point(0, 281);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView2.RowTemplate.Height = 24;
-            this.dataGridView2.Size = new System.Drawing.Size(1262, 500);
+            this.dataGridView2.Size = new System.Drawing.Size(1262, 472);
             this.dataGridView2.TabIndex = 12;
             // 
             // nextTourButton
@@ -91,7 +93,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(483, 135);
+            this.label1.Location = new System.Drawing.Point(514, 246);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(196, 32);
             this.label1.TabIndex = 14;
@@ -114,16 +116,16 @@
             this.comboBox1.DropDownWidth = 700;
             this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(399, 21);
+            this.comboBox1.Location = new System.Drawing.Point(436, 22);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(393, 39);
+            this.comboBox1.Size = new System.Drawing.Size(370, 39);
             this.comboBox1.TabIndex = 21;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(225, 24);
+            this.label2.Location = new System.Drawing.Point(243, 24);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(141, 32);
             this.label2.TabIndex = 22;
@@ -143,7 +145,7 @@
             // 
             this.ratingScaleTextBox.Enabled = false;
             this.ratingScaleTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ratingScaleTextBox.Location = new System.Drawing.Point(231, 93);
+            this.ratingScaleTextBox.Location = new System.Drawing.Point(249, 96);
             this.ratingScaleTextBox.Name = "ratingScaleTextBox";
             this.ratingScaleTextBox.Size = new System.Drawing.Size(151, 38);
             this.ratingScaleTextBox.TabIndex = 25;
@@ -166,13 +168,14 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.alphaComboBox);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.isConsensusReachedLabel);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.clearButton);
             this.groupBox1.Controls.Add(this.calculateButton);
             this.groupBox1.Controls.Add(this.tourNumberLabel);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.ratingScaleTextBox);
             this.groupBox1.Controls.Add(this.exportButton);
             this.groupBox1.Controls.Add(this.comboBox1);
@@ -182,15 +185,35 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1262, 167);
+            this.groupBox1.Size = new System.Drawing.Size(1262, 243);
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
+            // 
+            // alphaComboBox
+            // 
+            this.alphaComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.alphaComboBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.alphaComboBox.FormattingEnabled = true;
+            this.alphaComboBox.Location = new System.Drawing.Point(436, 156);
+            this.alphaComboBox.Name = "alphaComboBox";
+            this.alphaComboBox.Size = new System.Drawing.Size(151, 39);
+            this.alphaComboBox.TabIndex = 28;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(12, 163);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(379, 32);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "Уровень значимости критерия α";
             // 
             // isConsensusReachedLabel
             // 
             this.isConsensusReachedLabel.AutoSize = true;
             this.isConsensusReachedLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.isConsensusReachedLabel.Location = new System.Drawing.Point(662, 96);
+            this.isConsensusReachedLabel.Location = new System.Drawing.Point(712, 208);
             this.isConsensusReachedLabel.Name = "isConsensusReachedLabel";
             this.isConsensusReachedLabel.Size = new System.Drawing.Size(30, 32);
             this.isConsensusReachedLabel.TabIndex = 30;
@@ -200,11 +223,11 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(393, 96);
+            this.label4.Location = new System.Drawing.Point(430, 208);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(270, 32);
+            this.label4.Size = new System.Drawing.Size(296, 32);
             this.label4.TabIndex = 29;
-            this.label4.Text = "Мнения согласованны:";
+            this.label4.Text = "Согласованность мнений";
             // 
             // button1
             // 
@@ -243,9 +266,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.ClientSize = new System.Drawing.Size(1262, 753);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label1);
             this.Name = "Form2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Групповая оценка альтернатив";
@@ -253,6 +277,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -273,5 +298,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label isConsensusReachedLabel;
+        private System.Windows.Forms.ComboBox alphaComboBox;
+        private System.Windows.Forms.Label label5;
     }
 }

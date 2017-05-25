@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -45,8 +45,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.pearsonCorrelationComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -56,7 +54,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(166, 209);
+            this.button1.Location = new System.Drawing.Point(170, 163);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(128, 46);
             this.button1.TabIndex = 6;
@@ -68,7 +66,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(5, 153);
+            this.label4.Location = new System.Drawing.Point(9, 107);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(228, 32);
             this.label4.TabIndex = 11;
@@ -78,7 +76,7 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(278, 153);
+            this.radioButton1.Location = new System.Drawing.Point(282, 107);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(85, 36);
             this.radioButton1.TabIndex = 12;
@@ -90,7 +88,7 @@
             this.radioButton2.AutoSize = true;
             this.radioButton2.Checked = true;
             this.radioButton2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(392, 153);
+            this.radioButton2.Location = new System.Drawing.Point(373, 107);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(98, 36);
             this.radioButton2.TabIndex = 13;
@@ -116,14 +114,14 @@
             this.Title,
             this.Weight,
             this.Remove});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.Location = new System.Drawing.Point(543, 53);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
@@ -153,7 +151,7 @@
             // importButton
             // 
             this.importButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.importButton.Location = new System.Drawing.Point(307, 209);
+            this.importButton.Location = new System.Drawing.Point(311, 163);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(128, 46);
             this.importButton.TabIndex = 20;
@@ -168,7 +166,7 @@
             // numericUpDown2
             // 
             this.numericUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown2.Location = new System.Drawing.Point(369, 61);
+            this.numericUpDown2.Location = new System.Drawing.Point(348, 61);
             this.numericUpDown2.Minimum = new decimal(new int[] {
             1,
             0,
@@ -178,7 +176,7 @@
             this.numericUpDown2.Size = new System.Drawing.Size(121, 34);
             this.numericUpDown2.TabIndex = 5;
             this.numericUpDown2.Value = new decimal(new int[] {
-            30,
+            5,
             0,
             0,
             0});
@@ -186,7 +184,7 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown1.Location = new System.Drawing.Point(369, 21);
+            this.numericUpDown1.Location = new System.Drawing.Point(348, 21);
             this.numericUpDown1.Minimum = new decimal(new int[] {
             3,
             0,
@@ -196,7 +194,7 @@
             this.numericUpDown1.Size = new System.Drawing.Size(121, 34);
             this.numericUpDown1.TabIndex = 4;
             this.numericUpDown1.Value = new decimal(new int[] {
-            10,
+            3,
             0,
             0,
             0});
@@ -223,8 +221,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.pearsonCorrelationComboBox);
-            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.importButton);
             this.groupBox1.Controls.Add(this.label1);
@@ -241,26 +237,6 @@
             this.groupBox1.Size = new System.Drawing.Size(1001, 403);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(6, 101);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(357, 32);
-            this.label3.TabIndex = 21;
-            this.label3.Text = "Уровень значимости критерия";
-            // 
-            // pearsonCorrelationComboBox
-            // 
-            this.pearsonCorrelationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.pearsonCorrelationComboBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pearsonCorrelationComboBox.FormattingEnabled = true;
-            this.pearsonCorrelationComboBox.Location = new System.Drawing.Point(369, 98);
-            this.pearsonCorrelationComboBox.Name = "pearsonCorrelationComboBox";
-            this.pearsonCorrelationComboBox.Size = new System.Drawing.Size(121, 39);
-            this.pearsonCorrelationComboBox.TabIndex = 22;
             // 
             // Form1
             // 
@@ -299,8 +275,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
         private System.Windows.Forms.DataGridViewTextBoxColumn Weight;
         private System.Windows.Forms.DataGridViewButtonColumn Remove;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox pearsonCorrelationComboBox;
     }
 }
 
