@@ -34,6 +34,8 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.importButton = new System.Windows.Forms.Button();
             this.configOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
@@ -43,8 +45,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -77,7 +77,7 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(307, 141);
+            this.radioButton1.Location = new System.Drawing.Point(277, 141);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(85, 36);
             this.radioButton1.TabIndex = 12;
@@ -89,7 +89,7 @@
             this.radioButton2.AutoSize = true;
             this.radioButton2.Checked = true;
             this.radioButton2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(398, 140);
+            this.radioButton2.Location = new System.Drawing.Point(368, 141);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(98, 36);
             this.radioButton2.TabIndex = 13;
@@ -101,7 +101,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(561, 18);
+            this.label5.Location = new System.Drawing.Point(513, 18);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(398, 32);
             this.label5.TabIndex = 14;
@@ -110,15 +110,28 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.PaleGoldenrod;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Title,
             this.Weight});
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView1.Location = new System.Drawing.Point(567, 63);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(382, 327);
+            this.dataGridView1.Size = new System.Drawing.Size(344, 327);
             this.dataGridView1.TabIndex = 17;
+            // 
+            // Title
+            // 
+            this.Title.HeaderText = "Имя";
+            this.Title.Name = "Title";
+            this.Title.Width = 200;
+            // 
+            // Weight
+            // 
+            this.Weight.HeaderText = "Вес";
+            this.Weight.Name = "Weight";
             // 
             // importButton
             // 
@@ -237,27 +250,16 @@
             this.groupBox1.Controls.Add(this.numericUpDown3);
             this.groupBox1.Location = new System.Drawing.Point(12, 10);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(965, 394);
+            this.groupBox1.Size = new System.Drawing.Size(922, 403);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
-            // 
-            // Title
-            // 
-            this.Title.HeaderText = "Имя";
-            this.Title.Name = "Title";
-            this.Title.Width = 200;
-            // 
-            // Weight
-            // 
-            this.Weight.HeaderText = "Вес";
-            this.Weight.Name = "Weight";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(985, 425);
+            this.ClientSize = new System.Drawing.Size(939, 425);
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
             this.Name = "Form1";

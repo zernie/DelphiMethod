@@ -23,7 +23,7 @@ namespace DelphiMethod
                 {
                     HeaderCell = new DataGridViewRowHeaderCell
                     {
-                        Value = $"Альтернатива №{i + 1}"
+                        Value = $"Альтернатива x{i + 1}"
                     },
                 });
             }
