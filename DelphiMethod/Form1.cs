@@ -21,7 +21,7 @@ namespace DelphiMethod
 
         private int AlternativesCount => (int)numericUpDown2.Value; // n, количество альтернатив
         private int ExpertsCount => (int)numericUpDown1.Value; // m, количество экспертов
-        private int IndicatorsCount => (int)numericUpDown3.Value; // l, количество показателей
+        private int IndicatorsCount => Indicators.Count; // l, количество показателей
 
         // коэффициенты весов показателей q^k
         private List<Indicator> Indicators
@@ -30,7 +30,7 @@ namespace DelphiMethod
             {
                 var indicators = new List<Indicator>(dataGridView1.RowCount);
 
-                for (var i = 0; i < dataGridView1.RowCount; i++)
+                for (var i = 0; i < dataGridView1.RowCount -1; i++)
                 {
                     var title = Convert.ToString(dataGridView1["Title", i].Value);
                     var weight = Convert.ToDouble(dataGridView1["Weight", i].Value);
@@ -101,9 +101,16 @@ namespace DelphiMethod
             return true;
         }
 
-        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView1.RowCount = (int)numericUpDown3.Value;
+            if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                e.RowIndex >= 0 &&
+                e.RowIndex != dataGridView1.NewRowIndex &&
+                dataGridView1.RowCount > 2
+                )
+            {
+                dataGridView1.Rows.RemoveAt(e.RowIndex);
+            }
         }
     }
 }

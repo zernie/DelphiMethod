@@ -13,22 +13,21 @@ namespace DelphiMethod
         public Config Configuration;
 
         // Матрицы рангов
-        public List<Matrix> Matrices = new List<Matrix>();
+        public List<Matrix> Matrices;
         //весовые коэффициенты показателей сравнения альтернатив; 
 
         public MatrixList(Config configuration)
         {
             Configuration = configuration;
 
-            for (var i = 0; i < configuration.IndicatorsCount; i++)
-            {
-                var matrix = new Matrix(
-                    configuration.ExpertsCount,
+            Matrices = new List<Matrix>(configuration.IndicatorsCount);
+
+            Matrices = configuration.Indicators.Select(x =>
+                new Matrix(
+                    configuration.ExpertsCount, 
                     configuration.AlternativesCount,
-                    configuration.Indicators[i]
-                    );
-                Matrices.Add(matrix);
-            }
+                    x)
+            ).ToList();
         }
 
         public Matrix this[int index]
