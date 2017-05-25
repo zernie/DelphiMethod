@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace DelphiMethod
 {
@@ -36,7 +35,7 @@ namespace DelphiMethod
             set => Matrices[index] = value;
         }
 
-        // Матрица групповых оценок на альтернативы
+        // Матрица групповых оценок альтернатив по показателям
         public double[,] GroupScores()
         {
             var groupScores = new double[Configuration.AlternativesCount, Configuration.IndicatorsCount];
@@ -54,6 +53,7 @@ namespace DelphiMethod
             return groupScores;
         }
 
+        // Матрица сумм групповых оценок
         public List<double> GroupScoresSums(double[,] groupScores)
         {
             var sums = new List<double>(Configuration.AlternativesCount);

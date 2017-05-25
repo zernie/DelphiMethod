@@ -74,6 +74,15 @@ namespace DelphiMethod
             _disableTrigger = true;
             Utils.FillDataGridView(dataGridView2, _currentRank.Data);
             Utils.ClearCalculatedValues(dataGridView2);
+            try
+            {
+                Calculate();
+
+            }
+            catch (ArithmeticException)
+            {
+                Utils.ClearCalculatedValues(dataGridView2);
+            }
             _disableTrigger = false;
         }
 
@@ -130,7 +139,6 @@ namespace DelphiMethod
             try
             {
                 Calculate();
-
             }
             catch (ArithmeticException)
             {

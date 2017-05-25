@@ -2,13 +2,13 @@
 
 namespace DelphiMethod
 {
-    // Коэффициент
+    // Показатель
     [Serializable]
     public struct Indicator
     {
-        // название
+        // Название
         public string Title;
-        // вес коэффициента
+        // Вес коэффициента
         public double Weight;
         
         public Indicator(string title, double weight)

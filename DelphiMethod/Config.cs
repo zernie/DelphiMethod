@@ -11,7 +11,7 @@ namespace DelphiMethod
         public int AlternativesCount;
         // Кол-во экспертов m
         public int ExpertsCount;
-        // Кол-во показателей k
+        // Кол-во показателей l
         public int IndicatorsCount;
         // Весовые коэффиценты q_k
         public List<Indicator> Indicators;
