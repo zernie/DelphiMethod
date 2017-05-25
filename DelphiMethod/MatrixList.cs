@@ -98,7 +98,7 @@ namespace DelphiMethod
                         i++;
                     }
                 }
-                ranks.Add($"{k++}. {string.Join(" ", s.Select(x => $"x{x}").ToArray())}");
+                ranks.Add($"{k++}. {string.Join(", ", s.Select(x => $"x{x}").ToArray())}");
             }
 
             return ranks;
