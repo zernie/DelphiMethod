@@ -13,7 +13,6 @@ namespace DelphiMethod
 
         // Матрицы рангов
         public List<Matrix> Matrices;
-        //весовые коэффициенты показателей сравнения альтернатив; 
 
         public MatrixList(Config configuration)
         {
@@ -22,10 +21,7 @@ namespace DelphiMethod
             Matrices = new List<Matrix>(configuration.IndicatorsCount);
 
             Matrices = configuration.Indicators.Select(x =>
-                new Matrix(
-                    configuration.ExpertsCount, 
-                    configuration.AlternativesCount,
-                    x)
+                new Matrix(configuration.ExpertsCount, configuration.AlternativesCount, x)
             ).ToList();
         }
 
@@ -97,7 +93,9 @@ namespace DelphiMethod
                         i++;
                     }
                 }
-                ranks.Add($"{k++}. {string.Join(", ", s.Select(x => $"x{x}").ToArray())}");
+                
+                var strings = s.Select(x => $"x{x}").ToArray();
+                ranks.Add($"{k++}. {string.Join(", ", strings)}");
             }
 
             return ranks;

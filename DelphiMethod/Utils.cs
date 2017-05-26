@@ -124,7 +124,7 @@ namespace DelphiMethod
         {
             var groupScores = data.GroupScores(data.CompetenceCoefficients());
 
-            for (var i = 0; i < data.Height; i++)
+            for (var i = 0; i < data.N; i++)
             {
                 component["groupScore", i].Value = Math.Round(groupScores[i], 3);
             }
@@ -135,9 +135,9 @@ namespace DelphiMethod
         {
             var coefficients = data.CompetenceCoefficients();
 
-            for (var i = 0; i < data.Width; i++)
+            for (var i = 0; i < data.M; i++)
             {
-                component[i, data.Height].Value = Math.Round(coefficients[i], 3);
+                component[i, data.N].Value = Math.Round(coefficients[i], 3);
             }
         }
 
