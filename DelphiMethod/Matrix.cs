@@ -17,7 +17,7 @@ namespace DelphiMethod
         // Показатель
         public Indicator Indicator;
         // Точность вычисления коэффициентов компетентности
-        public static double E = 0.001;
+        public const double E = 0.001;
 
         public Matrix(double[,] data, Indicator indicator)
         {

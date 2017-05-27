@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.nextTourButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,6 +45,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.tourNumberLabel = new System.Windows.Forms.Label();
+            this.cendallCoefficientLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -55,22 +56,22 @@
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.BackgroundColor = System.Drawing.Color.PaleGoldenrod;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView2.GridColor = System.Drawing.Color.DimGray;
             this.dataGridView2.Location = new System.Drawing.Point(0, 173);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle16;
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.Size = new System.Drawing.Size(1262, 500);
             this.dataGridView2.TabIndex = 12;
@@ -114,7 +115,7 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(413, 21);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(289, 39);
+            this.comboBox1.Size = new System.Drawing.Size(315, 39);
             this.comboBox1.TabIndex = 21;
             // 
             // label2
@@ -149,9 +150,9 @@
             // calculateButton
             // 
             this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.calculateButton.Location = new System.Drawing.Point(797, 21);
+            this.calculateButton.Location = new System.Drawing.Point(822, 21);
             this.calculateButton.Name = "calculateButton";
-            this.calculateButton.Size = new System.Drawing.Size(184, 58);
+            this.calculateButton.Size = new System.Drawing.Size(159, 58);
             this.calculateButton.TabIndex = 26;
             this.calculateButton.Text = "Посчитать";
             this.calculateButton.UseVisualStyleBackColor = true;
@@ -164,6 +165,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cendallCoefficientLabel);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.clearButton);
@@ -189,16 +191,16 @@
             this.label4.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(407, 96);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(245, 32);
+            this.label4.Size = new System.Drawing.Size(275, 32);
             this.label4.TabIndex = 29;
-            this.label4.Text = "Коэфф. конкордации";
+            this.label4.Text = "Коэфф. конкордации = ";
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.button1.Location = new System.Drawing.Point(797, 96);
+            this.button1.Location = new System.Drawing.Point(822, 96);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(184, 58);
+            this.button1.Size = new System.Drawing.Size(159, 58);
             this.button1.TabIndex = 28;
             this.button1.Text = "Заполнить случ. значениями";
             this.button1.UseVisualStyleBackColor = true;
@@ -224,6 +226,16 @@
             this.tourNumberLabel.Size = new System.Drawing.Size(145, 32);
             this.tourNumberLabel.TabIndex = 20;
             this.tourNumberLabel.Text = "Номер тура";
+            // 
+            // cendallCoefficientLabel
+            // 
+            this.cendallCoefficientLabel.AutoSize = true;
+            this.cendallCoefficientLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cendallCoefficientLabel.Location = new System.Drawing.Point(671, 96);
+            this.cendallCoefficientLabel.Name = "cendallCoefficientLabel";
+            this.cendallCoefficientLabel.Size = new System.Drawing.Size(30, 32);
+            this.cendallCoefficientLabel.TabIndex = 30;
+            this.cendallCoefficientLabel.Text = "...";
             // 
             // Form2
             // 
@@ -259,5 +271,6 @@
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label cendallCoefficientLabel;
     }
 }

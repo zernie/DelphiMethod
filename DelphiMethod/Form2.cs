@@ -57,7 +57,7 @@ namespace DelphiMethod
         {
             Utils.CalculateCoefficients(dataGridView2, _currentRank);
             Utils.FillGroupScores(dataGridView2, _currentRank);
-            label4.Text = $"Коэфф.конкордации = {Math.Round(_currentRank.W(), 4)}";
+            cendallCoefficientLabel.Text = Math.Round(_currentRank.W(), 4).ToString();
         }
 
         // Экспорт из таблицы в файл
@@ -82,6 +82,7 @@ namespace DelphiMethod
             catch (ArithmeticException)
             {
                 Utils.ClearCalculatedValues(dataGridView2);
+                cendallCoefficientLabel.Text = "...";
             }
             _disableTrigger = false;
         }

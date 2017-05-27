@@ -10,6 +10,9 @@ namespace DelphiMethod
     // Вспомогательный класс для вывода значений на форму
     class Utils
     {
+        // Цифр после запятой
+        public const int DigitsAfterPoint = 3;
+
         // Инициализировать таблицу рангов заданным количеством строк и столбцов
         public static void InitInputDataGridView(DataGridView component, int width, int count)
         {
@@ -65,7 +68,7 @@ namespace DelphiMethod
 
             for (var i = 0; i < configuration.AlternativesCount; i++)
             {
-                component.Rows.Add(new DataGridViewRow()
+                component.Rows.Add(new DataGridViewRow
                 {
                     ReadOnly = true,
                     HeaderCell = new DataGridViewRowHeaderCell
@@ -85,7 +88,7 @@ namespace DelphiMethod
             {
                 for (var j = 0; j < data.GetLength(1); j++)
                 {
-                    component[j, i].Value = Math.Round(data[i, j], 3);
+                    component[j, i].Value = Math.Round(data[i, j], DigitsAfterPoint);
                 }
             }
         }
@@ -111,7 +114,7 @@ namespace DelphiMethod
 
             for (var i = 0; i < data.N; i++)
             {
-                component["groupScore", i].Value = Math.Round(groupScores[i], 3);
+                component["groupScore", i].Value = Math.Round(groupScores[i], DigitsAfterPoint);
             }
         }
 
@@ -131,7 +134,7 @@ namespace DelphiMethod
         {
             for (var i = 0; i < data.Count; i++)
             {
-                component["sum", i].Value = Math.Round(data[i], 3);
+                component["sum", i].Value = Math.Round(data[i], DigitsAfterPoint);
             }
         }
 
