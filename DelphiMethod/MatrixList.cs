@@ -25,7 +25,11 @@ namespace DelphiMethod
             ).ToList();
         }
 
-        public Matrix this[int index] => Matrices[index];
+        public Matrix this[int index]
+        {
+            get => Matrices[index];
+            set => Matrices[index] = value;
+        }
 
         // Матрица групповых оценок альтернатив по показателям
         public double[,] GroupScores()
