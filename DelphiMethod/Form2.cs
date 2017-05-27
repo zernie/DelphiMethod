@@ -57,6 +57,7 @@ namespace DelphiMethod
         {
             Utils.CalculateCoefficients(dataGridView2, _currentRank);
             Utils.FillGroupScores(dataGridView2, _currentRank);
+            label4.Text = $"Коэфф.конкордации = {Math.Round(_currentRank.W(), 4)}";
         }
 
         // Экспорт из таблицы в файл
@@ -91,9 +92,13 @@ namespace DelphiMethod
             try
             {
                 if (_disableTrigger) return;
-                var data = Utils.ExtractData(dataGridView2, _config);
-                _currentRank = new Matrix(data, _indicator);
-                _matrixList[comboBox1.SelectedIndex] = _currentRank;
+                var value = Convert.ToDouble(dataGridView2.CurrentCell.Value);
+                if (!_config.RatingScale.Includes(value))
+                {
+                    throw new FormatException("Оценка вышла за пределы шкалы");
+                }
+
+                _currentRank.Data[e.RowIndex, e.ColumnIndex] = value;
             }
             // в случае ввода нечисловых данных выдаем ошибку
             catch (FormatException exception)
@@ -138,7 +143,7 @@ namespace DelphiMethod
             try
             {
                 Calculate();
-                label4.Text = $"Коэфф.конкордации = {Math.Round(_currentRank.W(), 4)}";
+                
             }
             catch (ArithmeticException)
             {

@@ -153,11 +153,13 @@ namespace DelphiMethod
             return data;
         }
 
+        // Оценка математического ожидания r=1/2 * m(n+1)
         public double R()
         {
             return 0.5 * M * (N + 1);
         }
 
+        // Сумма показателей рангов Ti=sum(h_k^3 - h_k, k=1..H_i)
         public double T()
         {
             var T = 0.0;
@@ -189,6 +191,7 @@ namespace DelphiMethod
             return T;
         }
 
+        // S = sum((sum(r_ij - r, i = 1..m)) ^ 2, j = 1..n)
         public double S()
         {
             var temp = 0.0;
@@ -208,12 +211,12 @@ namespace DelphiMethod
         }
 
         // Коэффициент конкордации кенделла
+        // W = 12S / (m^2 (n^3 - n) - m * sum(T_i, i=1..m))
         public double W()
         {
-            var s = S();
             var t = T();
 
-            return 12 * s /
+            return 12 * S() /
                 (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * t);
         }
 

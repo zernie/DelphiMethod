@@ -11,10 +11,10 @@ namespace DelphiMethod
         public int AlternativesCount;
         // Кол-во экспертов m
         public int ExpertsCount;
-        // Кол-во показателей l
-        public int IndicatorsCount;
-        // Весовые коэффиценты q_k
+        // Весовые коэффиценты q^k и их названия
         public List<Indicator> Indicators;
+        // Кол-во показателей l
+        public int IndicatorsCount => Indicators.Count;
         // Шкала оценок
         public Range RatingScale;
     }

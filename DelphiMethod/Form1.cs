@@ -22,7 +22,6 @@ namespace DelphiMethod
 
         private int AlternativesCount => (int)numericUpDown2.Value; // n, количество альтернатив
         private int ExpertsCount => (int)numericUpDown1.Value; // m, количество экспертов
-        private int IndicatorsCount => Indicators.Count; // l, количество показателей
 
         // Показатели, их названия и веса q^k
         private List<Indicator> Indicators
@@ -54,7 +53,6 @@ namespace DelphiMethod
                 {
                     AlternativesCount = AlternativesCount,
                     ExpertsCount = ExpertsCount,
-                    IndicatorsCount = IndicatorsCount,
                     RatingScale = RatingScale,
                     Indicators = Indicators
                 };

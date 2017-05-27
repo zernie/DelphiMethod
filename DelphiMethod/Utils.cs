@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
@@ -19,7 +20,7 @@ namespace DelphiMethod
 
             for (var i = 0; i < count; i++)
             {
-                component.Rows.Add(new DataGridViewRow()
+                component.Rows.Add(new DataGridViewRow
                 {
                     HeaderCell = new DataGridViewRowHeaderCell
                     {
@@ -28,11 +29,16 @@ namespace DelphiMethod
                 });
             }
 
-            component.Columns.Add(new DataGridViewTextBoxColumn()
+            component.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "groupScore",
                 HeaderText = "Групповые оценки",
                 ReadOnly = true,
+                DefaultCellStyle =
+                {
+                    BackColor = Color.Gold,
+                }
+                
             });
             component.Rows.Add(new DataGridViewRow
             {
@@ -40,6 +46,10 @@ namespace DelphiMethod
                 HeaderCell = new DataGridViewRowHeaderCell
                 {
                     Value = "Коэффициент компетентности",
+                },
+                DefaultCellStyle =
+                {
+                    BackColor = Color.Gold,
                 }
             });
         }
@@ -47,7 +57,6 @@ namespace DelphiMethod
         // Инициализировать таблицу групповых оценок заданным количеством строк и столбцов
         public static void InitResultDataGridView(DataGridView component, Config configuration)
         {
-
             for (var i = 0; i < configuration.IndicatorsCount; i++)
             {
                 var indicator = configuration.Indicators[i].Title;
@@ -69,6 +78,7 @@ namespace DelphiMethod
             component.Columns.Add("sum", "Сумма");
         }
 
+        // Заполнить матрицу данными
         public static void FillDataGridView(DataGridView component, double[,] data)
         {
             for (var i = 0; i < data.GetLength(0); i++)
@@ -80,6 +90,7 @@ namespace DelphiMethod
             }
         }
 
+        // Очистить коэффициенты компетентности и групповые оценки
         public static void ClearCalculatedValues(DataGridView component)
         {
             for (var i = 0; i < component.RowCount; i++)
@@ -91,32 +102,6 @@ namespace DelphiMethod
             {
                 component[i, component.RowCount-1].Value = "";
             }
-        }
-
-
-        // Извлечь матрицу из таблицы
-        public static double[,] ExtractData(DataGridView component, Config config)
-        {
-            var width = config.ExpertsCount;
-            var height = config.AlternativesCount;
-            var data = new double[height, width];
-
-            for (var i = 0; i < height; i++)
-            {
-                for (var j = 0; j < width; j++)
-                {
-                    var value = Convert.ToDouble(component[j, i].Value);
-
-                    if (!config.RatingScale.Includes(value))
-                    {
-                        throw new FormatException("Оценка вышла за пределы шкалы");
-                    }
-
-                    data[i, j] = value;
-                }
-            }
-
-            return data;
         }
 
         // Вычислить групповые оценки и вывести их на форму
@@ -172,7 +157,7 @@ namespace DelphiMethod
             }
         }
 
-        // Экспорт из файла
+        // Экспорт в файл
         public static void ExportToFile(string filename, MatrixList matrixList)
         {
             try
