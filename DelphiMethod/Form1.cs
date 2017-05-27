@@ -63,10 +63,9 @@ namespace DelphiMethod
 
                 var matrixList = new MatrixList(Configuration);
 
-                using (var form = new Form2(matrixList))
-                {
-                    form.ShowDialog();
-                }
+                Hide();
+                var form = new Form2(matrixList);
+                if (form.ShowDialog() == DialogResult.Cancel) Show();
             }
             catch (Exception exception)
             {
@@ -82,10 +81,9 @@ namespace DelphiMethod
             var matrixList = Utils.ImportFromFile(configOpenFileDialog.FileName);
             if (matrixList == null) return;
 
-            using (var form = new Form2(matrixList, true))
-            {
-                form.ShowDialog();
-            }
+            Hide();
+            var form = new Form2(matrixList, true);
+            if (form.ShowDialog() == DialogResult.Cancel) Show();
         }
 
         // Проверка на верность введенных данных

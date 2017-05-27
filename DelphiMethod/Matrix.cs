@@ -208,28 +208,40 @@ namespace DelphiMethod
         // (M^2 * (N^3 - N)) / (12 * (N - 1))
         public double DMax()
         {
-            return (Math.Pow(M, 2) * (Math.Pow(N, 3) - N)) /
+            return (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * T().Sum()) /
                    (12 * (N - 1));
         }
 
-        public void T()
+        public List<int> T()
         {
-            var H = Ranks().GroupBy(r => r).Select(g => g).ToList();
-            MessageBox.Show(H.Count.ToString());
-
-            /*for (var i = 0; i < H.Count; i++)
+            var T = new List<int>(M);
+            for (var i = 0; i < M; i++)
             {
-                var h = H[i];
-                var temp = new List<double>();
-
-                for (var j = 0; j < M; j++)
+                var temp = new List<double>(N);
+                for (var j = 0; j < N; j++)
                 {
-                    temp.Add(Data[i, j]);
+                    temp.Add(Data[j, i]);
                 }
-                MessageBox.Show(string.Join(" ", temp.Select(x => x.ToString()).ToArray()));
 
-                MessageBox.Show($"!!! {temp.GroupBy(x => x).Count()}");
-            }*/
+                var H = (from x in temp
+                        group x by x into g
+                        where g.Count() > 1
+                        select g.Count())
+                        .ToList();
+
+                var Hi = H.Count;
+                var sum = 0;
+
+                for (var k = 0; k < Hi; k++)
+                {
+                    var hk = H[k];
+                    sum += (int)Math.Pow(hk, 3) - hk;
+                }
+
+                T.Add(sum);
+
+            }
+            return T;
         }
 
         public double W()

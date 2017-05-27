@@ -140,7 +140,6 @@ namespace DelphiMethod
                 Calculate();
                 label4.Text = $"Коэфф.конкордации = {Math.Round(_currentRank.W(), 4)}";
             }
-//                _currentRank.T();
             catch (ArithmeticException)
             {
                 MessageBox.Show("Заполните матрицу рангов");
