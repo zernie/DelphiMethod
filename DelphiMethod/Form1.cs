@@ -24,21 +24,18 @@ namespace DelphiMethod
         private int ExpertsCount => (int)numericUpDown1.Value; // m, количество экспертов
 
         // Показатели, их названия и веса q^k
-        private List<Indicator> Indicators
+        private List<Indicator> Indicators()
         {
-            get
+            var indicators = new List<Indicator>(dataGridView1.RowCount);
+
+            for (var i = 0; i < dataGridView1.RowCount - 1; i++)
             {
-                var indicators = new List<Indicator>(dataGridView1.RowCount);
-
-                for (var i = 0; i < dataGridView1.RowCount - 1; i++)
-                {
-                    var title = Convert.ToString(dataGridView1["Title", i].Value);
-                    var weight = Convert.ToDouble(dataGridView1["Weight", i].Value);
-                    indicators.Add(new Indicator(title, weight));
-                }
-
-                return indicators;
+                var title = Convert.ToString(dataGridView1["Title", i].Value);
+                var weight = Convert.ToDouble(dataGridView1["Weight", i].Value);
+                indicators.Add(new Indicator(title, weight));
             }
+
+            return indicators;
         }
 
         // Шкала оценок
@@ -54,7 +51,7 @@ namespace DelphiMethod
                     AlternativesCount = AlternativesCount,
                     ExpertsCount = ExpertsCount,
                     RatingScale = RatingScale,
-                    Indicators = Indicators
+                    Indicators = Indicators()
                 };
 
                 if (!ValidWeightIndicators()) return;
@@ -94,8 +91,7 @@ namespace DelphiMethod
             return false;
         }
 
-        private double indicatorsWeightSum
-            => Indicators.Select(x => x.Weight).Sum();
+        private double indicatorsWeightSum => Indicators().Sum(x => x.Weight);
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -112,10 +108,15 @@ namespace DelphiMethod
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView1.CurrentCell.ColumnIndex != 1) return;
-            if (double.TryParse(dataGridView1.CurrentCell.Value.ToString(), out double value) && value >= 0.0 && value <= 1.0) return;
 
-            dataGridView1.CurrentCell.Value = 0.1;
-            MessageBox.Show("Введите число от 0 до 1");
+            var value = dataGridView1.CurrentCell.Value;
+            var isNumber = double.TryParse(value.ToString(), out double doubleValue);
+
+            if (!isNumber || value == null || doubleValue < 0.0 || doubleValue > 1.0)
+            {
+                dataGridView1.CurrentCell.Value = 0.0;
+                MessageBox.Show("Введите число от 0 до 1");
+            }
         }
     }
 }
