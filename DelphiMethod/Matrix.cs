@@ -153,68 +153,14 @@ namespace DelphiMethod
             return data;
         }
 
-        // Сумма рангов
-        public List<double> RanksSum()
-        {
-            var data = new List<double>(N);
-            for (var i = 0; i < N; i++)
-            {
-                var sum = 0.0;
-                for (var j = 0; j < M; j++)
-                {
-                    sum += Data[i, j];
-                }
-                data.Add(sum);
-            }
-
-            return data;
-        }
-
-        public List<double> Ranks()
-        {
-            var data = new List<double>(M);
-            for (var i = 0; i < M; i++)
-            {
-                var sum = 0.0;
-                for (var j = 0; j < N; j++)
-                {
-                    sum += Data[j, i];
-                }
-                data.Add(sum);
-            }
-
-            return data;
-        }
-
         public double R()
         {
             return 0.5 * M * (N + 1);
         }
 
-        public double D()
+        public double T()
         {
-            var ranksSum = RanksSum();
-            var r = R();
-
-            var sum = 0.0;
-            foreach (var t in ranksSum)
-            {
-                sum += Math.Pow(t - r, 2);
-            }
-
-            return 1.0 / (N - 1.0) * sum;
-        }
-
-        // (M^2 * (N^3 - N)) / (12 * (N - 1))
-        public double DMax()
-        {
-            return (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * T().Sum()) /
-                   (12 * (N - 1));
-        }
-
-        public List<int> T()
-        {
-            var T = new List<int>(M);
+            var T = 0.0;
             for (var i = 0; i < M; i++)
             {
                 var temp = new List<double>(N);
@@ -230,23 +176,45 @@ namespace DelphiMethod
                         .ToList();
 
                 var Hi = H.Count;
-                var sum = 0;
+                var Ti = 0;
 
                 for (var k = 0; k < Hi; k++)
                 {
                     var hk = H[k];
-                    sum += (int)Math.Pow(hk, 3) - hk;
+                    Ti += (int)Math.Pow(hk, 3) - hk;
                 }
 
-                T.Add(sum);
-
+                T += Ti;
             }
             return T;
         }
 
+        public double S()
+        {
+            var temp = 0.0;
+            var r = R();
+
+            for (var i = 0; i < N; i++)
+            {
+                var sum = 0.0;
+                for (var j = 0; j < M; j++)
+                {
+                    sum += Data[i, j];
+                }
+                temp += Math.Pow(sum - r, 2);
+            }
+
+            return temp;
+        }
+
+        // Коэффициент конкордации кенделла
         public double W()
         {
-            return D() / DMax();
+            var s = S();
+            var t = T();
+
+            return 12 * s /
+                (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * t);
         }
 
         // Заполнить матрицу случайными значениями
