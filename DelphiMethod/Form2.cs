@@ -93,13 +93,12 @@ namespace DelphiMethod
             try
             {
                 if (_disableTrigger) return;
-                var value = Convert.ToDouble(dataGridView2.CurrentCell.Value);
-                if (!_config.RatingScale.Includes(value))
-                {
-                    throw new FormatException("Оценка вышла за пределы шкалы");
-                }
+                var value = Convert.ToDouble(dataGridView2[e.ColumnIndex, e.RowIndex].Value);
 
-                _currentRank.Data[e.ColumnIndex, e.RowIndex] = value;
+                if (_config.RatingScale.Includes(value))
+                    _currentRank.Data[e.RowIndex, e.ColumnIndex] = value;
+                else
+                    throw new FormatException("Оценка вышла за пределы шкалы");
             }
             // в случае ввода нечисловых данных выдаем ошибку
             catch (FormatException exception)
@@ -143,12 +142,16 @@ namespace DelphiMethod
         {
             try
             {
+                _disableTrigger = true;
                 Calculate();
-                
             }
             catch (ArithmeticException)
             {
                 MessageBox.Show("Заполните матрицу рангов");
+            }
+            finally
+            {
+                _disableTrigger = false;
             }
         }
 
