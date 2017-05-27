@@ -95,12 +95,12 @@ namespace DelphiMethod
         {
             for (var i = 0; i < component.RowCount; i++)
             {
-                component["groupScore", i].Value = "";
+                component["groupScore", i].Value = null;
             }
 
             for (var i = 0; i < component.ColumnCount; i++)
             {
-                component[i, component.RowCount-1].Value = "";
+                component[i, component.RowCount-1].Value = null;
             }
         }
 

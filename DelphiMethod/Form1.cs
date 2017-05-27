@@ -54,7 +54,7 @@ namespace DelphiMethod
                     Indicators = Indicators()
                 };
 
-                if (!ValidWeightIndicators()) return;
+                if (!CheckWeightIndicators()) return;
 
                 var matrixList = new MatrixList(Configuration);
 
@@ -82,17 +82,18 @@ namespace DelphiMethod
         }
 
         // Проверка на верность введенных данных
-        private bool ValidWeightIndicators()
+        private bool CheckWeightIndicators()
         {
-            if (indicatorsWeightSum == 1.0) return true;
+            if (IndicatorsWeightSum == 1.0) return true;
 
-            MessageBox.Show($"Сумма коэффициентов весов показателей = {indicatorsWeightSum}," +
-                            " а должна равняться единице");
+            MessageBox.Show($"Сумма коэффициентов весов показателей = {IndicatorsWeightSum}, а должна равняться 1");
             return false;
         }
 
-        private double indicatorsWeightSum => Indicators().Sum(x => x.Weight);
+        // Сумма весов коэффициентов
+        private double IndicatorsWeightSum => Indicators().Sum(x => x.Weight);
 
+        // Удаление показателя из таблицы
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
@@ -105,14 +106,20 @@ namespace DelphiMethod
             }
         }
 
+        // Проверка на введенный вес показателя
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.CurrentCell.ColumnIndex != 1) return;
-
             var value = dataGridView1.CurrentCell.Value;
-            var isNumber = double.TryParse(value.ToString(), out double doubleValue);
+            if (dataGridView1.CurrentCell.ColumnIndex != 1 && value != null) return;
 
-            if (!isNumber || value == null || doubleValue < 0.0 || doubleValue > 1.0)
+            try
+            {
+                var doubleValue = Convert.ToDouble(value);
+
+                if (value == null || doubleValue < 0.0 || doubleValue > 1.0)
+                    throw new FormatException();
+            }
+            catch (FormatException)
             {
                 dataGridView1.CurrentCell.Value = 0.0;
                 MessageBox.Show("Введите число от 0 до 1");
