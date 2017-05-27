@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace DelphiMethod
 {
@@ -17,21 +16,8 @@ namespace DelphiMethod
         public int N;
         // Показатель
         public Indicator Indicator;
-
-        // Начальные коэффициенты компетентности экспертов K_i^0=1/M
-        public List<double> InitialCompetenceCoefficient
-        {
-            get
-            {
-                var coefficients = new List<double>(M);
-                for (var i = 0; i < M; i++)
-                {
-                    coefficients.Add(1.0 / M);
-                }
-
-                return coefficients;
-            }
-        }
+        // Точность вычисления коэффициентов компетентности
+        public static double E = 0.001;
 
         public Matrix(double[,] data, Indicator indicator)
         {
@@ -52,19 +38,7 @@ namespace DelphiMethod
 
         public double this[int row, int col] => Data[row, col];
 
-        // Вычесть вектор из вектора
-        private List<double> Subtract(List<double> a, List<double> b)
-        {
-            var data = new List<double>(a.Count);
-            for (var i = 0; i < a.Count; i++)
-            {
-                data.Add(a[i] - b[i]);
-            }
-
-            return data;
-        }
-
-        // Групповые оценки x_j^k=sum(q^k*K_i*x_i_j^k), i=1..M), j=1..N
+        // Групповые оценки x_j^k = sum(q^k * K_i * x_i_j^k), i=1..m), j=1..n
         public List<double> GroupScores(List<double> competenceCoefficients)
         {
             var groupScores = new List<double>(N);
@@ -81,7 +55,7 @@ namespace DelphiMethod
             return groupScores;
         }
 
-        // Средние оценки объектов x_i=sum(K_i * x_i_j, i=1..M), j=1..N
+        // Средние оценки объектов x_i = sum(K_i * x_i_j, i = 1..m), j = 1..n
         public List<double> AverageScores(List<double> competenceCoefficients)
         {
             var list = new List<double>(N);
@@ -100,7 +74,7 @@ namespace DelphiMethod
             return list;
         }
 
-        // Нормировочный коэффициент lambda=sum(sum(x_i * x_i_j, i=1..m), j=1..N)
+        // Нормировочный коэффициент lambda = sum(sum(x_i * x_i_j, i = 1..m), j = 1..n)
         public double Lambda(List<double> averageScores)
         {
             var lambda = 0.0;
@@ -115,10 +89,10 @@ namespace DelphiMethod
             return lambda;
         }
 
-        public List<double> CompetenceCoefficients() => CompetenceCoefficients(InitialCompetenceCoefficient);
+        public List<double> CompetenceCoefficients() => CompetenceCoefficients(InitialCompetenceCoefficient());
 
-        // Коэффициенты компетентности K_i=(1/lambda)*sum(x_j*x_i_j, j=1..n)
-        public List<double> CompetenceCoefficients(List<double> competenceCoefficients, double e = 0.001)
+        // Коэффициенты компетентности K_i = (1 / lambda)*sum(x_j * x_i_j, j = 1..n)
+        public List<double> CompetenceCoefficients(List<double> competenceCoefficients)
         {
             var data = new List<double>(M);
             var averageScores = AverageScores(competenceCoefficients);
@@ -148,18 +122,42 @@ namespace DelphiMethod
                 // Признак окончания итерационного процесса
                 // max(|x_i^t - x_i^t-1|) < e
                 var max = Subtract(averageScores, previousAverageScores).Max();
-                if (Math.Abs(max) < e) break;
+                if (Math.Abs(max) < E) break;
             }
             return data;
         }
 
-        // Оценка математического ожидания r=1/2 * m(n+1)
-        public double R()
+        // Начальные коэффициенты компетентности экспертов K_i^0 = 1 / M
+        public List<double> InitialCompetenceCoefficient()
         {
-            return 0.5 * M * (N + 1);
+                var coefficients = new List<double>(M);
+                for (var i = 0; i < M; i++)
+                {
+                    coefficients.Add(1.0 / M);
+                }
+
+                return coefficients;
         }
 
-        // Сумма показателей рангов Ti=sum(h_k^3 - h_k, k=1..H_i)
+        // Вычесть вектор из вектора
+        private List<double> Subtract(List<double> a, List<double> b)
+        {
+            var data = new List<double>(a.Count);
+            for (var i = 0; i < a.Count; i++)
+            {
+                data.Add(a[i] - b[i]);
+            }
+
+            return data;
+        }
+
+
+        // Вычиcление согласованности экспертов
+
+        // Оценка математического ожидания r = 1 / 2 * m(n + 1)
+        public double R() => 0.5 * M * (N + 1);
+
+        // Сумма показателей рангов Ti=sum(h_k^3 - h_k, k = 1..H_i)
         public double T()
         {
             var T = 0.0;

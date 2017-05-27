@@ -98,7 +98,7 @@ namespace DelphiMethod
                     throw new FormatException("Оценка вышла за пределы шкалы");
                 }
 
-                _currentRank.Data[e.RowIndex, e.ColumnIndex] = value;
+                _currentRank.Data[e.ColumnIndex, e.RowIndex] = value;
             }
             // в случае ввода нечисловых данных выдаем ошибку
             catch (FormatException exception)
