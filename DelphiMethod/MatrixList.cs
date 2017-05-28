@@ -49,7 +49,7 @@ namespace DelphiMethod
             return groupScores;
         }
 
-        // Матрица сумм групповых оценок
+        // Суммы групповых оценок по показателям
         public List<double> GroupScoresSums(double[,] groupScores)
         {
             var sums = new List<double>(Configuration.AlternativesCount);
@@ -87,9 +87,9 @@ namespace DelphiMethod
 
                 for (var j = i + 1; j < list.Length; j++)
                 {
-                    if (list[i] == list[j])
+                    if (list[i] == list[j]) 
                     {
-                        s.Add(indexes[j] + 1);
+                        s.Add(indexes[j]);
                         i++;
                     }
                 }

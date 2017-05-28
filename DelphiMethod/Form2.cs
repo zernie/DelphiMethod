@@ -42,7 +42,7 @@ namespace DelphiMethod
             ratingScaleTextBox.Text = _config.RatingScale.ToString();
 
             Utils.InitInputDataGridView(dataGridView2, _config.ExpertsCount, _config.AlternativesCount);
-            Utils.FillDataGridView(dataGridView2, _currentRank.Data);
+            Utils.FillDataGridView(dataGridView2, _currentRank.X);
             if (calculate) Calculate();
 
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
@@ -73,7 +73,7 @@ namespace DelphiMethod
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            Utils.FillDataGridView(dataGridView2, _currentRank.Data);
+            Utils.FillDataGridView(dataGridView2, _currentRank.X);
             Utils.ClearCalculatedValues(dataGridView2);
             try
             {
@@ -96,7 +96,7 @@ namespace DelphiMethod
                 var value = Convert.ToDouble(dataGridView2[e.ColumnIndex, e.RowIndex].Value);
 
                 if (_config.RatingScale.Includes(value))
-                    _currentRank.Data[e.RowIndex, e.ColumnIndex] = value;
+                    _currentRank.X[e.RowIndex, e.ColumnIndex] = value;
                 else
                     throw new FormatException("Оценка вышла за пределы шкалы");
             }
@@ -160,7 +160,7 @@ namespace DelphiMethod
         {
             _disableTrigger = true;
             _currentRank = new Matrix(_config.ExpertsCount, _config.AlternativesCount, _indicator);
-            Utils.FillDataGridView(dataGridView2, _currentRank.Data);
+            Utils.FillDataGridView(dataGridView2, _currentRank.X);
             Utils.ClearCalculatedValues(dataGridView2);
             _disableTrigger = false;
         }
@@ -170,7 +170,7 @@ namespace DelphiMethod
         {
             _disableTrigger = true;
             _currentRank.FillWithRandomValues();
-            Utils.FillDataGridView(dataGridView2, _currentRank.Data);
+            Utils.FillDataGridView(dataGridView2, _currentRank.X);
             Calculate();
             _disableTrigger = false;
         }

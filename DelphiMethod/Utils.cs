@@ -41,7 +41,6 @@ namespace DelphiMethod
                 {
                     BackColor = Color.Gold,
                 }
-                
             });
             component.Rows.Add(new DataGridViewRow
             {
@@ -78,17 +77,26 @@ namespace DelphiMethod
                 });
             }
 
-            component.Columns.Add("sum", "Сумма");
+            component.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "sum",
+                HeaderText = "Сумма",
+                ReadOnly = true,
+                DefaultCellStyle =
+                {
+                    BackColor = Color.Gold,
+                }
+            });
         }
 
         // Заполнить матрицу данными
-        public static void FillDataGridView(DataGridView component, double[,] data)
+        public static void FillDataGridView(DataGridView component, double[,] x)
         {
-            for (var i = 0; i < data.GetLength(0); i++)
+            for (var i = 0; i < x.GetLength(0); i++)
             {
-                for (var j = 0; j < data.GetLength(1); j++)
+                for (var j = 0; j < x.GetLength(1); j++)
                 {
-                    component[j, i].Value = Math.Round(data[i, j], DigitsAfterPoint);
+                    component[j, i].Value = Math.Round(x[i, j], DigitsAfterPoint).ToString();
                 }
             }
         }
@@ -98,43 +106,43 @@ namespace DelphiMethod
         {
             for (var i = 0; i < component.RowCount; i++)
             {
-                component["groupScore", i].Value = null;
+                component["groupScore", i].Value = "";
             }
 
             for (var i = 0; i < component.ColumnCount; i++)
             {
-                component[i, component.RowCount-1].Value = null;
+                component[i, component.RowCount-1].Value = "";
             }
         }
 
         // Вычислить групповые оценки и вывести их на форму
-        public static void FillGroupScores(DataGridView component, Matrix data)
+        public static void FillGroupScores(DataGridView component, Matrix x)
         {
-            var groupScores = data.GroupScores(data.CompetenceCoefficients());
+            var groupScores = x.GroupScores(x.CompetenceCoefficients());
 
-            for (var i = 0; i < data.N; i++)
+            for (var i = 0; i < x.N; i++)
             {
                 component["groupScore", i].Value = Math.Round(groupScores[i], DigitsAfterPoint);
             }
         }
 
         // Вычислить коэффициенты компетентности и вывести их на форму
-        public static void CalculateCoefficients(DataGridView component, Matrix data)
+        public static void CalculateCoefficients(DataGridView component, Matrix x)
         {
-            var coefficients = data.CompetenceCoefficients();
+            var coefficients = x.CompetenceCoefficients();
 
-            for (var i = 0; i < data.M; i++)
+            for (var i = 0; i < x.M; i++)
             {
-                component[i, data.N].Value = Math.Round(coefficients[i], 3);
+                component[i, x.N].Value = Math.Round(coefficients[i], 3);
             }
         }
 
         // Вычислить коэффициенты компетентности и вывести их на форму результатов
-        public static void CalculateGroupScoreSums(DataGridView component, List<double> data)
+        public static void CalculateGroupScoreSums(DataGridView component, List<double> x)
         {
-            for (var i = 0; i < data.Count; i++)
+            for (var i = 0; i < x.Count; i++)
             {
-                component["sum", i].Value = Math.Round(data[i], DigitsAfterPoint);
+                component["sum", i].Value = Math.Round(x[i], DigitsAfterPoint);
             }
         }
 
