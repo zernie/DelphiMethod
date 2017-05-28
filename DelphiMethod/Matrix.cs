@@ -37,7 +37,7 @@ namespace DelphiMethod
 
         public double this[int row, int col] => X[row, col];
 
-        // Групповые оценки x_j^k = Σ(q^k * K_i * x_i_j^k), i=1..m), j=1..n
+        // Групповые оценки x_j^k = Σ(q^k * K_i * x_ij^k), i=1..m), j=1..n
         public List<double> GroupScores(List<double> competenceCoefficients)
         {
             var groupScores = new List<double>(N);
@@ -54,7 +54,7 @@ namespace DelphiMethod
             return groupScores;
         }
 
-        // Средние оценки объектов x_i = Σ(K_i * x_i_j, i = 1..m), j = 1..n
+        // Средние оценки объектов x_i = Σ(K_i * x_ij, i = 1..m), j = 1..n
         public List<double> AverageScores(List<double> competenceCoefficients)
         {
             var list = new List<double>(N);
@@ -73,7 +73,7 @@ namespace DelphiMethod
             return list;
         }
 
-        // Нормировочный коэффициент lambda = Σ(Σ(x_i * x_i_j, i = 1..m), j = 1..n)
+        // Нормировочный коэффициент λ = Σ(Σ(x_i * x_ij, i = 1..m), j = 1..n)
         public double Lambda(List<double> averageScores)
         {
             var lambda = 0.0;
@@ -90,7 +90,7 @@ namespace DelphiMethod
 
         public List<double> CompetenceCoefficients() => CompetenceCoefficients(InitialCompetenceCoefficient());
 
-        // Коэффициенты компетентности K_i = (1 / lambda) * Σ(x_j * x_i_j, j = 1..n)
+        // Коэффициенты компетентности K_i = (1 / lambda) * Σ(x_j * x_ij, j = 1..n)
         public List<double> CompetenceCoefficients(List<double> competenceCoefficients)
         {
             var data = new List<double>(M);
@@ -199,7 +199,7 @@ namespace DelphiMethod
             return s;
         }
 
-        // Коэффициент конкордации кенделла
+        // Коэффициент конкордации Кенделла
         // W = 12S / (m^2 (n^3 - n) - m * Σ(T_i, i=1..m))
         public double W()
         {

@@ -78,7 +78,7 @@ namespace DelphiMethod
             Array.Reverse(list);
             Array.Reverse(indexes);
 
-            var ranks = new List<string>();
+            var ranks = new List<string>(list.Length);
 
             var k = 1;
             for (var i = 0; i < list.Length; i++)
