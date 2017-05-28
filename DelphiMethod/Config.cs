@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DelphiMethod
 {
-    // Конфигурация
+    // Настройки
     [Serializable]
     public struct Config
     {

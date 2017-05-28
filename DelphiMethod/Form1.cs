@@ -41,6 +41,11 @@ namespace DelphiMethod
         // Шкала оценок
         private Range RatingScale => new Range(0.0, radioButton1.Checked ? 10.0 : 100.0);
 
+        // Сумма весов коэффициентов
+        private double IndicatorsWeightSum => Indicators().Sum(x => x.Weight);
+
+
+
         // Пуск
         private void button1_Click(object sender, EventArgs e)
         {
@@ -90,9 +95,6 @@ namespace DelphiMethod
             return false;
         }
 
-        // Сумма весов коэффициентов
-        private double IndicatorsWeightSum => Indicators().Sum(x => x.Weight);
-
         // Удаление показателя из таблицы
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -106,7 +108,7 @@ namespace DelphiMethod
             }
         }
 
-        // Проверка на введенный вес показателя
+        // Проверка введенного веса показателя
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             var value = dataGridView1.CurrentCell.Value;
