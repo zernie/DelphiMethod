@@ -245,6 +245,7 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1025, 425);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -59,22 +59,22 @@
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.BackgroundColor = System.Drawing.Color.PaleGoldenrod;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle17;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView2.GridColor = System.Drawing.Color.DimGray;
             this.dataGridView2.Location = new System.Drawing.Point(0, 281);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle18;
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.Size = new System.Drawing.Size(1262, 472);
             this.dataGridView2.TabIndex = 12;
@@ -96,12 +96,12 @@
             // 
             // nextTourButton
             // 
-            this.nextTourButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.nextTourButton.Location = new System.Drawing.Point(684, 96);
+            this.nextTourButton.Font = new System.Drawing.Font("Segoe UI", 10.8F);
+            this.nextTourButton.Location = new System.Drawing.Point(822, 92);
             this.nextTourButton.Name = "nextTourButton";
-            this.nextTourButton.Size = new System.Drawing.Size(132, 58);
+            this.nextTourButton.Size = new System.Drawing.Size(159, 58);
             this.nextTourButton.TabIndex = 15;
-            this.nextTourButton.Text = "След. тур";
+            this.nextTourButton.Text = "Следующий тур";
             this.nextTourButton.UseVisualStyleBackColor = true;
             this.nextTourButton.Click += new System.EventHandler(this.nextTourButton_Click);
             // 
@@ -109,7 +109,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(12, 96);
+            this.label3.Location = new System.Drawing.Point(6, 156);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(175, 32);
             this.label3.TabIndex = 24;
@@ -119,7 +119,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(243, 24);
+            this.label2.Location = new System.Drawing.Point(12, 18);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(141, 32);
             this.label2.TabIndex = 22;
@@ -131,15 +131,15 @@
             this.indicatorComboBox.DropDownWidth = 700;
             this.indicatorComboBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.indicatorComboBox.FormattingEnabled = true;
-            this.indicatorComboBox.Location = new System.Drawing.Point(436, 22);
+            this.indicatorComboBox.Location = new System.Drawing.Point(405, 21);
             this.indicatorComboBox.Name = "indicatorComboBox";
             this.indicatorComboBox.Size = new System.Drawing.Size(370, 39);
             this.indicatorComboBox.TabIndex = 21;
             // 
             // exportButton
             // 
-            this.exportButton.Font = new System.Drawing.Font("Segoe UI", 14F);
-            this.exportButton.Location = new System.Drawing.Point(1129, 96);
+            this.exportButton.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.exportButton.Location = new System.Drawing.Point(1129, 93);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(121, 58);
             this.exportButton.TabIndex = 18;
@@ -151,7 +151,7 @@
             // 
             this.ratingScaleTextBox.Enabled = false;
             this.ratingScaleTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ratingScaleTextBox.Location = new System.Drawing.Point(249, 96);
+            this.ratingScaleTextBox.Location = new System.Drawing.Point(405, 153);
             this.ratingScaleTextBox.Name = "ratingScaleTextBox";
             this.ratingScaleTextBox.Size = new System.Drawing.Size(151, 38);
             this.ratingScaleTextBox.TabIndex = 25;
@@ -160,7 +160,7 @@
             // 
             this.tourNumberLabel.AutoSize = true;
             this.tourNumberLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tourNumberLabel.Location = new System.Drawing.Point(12, 25);
+            this.tourNumberLabel.Location = new System.Drawing.Point(605, 96);
             this.tourNumberLabel.Name = "tourNumberLabel";
             this.tourNumberLabel.Size = new System.Drawing.Size(170, 32);
             this.tourNumberLabel.TabIndex = 20;
@@ -168,7 +168,7 @@
             // 
             // calculateButton
             // 
-            this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 11.8F);
             this.calculateButton.Location = new System.Drawing.Point(822, 21);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(159, 58);
@@ -180,7 +180,7 @@
             // clearButton
             // 
             this.clearButton.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.clearButton.Location = new System.Drawing.Point(987, 96);
+            this.clearButton.Location = new System.Drawing.Point(987, 93);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(136, 58);
             this.clearButton.TabIndex = 27;
@@ -191,9 +191,9 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.button1.Location = new System.Drawing.Point(822, 96);
+            this.button1.Location = new System.Drawing.Point(987, 156);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(159, 58);
+            this.button1.Size = new System.Drawing.Size(263, 58);
             this.button1.TabIndex = 28;
             this.button1.Text = "Заполнить случ. значениями";
             this.button1.UseVisualStyleBackColor = true;
@@ -223,7 +223,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 163);
+            this.label5.Location = new System.Drawing.Point(12, 92);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(379, 32);
             this.label5.TabIndex = 31;
@@ -234,7 +234,7 @@
             this.alphaComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.alphaComboBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.alphaComboBox.FormattingEnabled = true;
-            this.alphaComboBox.Location = new System.Drawing.Point(436, 156);
+            this.alphaComboBox.Location = new System.Drawing.Point(405, 93);
             this.alphaComboBox.Name = "alphaComboBox";
             this.alphaComboBox.Size = new System.Drawing.Size(151, 39);
             this.alphaComboBox.TabIndex = 28;
