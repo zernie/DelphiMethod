@@ -87,7 +87,7 @@ namespace DelphiMethod
             var k = 1;
             for (var i = 0; i < list.Length; i++)
             {
-                var s = new List<int> { indexes[i] + 1 };
+                var s = new List<int> { indexes[i] };
 
                 for (var j = i + 1; j < list.Length; j++)
                 {
@@ -98,7 +98,7 @@ namespace DelphiMethod
                     }
                 }
 
-                var strings = s.Select(x => Configuration.Alternatives[x-1]).ToArray();
+                var strings = s.Select(x => Configuration.Alternatives[x]).ToArray();
                 ranks.Add($"{k++}. {string.Join(", ", strings)}");
             }
 
