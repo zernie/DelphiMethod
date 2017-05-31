@@ -178,10 +178,12 @@ namespace DelphiMethod
             return T;
         }
 
-        // Сумма квадратов отклонений S = Σ((Σ(x_ij - ΣΣx_ij / n, i = 1..m)), j = 1..n)
+        // Сумма квадратов отклонений S = Σ((Σx_ij - ΣΣx_ij / n, i = 1..m)^2), j = 1..n)
         public double S()
         {
             var sums = new List<double>(N);
+            var s = 0.0;
+
             for (var i = 0; i < N; i++)
             {
                 var sum = 0.0;
@@ -192,7 +194,12 @@ namespace DelphiMethod
                 sums.Add(sum);
             }
 
-            return sums.Select(s => Math.Pow(s - sums.Sum() / N, 2)).Sum();
+            for (var i = 0; i < N; i++)
+            {
+                s += Math.Pow(sums[i] - sums.Sum() / N, 2);
+            }
+
+            return s;
         }
 
         // Коэффициент конкордации Кенделла
