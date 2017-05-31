@@ -36,6 +36,8 @@ namespace DelphiMethod
         // Включить проверку введенных значений?
         private bool _disableTrigger;
 
+        private int _alphaIndex => alphaComboBox.SelectedIndex;
+
         public Form2(MatrixList ranks, bool calculate = false)
         {
             InitializeComponent();
@@ -79,7 +81,7 @@ namespace DelphiMethod
         // Проверить, достигнута ли согласованность
         private void CheckConsensus()
         {
-            var isConsensusReached = _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, alphaComboBox.SelectedIndex);
+            var isConsensusReached = _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, _alphaIndex);
             isConsensusReachedLabel.Text = isConsensusReached ? "достигнута" : "не достигнута";
         }
 
@@ -142,7 +144,7 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
                 MessageBox.Show($"'{dataGridView2.CurrentCell.Value}': {exception.Message}");
-                dataGridView2.CurrentCell.Value = _config.RatingScale.Start;
+                dataGridView2.CurrentCell.Value = "0";
                 _disableTrigger = false;
             }
         }
@@ -170,8 +172,7 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
                 Calculate();
-                var analysisDone = _ranks.Matrices.All(rank => rank.IsConsensusReached(_config.PearsonCorrelationTable, alphaComboBox.SelectedIndex));
-                if (analysisDone)
+                if (_ranks.IsAnalysisDone(alphaComboBox.SelectedIndex))
                 {
                     MessageBox.Show("Мнения экспертов согласованы во всех показателях!");
                     nextTourButton.Enabled = false;
@@ -211,12 +212,7 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
 
-                var z = _ranks.GroupScores();
-                var sums = _ranks.GroupScoresSums(z);
-                var ranks = _ranks.Ranks(sums);
-                var disabledRanks = _ranks.DisabledRanks(alphaComboBox.SelectedIndex);
-
-                using (var form = new Result(z, sums, ranks, disabledRanks, _config))
+                using (var form = new Result(_ranks, _alphaIndex))
                 {
                     form.ShowDialog();
                 }
@@ -225,10 +221,7 @@ namespace DelphiMethod
             {
                 MessageBox.Show(exception.Message);
             }
-            finally
-            {
-                _disableTrigger = false;
-            }
+            _disableTrigger = false;
         }
     }
 }

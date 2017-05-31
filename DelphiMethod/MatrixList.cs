@@ -115,5 +115,9 @@ namespace DelphiMethod
             }
             return disabledRanks;
         }
+
+        // Согласованы ли мнения во всех показателях?
+        public bool IsAnalysisDone(int alphaIndex) => 
+            Matrices.All(rank => rank.IsConsensusReached(Configuration.PearsonCorrelationTable, alphaIndex));
     }
 }
