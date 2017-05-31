@@ -153,9 +153,6 @@ namespace DelphiMethod
 
         // Вычиcление согласованности экспертов
 
-        // Оценка математического ожидания r = 1 / 2 * m(n + 1)
-        public double R() => 0.5 * M * (N + 1);
-
         // Сумма показателей рангов ΣT_i, i=1..H_i. T_i=Σ(h_k^3 - h_k, k = 1..H_i)
         public double T()
         {
@@ -181,12 +178,10 @@ namespace DelphiMethod
             return T;
         }
 
-        // Сумма квадратов отклонений S = Σ((Σ(r_ij - r, i = 1..m)) ^ 2, j = 1..n)
+        // Сумма квадратов отклонений S = Σ((Σ(x_ij - ΣΣx_ij / n, i = 1..m)), j = 1..n)
         public double S()
         {
-            var s = 0.0;
-            var r = R();
-
+            var sums = new List<double>(N);
             for (var i = 0; i < N; i++)
             {
                 var sum = 0.0;
@@ -194,10 +189,10 @@ namespace DelphiMethod
                 {
                     sum += X[i, j];
                 }
-                var pow = Math.Pow(sum - r, 2);
-                s += pow;
+                sums.Add(sum);
             }
-            return s;
+
+            return sums.Select(s => Math.Pow(s - sums.Sum() / N, 2)).Sum();
         }
 
         // Коэффициент конкордации Кенделла
