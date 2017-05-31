@@ -36,7 +36,7 @@
             this.nextTourButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.indicatorComboBox = new System.Windows.Forms.ComboBox();
             this.exportButton = new System.Windows.Forms.Button();
             this.ratingScaleTextBox = new System.Windows.Forms.TextBox();
             this.tourNumberLabel = new System.Windows.Forms.Label();
@@ -125,16 +125,16 @@
             this.label2.TabIndex = 22;
             this.label2.Text = "Показатель";
             // 
-            // comboBox1
+            // indicatorComboBox
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.DropDownWidth = 700;
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(436, 22);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(370, 39);
-            this.comboBox1.TabIndex = 21;
+            this.indicatorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.indicatorComboBox.DropDownWidth = 700;
+            this.indicatorComboBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.indicatorComboBox.FormattingEnabled = true;
+            this.indicatorComboBox.Location = new System.Drawing.Point(436, 22);
+            this.indicatorComboBox.Name = "indicatorComboBox";
+            this.indicatorComboBox.Size = new System.Drawing.Size(370, 39);
+            this.indicatorComboBox.TabIndex = 21;
             // 
             // exportButton
             // 
@@ -263,7 +263,7 @@
             this.groupBox1.Controls.Add(this.tourNumberLabel);
             this.groupBox1.Controls.Add(this.ratingScaleTextBox);
             this.groupBox1.Controls.Add(this.exportButton);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.indicatorComboBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.nextTourButton);
@@ -301,7 +301,7 @@
         private System.Windows.Forms.Button nextTourButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox indicatorComboBox;
         private System.Windows.Forms.Button exportButton;
         private System.Windows.Forms.TextBox ratingScaleTextBox;
         private System.Windows.Forms.Label tourNumberLabel;

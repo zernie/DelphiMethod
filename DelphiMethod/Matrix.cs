@@ -151,7 +151,7 @@ namespace DelphiMethod
         }
 
 
-        // Вычиcление согласованности экспертов
+        //                          Вычиcление согласованности экспертов
 
         // Сумма показателей рангов ΣT_i, i=1..H_i. T_i=Σ(h_k^3 - h_k, k = 1..H_i)
         public double T()
@@ -204,13 +204,8 @@ namespace DelphiMethod
 
         // Коэффициент конкордации Кенделла
         // W = 12S / (m^2 (n^3 - n) - m * Σ(T_i, i=1..m))
-        public double W()
-        {
-            var t = T();
-
-            return 12 * S() /
-                (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * t);
-        }
+        public double W() => 12 * S() /
+                             (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * T());
 
         // Согласованы ли мнения?
         public bool IsConsensusReached(PearsonCorrelation pearsonCorrelationTable, int alphaIndex)

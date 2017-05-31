@@ -29,7 +29,7 @@ namespace DelphiMethod
         private List<double[,]> _previousRanks;
 
         // Текущий показатель
-        private int _indicatorIndex => comboBox1.SelectedIndex;
+        private int _indicatorIndex => indicatorComboBox.SelectedIndex;
         // Вес коэффициента
         private Indicator _indicator => _config.Indicators[_indicatorIndex];
 
@@ -45,8 +45,8 @@ namespace DelphiMethod
             _previousRanks = ranks.Matrices.Select(rank => rank.X).ToList();
 
             // Заполняем показатели
-            comboBox1.Items.AddRange(_config.Indicators.Select(x => x.Title).ToArray());
-            comboBox1.SelectedIndex = 0;
+            indicatorComboBox.Items.AddRange(_config.Indicators.Select(x => x.Title).ToArray());
+            indicatorComboBox.SelectedIndex = 0;
 
             // Заполняем шкалу оценок
             ratingScaleTextBox.Text = _config.RatingScale.ToString();
@@ -62,7 +62,7 @@ namespace DelphiMethod
 
             if (calculate) Calculate();
 
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            indicatorComboBox.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
             alphaComboBox.SelectedIndexChanged += alphaComboBox_SelectedIndexChanged;
         }
@@ -160,10 +160,7 @@ namespace DelphiMethod
             {
                 MessageBox.Show("Заполните матрицу рангов");
             }
-            finally
-            {
-                _disableTrigger = false;
-            }
+            _disableTrigger = false;
         }
 
         // Посчитать
@@ -184,10 +181,7 @@ namespace DelphiMethod
             {
                 MessageBox.Show("Заполните матрицу рангов");
             }
-            finally
-            {
-                _disableTrigger = false;
-            }
+            _disableTrigger = false;
         }
 
         // Начать заново
