@@ -16,18 +16,15 @@ namespace DelphiMethod
             dataGridView1.Rows.Add("Удобство", 0.4);
             dataGridView1.Rows.Add("Популярность", 0.1);
             dataGridView1.Rows.Add("Наличие", 0.1);
-            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
-
-            var path = Path.Combine(Path.GetFullPath(@"..\..\"), "P.csv");
-            var lines = File.ReadAllLines(path);
+            var lines = ReadPearsonCorrelationFromFile();
+            if (lines == null) Application.Exit();
             PearsonCorrelationTable = new PearsonCorrelation(lines);
-            numericUpDown2.Maximum = PearsonCorrelationTable.Length;
+            alternativesCountNumericUpDown.Maximum = PearsonCorrelationTable.Length;
+            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
         }
 
-        private Config Configuration;
-
-        private int AlternativesCount => (int)numericUpDown2.Value; // n, количество альтернатив
-        private int ExpertsCount => (int)numericUpDown1.Value; // m, количество экспертов
+        private int AlternativesCount => (int)alternativesCountNumericUpDown.Value; // n, количество альтернатив
+        private int ExpertsCount => (int)expertsCountNumericUpDown.Value; // m, количество экспертов
 
         // Показатели, их названия и веса q^k
         private List<Indicator> Indicators()
@@ -59,7 +56,7 @@ namespace DelphiMethod
         {
             try
             {
-                Configuration = new Config
+                var configuration = new Config
                 {
                     AlternativesCount = AlternativesCount,
                     ExpertsCount = ExpertsCount,
@@ -70,7 +67,7 @@ namespace DelphiMethod
 
                 if (!CheckWeightIndicators()) return;
 
-                var matrixList = new MatrixList(Configuration);
+                var matrixList = new MatrixList(configuration);
 
                 Hide();
                 var form = new Form2(matrixList);
@@ -135,6 +132,21 @@ namespace DelphiMethod
                 dataGridView1.CurrentCell.Value = 0.0;
                 MessageBox.Show("Введите число от 0 до 1");
             }
+        }
+
+        // Чтение таблицы критических значений корреляции пирсона из файла
+        private static string[] ReadPearsonCorrelationFromFile()
+        {
+            try
+            {
+                var path = Path.Combine(Path.GetFullPath(@"..\..\"), "P.csv");
+                return File.ReadAllLines(path);
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show($"Не удалось загрузить таблицу критических значений корреляции Пирсона: {e.Message}");
+            }
+            return null;
         }
     }
 }

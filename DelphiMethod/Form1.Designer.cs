@@ -40,14 +40,14 @@
             this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
             this.importButton = new System.Windows.Forms.Button();
             this.configOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.alternativesCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.expertsCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.mLabel = new System.Windows.Forms.Label();
+            this.nLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.alternativesCountNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.expertsCountNumericUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -163,73 +163,73 @@
             // 
             this.configOpenFileDialog.Filter = "Файлы конфигурации|*.bin|Все файлы|*.*";
             // 
-            // numericUpDown2
+            // alternativesCountNumericUpDown
             // 
-            this.numericUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown2.Location = new System.Drawing.Point(348, 61);
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.alternativesCountNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.alternativesCountNumericUpDown.Location = new System.Drawing.Point(348, 61);
+            this.alternativesCountNumericUpDown.Minimum = new decimal(new int[] {
             2,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(121, 34);
-            this.numericUpDown2.TabIndex = 5;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.alternativesCountNumericUpDown.Name = "alternativesCountNumericUpDown";
+            this.alternativesCountNumericUpDown.Size = new System.Drawing.Size(121, 34);
+            this.alternativesCountNumericUpDown.TabIndex = 5;
+            this.alternativesCountNumericUpDown.Value = new decimal(new int[] {
             5,
             0,
             0,
             0});
             // 
-            // numericUpDown1
+            // expertsCountNumericUpDown
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown1.Location = new System.Drawing.Point(348, 21);
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.expertsCountNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.expertsCountNumericUpDown.Location = new System.Drawing.Point(348, 21);
+            this.expertsCountNumericUpDown.Minimum = new decimal(new int[] {
             3,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(121, 34);
-            this.numericUpDown1.TabIndex = 4;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.expertsCountNumericUpDown.Name = "expertsCountNumericUpDown";
+            this.expertsCountNumericUpDown.Size = new System.Drawing.Size(121, 34);
+            this.expertsCountNumericUpDown.TabIndex = 4;
+            this.expertsCountNumericUpDown.Value = new decimal(new int[] {
             3,
             0,
             0,
             0});
             // 
-            // label2
+            // mLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(5, 56);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(289, 32);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Количество альтернатив";
+            this.mLabel.AutoSize = true;
+            this.mLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.mLabel.Location = new System.Drawing.Point(5, 56);
+            this.mLabel.Name = "mLabel";
+            this.mLabel.Size = new System.Drawing.Size(289, 32);
+            this.mLabel.TabIndex = 3;
+            this.mLabel.Text = "Количество альтернатив";
             // 
-            // label1
+            // nLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(6, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(264, 32);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Количество экспертов";
+            this.nLabel.AutoSize = true;
+            this.nLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.nLabel.Location = new System.Drawing.Point(6, 18);
+            this.nLabel.Name = "nLabel";
+            this.nLabel.Size = new System.Drawing.Size(264, 32);
+            this.nLabel.TabIndex = 2;
+            this.nLabel.Text = "Количество экспертов";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.importButton);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.nLabel);
+            this.groupBox1.Controls.Add(this.mLabel);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
-            this.groupBox1.Controls.Add(this.numericUpDown2);
+            this.groupBox1.Controls.Add(this.expertsCountNumericUpDown);
+            this.groupBox1.Controls.Add(this.alternativesCountNumericUpDown);
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Location = new System.Drawing.Point(12, 10);
@@ -250,8 +250,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Групповая оценка альтернатив";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.alternativesCountNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.expertsCountNumericUpDown)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -267,10 +267,10 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button importButton;
         private System.Windows.Forms.OpenFileDialog configOpenFileDialog;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown alternativesCountNumericUpDown;
+        private System.Windows.Forms.NumericUpDown expertsCountNumericUpDown;
+        private System.Windows.Forms.Label mLabel;
+        private System.Windows.Forms.Label nLabel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
         private System.Windows.Forms.DataGridViewTextBoxColumn Weight;
