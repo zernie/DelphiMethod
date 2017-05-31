@@ -36,8 +36,6 @@ namespace DelphiMethod
         // Включить проверку введенных значений?
         private bool _disableTrigger;
 
-        private int _alphaIndex => alphaComboBox.SelectedIndex;
-
         public Form2(MatrixList ranks, bool calculate = false)
         {
             InitializeComponent();
@@ -53,20 +51,14 @@ namespace DelphiMethod
             // Заполняем шкалу оценок
             ratingScaleTextBox.Text = _config.RatingScale.ToString();
 
-            // Заполняем уровни значимости критерия α
-            foreach (var alpha in _config.PearsonCorrelationTable.Alphas)
-                alphaComboBox.Items.Add(alpha);
-            alphaComboBox.SelectedIndex = 0;
-
             // Выводим матрицу
-            Utils.InitInputDataGridView(dataGridView2, _config.ExpertsCount, _config.AlternativesCount);
+            Utils.InitInputDataGridView(dataGridView2, _config);
             Utils.FillDataGridView(dataGridView2, _currentRank.X);
 
             if (calculate) Calculate();
 
             indicatorComboBox.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
-            alphaComboBox.SelectedIndexChanged += alphaComboBox_SelectedIndexChanged;
         }
 
         // Переход на след.тур
@@ -81,7 +73,7 @@ namespace DelphiMethod
         // Проверить, достигнута ли согласованность
         private void CheckConsensus()
         {
-            var isConsensusReached = _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, _alphaIndex);
+            var isConsensusReached = _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, _config.AlphaIndex);
             isConsensusReachedLabel.Text = isConsensusReached ? "достигнута" : "не достигнута";
         }
 
@@ -118,12 +110,6 @@ namespace DelphiMethod
                 isConsensusReachedLabel.Text = "...";
             }
             _disableTrigger = false;
-        }
-
-        // Смена уровня значимости критерия α
-        private void alphaComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CheckConsensus();
         }
 
         // Ввод данных в ячейку
@@ -172,7 +158,7 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
                 Calculate();
-                if (_ranks.IsAnalysisDone(alphaComboBox.SelectedIndex))
+                if (_ranks.IsAnalysisDone)
                 {
                     MessageBox.Show("Мнения экспертов согласованы во всех показателях!");
                     nextTourButton.Enabled = false;
@@ -212,7 +198,7 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
 
-                using (var form = new Result(_ranks, _alphaIndex))
+                using (var form = new Result(_ranks))
                 {
                     form.ShowDialog();
                 }

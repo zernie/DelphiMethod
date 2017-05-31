@@ -31,6 +31,10 @@ namespace DelphiMethod
             set => Matrices[index] = value;
         }
 
+        // Согласованы ли мнения во всех показателях?
+        public bool IsAnalysisDone =>
+            Matrices.All(rank => rank.IsConsensusReached(Configuration.PearsonCorrelationTable, Configuration.AlphaIndex));
+
         // Матрица групповых оценок альтернатив по показателям
         public double[,] GroupScores()
         {
@@ -83,7 +87,7 @@ namespace DelphiMethod
             var k = 1;
             for (var i = 0; i < list.Length; i++)
             {
-                var s = new List<int> {indexes[i] + 1};
+                var s = new List<int> { indexes[i] + 1 };
 
                 for (var j = i + 1; j < list.Length; j++)
                 {
@@ -94,7 +98,7 @@ namespace DelphiMethod
                     }
                 }
 
-                var strings = s.Select(x => $"x{x}").ToArray();
+                var strings = s.Select(x => Configuration.Alternatives[x-1]).ToArray();
                 ranks.Add($"{k++}. {string.Join(", ", strings)}");
             }
 
@@ -102,22 +106,18 @@ namespace DelphiMethod
         }
 
         // Индексы показателей, в которых достигнута согласованность мнений
-        public List<int> DisabledRanks(int alphaIndex)
+        public List<int> DisabledRanks()
         {
             var disabledRanks = new List<int>();
             for (var i = 0; i < Matrices.Count; i++)
             {
                 var rank = Matrices[i];
-                if (rank.IsConsensusReached(Configuration.PearsonCorrelationTable, alphaIndex))
+                if (rank.IsConsensusReached(Configuration.PearsonCorrelationTable, Configuration.AlphaIndex))
                 {
                     disabledRanks.Add(i);
                 }
             }
             return disabledRanks;
         }
-
-        // Согласованы ли мнения во всех показателях?
-        public bool IsAnalysisDone(int alphaIndex) => 
-            Matrices.All(rank => rank.IsConsensusReached(Configuration.PearsonCorrelationTable, alphaIndex));
     }
 }

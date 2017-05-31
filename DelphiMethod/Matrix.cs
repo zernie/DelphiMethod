@@ -183,20 +183,22 @@ namespace DelphiMethod
         {
             var sums = new List<double>(N);
             var s = 0.0;
+            var sum = 0.0;
 
             for (var i = 0; i < N; i++)
             {
-                var sum = 0.0;
+                var temp = 0.0;
                 for (var j = 0; j < M; j++)
                 {
-                    sum += X[i, j];
+                    temp += X[i, j];
                 }
-                sums.Add(sum);
+                sum += temp;
+                sums.Add(temp);
             }
 
             for (var i = 0; i < N; i++)
             {
-                s += Math.Pow(sums[i] - sums.Sum() / N, 2);
+                s += Math.Pow(sums[i] - sum / N, 2);
             }
 
             return s;

@@ -11,36 +11,43 @@ namespace DelphiMethod
         public Form1()
         {
             InitializeComponent();
-            dataGridView1.Rows.Add("Стоимость", 0.2);
-            dataGridView1.Rows.Add("Надежность", 0.2);
-            dataGridView1.Rows.Add("Удобство", 0.4);
-            dataGridView1.Rows.Add("Популярность", 0.1);
-            dataGridView1.Rows.Add("Наличие", 0.1);
+            indicatorsDataGridView.Rows.Add("Полнота поиска", 0.3);
+            indicatorsDataGridView.Rows.Add("Точность поиска", 0.2);
+            indicatorsDataGridView.Rows.Add("Усилия, затрачиваемые на формулирование запросов", 0.3);
+            indicatorsDataGridView.Rows.Add("Форма представления найденной информации", 0.1);
+            indicatorsDataGridView.Rows.Add("Полнота информационного массива", 0.1);
             var lines = ReadPearsonCorrelationFromFile();
             if (lines == null) Application.Exit();
             PearsonCorrelationTable = new PearsonCorrelation(lines);
-            alternativesCountNumericUpDown.Maximum = PearsonCorrelationTable.Length;
-            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
+
+            // Заполняем уровни значимости критерия α
+            foreach (var alpha in PearsonCorrelationTable.Alphas)
+                alphaComboBox.Items.Add(alpha);
+            alphaComboBox.SelectedIndex = PearsonCorrelationTable.Alphas.Count / 2;
+
+
+            indicatorsDataGridView.CellValueChanged += dataGridView1_CellValueChanged;
         }
 
-        private int AlternativesCount => (int)alternativesCountNumericUpDown.Value; // n, количество альтернатив
-        private int ExpertsCount => (int)expertsCountNumericUpDown.Value; // m, количество экспертов
+        private List<string> Alternatives => alternativesRichTextBox.Lines.ToList();
+        private List<string> Experts => expertsRichTextBox.Lines.ToList();
 
         // Показатели, их названия и веса q^k
         private List<Indicator> Indicators()
         {
-            var indicators = new List<Indicator>(dataGridView1.RowCount);
+            var indicators = new List<Indicator>(indicatorsDataGridView.RowCount);
 
-            for (var i = 0; i < dataGridView1.RowCount - 1; i++)
+            for (var i = 0; i < indicatorsDataGridView.RowCount - 1; i++)
             {
-                var title = Convert.ToString(dataGridView1["Title", i].Value);
-                var weight = Convert.ToDouble(dataGridView1["Weight", i].Value);
+                var title = Convert.ToString(indicatorsDataGridView["Title", i].Value);
+                var weight = Convert.ToDouble(indicatorsDataGridView["Weight", i].Value);
                 indicators.Add(new Indicator(title, weight));
             }
 
             return indicators;
         }
 
+        // Таблица корреляции
         private PearsonCorrelation PearsonCorrelationTable;
 
         // Шкала оценок
@@ -50,7 +57,6 @@ namespace DelphiMethod
         private double IndicatorsWeightSum => Indicators().Sum(x => x.Weight);
 
 
-
         // Пуск
         private void button1_Click(object sender, EventArgs e)
         {
@@ -58,14 +64,15 @@ namespace DelphiMethod
             {
                 var configuration = new Config
                 {
-                    AlternativesCount = AlternativesCount,
-                    ExpertsCount = ExpertsCount,
+                    Alternatives = Alternatives,
+                    Experts = Experts,
                     RatingScale = RatingScale,
                     Indicators = Indicators(),
                     PearsonCorrelationTable = PearsonCorrelationTable,
+                    AlphaIndex = alphaComboBox.SelectedIndex,
                 };
 
-                if (!CheckWeightIndicators()) return;
+                if (!CheckInput()) return;
 
                 var matrixList = new MatrixList(configuration);
 
@@ -93,32 +100,48 @@ namespace DelphiMethod
         }
 
         // Проверка на верность введенных данных
-        private bool CheckWeightIndicators()
+        private bool CheckInput()
         {
-            if (IndicatorsWeightSum == 1.0) return true;
+            if (IndicatorsWeightSum != 1.0)
+            {
+                MessageBox.Show($"Сумма коэффициентов весов показателей = {IndicatorsWeightSum}, а должна равняться 1");
+                return false;
+            }
 
-            MessageBox.Show($"Сумма коэффициентов весов показателей = {IndicatorsWeightSum}, а должна равняться 1");
-            return false;
+            if (Alternatives.Count < 2)
+            {
+                MessageBox.Show($"Пожалуйста, введите не менее 2 альтернатив");
+                return false;
+
+            }
+
+            if (Experts.Count < 3)
+            {
+                MessageBox.Show($"Пожалуйста, введите не менее 3 экспертов");
+                return false;
+
+            }
+            return true;
         }
 
         // Удаление показателя из таблицы
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+            if (indicatorsDataGridView.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0 &&
-                e.RowIndex != dataGridView1.NewRowIndex &&
-                dataGridView1.RowCount > 2
+                e.RowIndex != indicatorsDataGridView.NewRowIndex &&
+                indicatorsDataGridView.RowCount > 2
                 )
             {
-                dataGridView1.Rows.RemoveAt(e.RowIndex);
+                indicatorsDataGridView.Rows.RemoveAt(e.RowIndex);
             }
         }
 
         // Проверка введенного веса показателя
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            var value = dataGridView1.CurrentCell.Value;
-            if (dataGridView1.CurrentCell.ColumnIndex != 1 && value != null) return;
+            var value = indicatorsDataGridView.CurrentCell.Value;
+            if (indicatorsDataGridView.CurrentCell.ColumnIndex != 1 && value != null) return;
 
             try
             {
@@ -129,7 +152,7 @@ namespace DelphiMethod
             }
             catch (FormatException)
             {
-                dataGridView1.CurrentCell.Value = 0.0;
+                indicatorsDataGridView.CurrentCell.Value = 0.0;
                 MessageBox.Show("Введите число от 0 до 1");
             }
         }

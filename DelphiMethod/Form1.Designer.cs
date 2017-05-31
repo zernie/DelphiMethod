@@ -29,88 +29,47 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.configOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.label5 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.indicatorsDataGridView = new System.Windows.Forms.DataGridView();
             this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.label4 = new System.Windows.Forms.Label();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.importButton = new System.Windows.Forms.Button();
-            this.configOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.alternativesCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.expertsCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.mLabel = new System.Windows.Forms.Label();
-            this.nLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.Альтернативы = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.alternativesCountNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.expertsCountNumericUpDown)).BeginInit();
+            this.expertsRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.alternativesRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.alphaComboBox = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.indicatorsDataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // configOpenFileDialog
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(170, 163);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(128, 46);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Пуск";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(9, 107);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(228, 32);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Шкала оценивания";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(282, 107);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(85, 36);
-            this.radioButton1.TabIndex = 12;
-            this.radioButton1.Text = "0..10";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Checked = true;
-            this.radioButton2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(373, 107);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(98, 36);
-            this.radioButton2.TabIndex = 13;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "0..100";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.configOpenFileDialog.Filter = "Файлы конфигурации|*.bin|Все файлы|*.*";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(537, 18);
+            this.label5.Location = new System.Drawing.Point(921, 18);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(143, 32);
             this.label5.TabIndex = 14;
             this.label5.Text = "Показатели";
             // 
-            // dataGridView1
+            // indicatorsDataGridView
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.PaleGoldenrod;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.indicatorsDataGridView.BackgroundColor = System.Drawing.Color.PaleGoldenrod;
+            this.indicatorsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.indicatorsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Title,
             this.Weight,
             this.Remove});
@@ -121,13 +80,13 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.Location = new System.Drawing.Point(543, 53);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(447, 327);
-            this.dataGridView1.TabIndex = 17;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.indicatorsDataGridView.DefaultCellStyle = dataGridViewCellStyle1;
+            this.indicatorsDataGridView.Location = new System.Drawing.Point(850, 53);
+            this.indicatorsDataGridView.Name = "indicatorsDataGridView";
+            this.indicatorsDataGridView.RowTemplate.Height = 24;
+            this.indicatorsDataGridView.Size = new System.Drawing.Size(400, 400);
+            this.indicatorsDataGridView.TabIndex = 17;
+            this.indicatorsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Title
             // 
@@ -139,6 +98,7 @@
             // 
             this.Weight.HeaderText = "Вес";
             this.Weight.Name = "Weight";
+            this.Weight.Width = 70;
             // 
             // Remove
             // 
@@ -148,10 +108,44 @@
             this.Remove.UseColumnTextForButtonValue = true;
             this.Remove.Width = 80;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(199, 532);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(228, 32);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Шкала оценивания";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton1.Location = new System.Drawing.Point(538, 532);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(85, 36);
+            this.radioButton1.TabIndex = 12;
+            this.radioButton1.Text = "0..10";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Checked = true;
+            this.radioButton2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton2.Location = new System.Drawing.Point(675, 529);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(98, 36);
+            this.radioButton2.TabIndex = 13;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "0..100";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
             // importButton
             // 
             this.importButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.importButton.Location = new System.Drawing.Point(311, 163);
+            this.importButton.Location = new System.Drawing.Point(645, 585);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(128, 46);
             this.importButton.TabIndex = 20;
@@ -159,123 +153,139 @@
             this.importButton.UseVisualStyleBackColor = true;
             this.importButton.Click += new System.EventHandler(this.importButton_Click);
             // 
-            // configOpenFileDialog
+            // button1
             // 
-            this.configOpenFileDialog.Filter = "Файлы конфигурации|*.bin|Все файлы|*.*";
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(495, 585);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(128, 46);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Пуск";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // alternativesCountNumericUpDown
+            // Альтернативы
             // 
-            this.alternativesCountNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.alternativesCountNumericUpDown.Location = new System.Drawing.Point(348, 61);
-            this.alternativesCountNumericUpDown.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.alternativesCountNumericUpDown.Name = "alternativesCountNumericUpDown";
-            this.alternativesCountNumericUpDown.Size = new System.Drawing.Size(121, 34);
-            this.alternativesCountNumericUpDown.TabIndex = 5;
-            this.alternativesCountNumericUpDown.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            // 
-            // expertsCountNumericUpDown
-            // 
-            this.expertsCountNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.expertsCountNumericUpDown.Location = new System.Drawing.Point(348, 21);
-            this.expertsCountNumericUpDown.Minimum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.expertsCountNumericUpDown.Name = "expertsCountNumericUpDown";
-            this.expertsCountNumericUpDown.Size = new System.Drawing.Size(121, 34);
-            this.expertsCountNumericUpDown.TabIndex = 4;
-            this.expertsCountNumericUpDown.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            // 
-            // mLabel
-            // 
-            this.mLabel.AutoSize = true;
-            this.mLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.mLabel.Location = new System.Drawing.Point(5, 56);
-            this.mLabel.Name = "mLabel";
-            this.mLabel.Size = new System.Drawing.Size(289, 32);
-            this.mLabel.TabIndex = 3;
-            this.mLabel.Text = "Количество альтернатив";
-            // 
-            // nLabel
-            // 
-            this.nLabel.AutoSize = true;
-            this.nLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.nLabel.Location = new System.Drawing.Point(6, 18);
-            this.nLabel.Name = "nLabel";
-            this.nLabel.Size = new System.Drawing.Size(264, 32);
-            this.nLabel.TabIndex = 2;
-            this.nLabel.Text = "Количество экспертов";
+            this.Альтернативы.AutoSize = true;
+            this.Альтернативы.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Альтернативы.Location = new System.Drawing.Point(39, 18);
+            this.Альтернативы.Name = "Альтернативы";
+            this.Альтернативы.Size = new System.Drawing.Size(172, 32);
+            this.Альтернативы.TabIndex = 21;
+            this.Альтернативы.Text = "Альтернативы";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.importButton);
-            this.groupBox1.Controls.Add(this.nLabel);
-            this.groupBox1.Controls.Add(this.mLabel);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.expertsCountNumericUpDown);
-            this.groupBox1.Controls.Add(this.alternativesCountNumericUpDown);
-            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.expertsRichTextBox);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.alternativesRichTextBox);
+            this.groupBox1.Controls.Add(this.Альтернативы);
+            this.groupBox1.Controls.Add(this.indicatorsDataGridView);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(12, 10);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1001, 403);
+            this.groupBox1.Size = new System.Drawing.Size(1262, 453);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
+            // 
+            // expertsRichTextBox
+            // 
+            this.expertsRichTextBox.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.expertsRichTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.expertsRichTextBox.Location = new System.Drawing.Point(427, 53);
+            this.expertsRichTextBox.Name = "expertsRichTextBox";
+            this.expertsRichTextBox.Size = new System.Drawing.Size(400, 400);
+            this.expertsRichTextBox.TabIndex = 24;
+            this.expertsRichTextBox.Text = "Сергей Брин\nЛарри Пейдж\nСундар Пичаи\nСатья Наделла\nБилл Гейтс\nПолл Аллен\nРичард С" +
+    "толлмен\nСтивен Хокинг";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(502, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(121, 32);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Эксперты";
+            // 
+            // alternativesRichTextBox
+            // 
+            this.alternativesRichTextBox.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.alternativesRichTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.alternativesRichTextBox.Location = new System.Drawing.Point(6, 53);
+            this.alternativesRichTextBox.Name = "alternativesRichTextBox";
+            this.alternativesRichTextBox.Size = new System.Drawing.Size(400, 400);
+            this.alternativesRichTextBox.TabIndex = 22;
+            this.alternativesRichTextBox.Text = "Google\nBing\nYandex\nYahoo\nMail.ru\nSputnik\nBaidu\nDuckDuckGo\nAOL search\nWebCrawler";
+            // 
+            // alphaComboBox
+            // 
+            this.alphaComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.alphaComboBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.alphaComboBox.FormattingEnabled = true;
+            this.alphaComboBox.Location = new System.Drawing.Point(592, 484);
+            this.alphaComboBox.Name = "alphaComboBox";
+            this.alphaComboBox.Size = new System.Drawing.Size(151, 39);
+            this.alphaComboBox.TabIndex = 32;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(199, 487);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(379, 32);
+            this.label2.TabIndex = 33;
+            this.label2.Text = "Уровень значимости критерия α";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1025, 425);
+            this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.Controls.Add(this.alphaComboBox);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.importButton);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.radioButton2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Групповая оценка альтернатив";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.alternativesCountNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.expertsCountNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indicatorsDataGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button importButton;
         private System.Windows.Forms.OpenFileDialog configOpenFileDialog;
-        private System.Windows.Forms.NumericUpDown alternativesCountNumericUpDown;
-        private System.Windows.Forms.NumericUpDown expertsCountNumericUpDown;
-        private System.Windows.Forms.Label mLabel;
-        private System.Windows.Forms.Label nLabel;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView indicatorsDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn Title;
         private System.Windows.Forms.DataGridViewTextBoxColumn Weight;
         private System.Windows.Forms.DataGridViewButtonColumn Remove;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.Button importButton;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label Альтернативы;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RichTextBox alternativesRichTextBox;
+        private System.Windows.Forms.RichTextBox expertsRichTextBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox alphaComboBox;
+        private System.Windows.Forms.Label label2;
     }
 }
 

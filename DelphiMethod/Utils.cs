@@ -14,20 +14,20 @@ namespace DelphiMethod
         public const int DigitsAfterPoint = 3;
 
         // Инициализировать таблицу рангов заданным количеством строк и столбцов
-        public static void InitInputDataGridView(DataGridView component, int width, int count)
+        public static void InitInputDataGridView(DataGridView component, Config config)
         {
-            for (var i = 0; i < width; i++)
+            for (var i = 0; i < config.ExpertsCount; i++)
             {
-                component.Columns.Add(i.ToString(), $"Эксперт №{i + 1}");
+                component.Columns.Add(i.ToString(), config.Experts[i]);
             }
 
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < config.AlternativesCount; i++)
             {
                 component.Rows.Add(new DataGridViewRow
                 {
                     HeaderCell = new DataGridViewRowHeaderCell
                     {
-                        Value = $"Альтернатива x{i + 1}"
+                        Value = config.Alternatives[i]
                     },
                 });
             }
@@ -57,14 +57,14 @@ namespace DelphiMethod
         }
 
         // Инициализировать таблицу групповых оценок заданным количеством строк и столбцов
-        public static void InitResultDataGridView(DataGridView component, Config configuration, List<int> disabled)
+        public static void InitResultDataGridView(DataGridView component, Config config, List<int> disabled)
         {
-            for (var i = 0; i < configuration.IndicatorsCount; i++)
+            for (var i = 0; i < config.IndicatorsCount; i++)
             {
-                var indicator = configuration.Indicators[i].Title;
+                var indicator = config.Indicators[i].Title;
                 component.Columns.Add(new DataGridViewTextBoxColumn
                 {
-                    HeaderText = $"z{i + 1} ({indicator})",
+                    HeaderText = indicator,
                     ReadOnly = true,
                     DefaultCellStyle =
                     {
@@ -73,14 +73,14 @@ namespace DelphiMethod
                 });
             }
 
-            for (var i = 0; i < configuration.AlternativesCount; i++)
+            for (var i = 0; i < config.AlternativesCount; i++)
             {
                 component.Rows.Add(new DataGridViewRow
                 {
                     ReadOnly = true,
                     HeaderCell = new DataGridViewRowHeaderCell
                     {
-                        Value = $"Групповая оценка x{i + 1}"
+                        Value = $"Групповая оценка {config.Alternatives[i]}"
                     }
                 });
             }
