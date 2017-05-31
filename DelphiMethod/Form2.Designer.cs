@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.nextTourButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,6 +41,8 @@
             this.calculateButton = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.showResultButton = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.alphaComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.isConsensusReachedLabel = new System.Windows.Forms.Label();
@@ -48,8 +50,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.tourNumberLabel = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.showResultButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -60,22 +60,22 @@
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.BackgroundColor = System.Drawing.Color.PaleGoldenrod;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView2.GridColor = System.Drawing.Color.DimGray;
             this.dataGridView2.Location = new System.Drawing.Point(0, 281);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.Size = new System.Drawing.Size(1262, 472);
             this.dataGridView2.TabIndex = 12;
@@ -83,7 +83,7 @@
             // nextTourButton
             // 
             this.nextTourButton.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.nextTourButton.Location = new System.Drawing.Point(674, 93);
+            this.nextTourButton.Location = new System.Drawing.Point(684, 96);
             this.nextTourButton.Name = "nextTourButton";
             this.nextTourButton.Size = new System.Drawing.Size(132, 58);
             this.nextTourButton.TabIndex = 15;
@@ -193,6 +193,26 @@
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
             // 
+            // showResultButton
+            // 
+            this.showResultButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.showResultButton.Location = new System.Drawing.Point(987, 21);
+            this.showResultButton.Name = "showResultButton";
+            this.showResultButton.Size = new System.Drawing.Size(263, 58);
+            this.showResultButton.TabIndex = 33;
+            this.showResultButton.Text = "Вывод результатов";
+            this.showResultButton.UseVisualStyleBackColor = true;
+            this.showResultButton.Click += new System.EventHandler(this.showResultButton_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(817, 167);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(0, 28);
+            this.label6.TabIndex = 32;
+            // 
             // alphaComboBox
             // 
             this.alphaComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -264,26 +284,6 @@
             this.tourNumberLabel.Size = new System.Drawing.Size(170, 32);
             this.tourNumberLabel.TabIndex = 20;
             this.tourNumberLabel.Text = "Номер тура: 1";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(817, 167);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(0, 28);
-            this.label6.TabIndex = 32;
-            // 
-            // showResultButton
-            // 
-            this.showResultButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.showResultButton.Location = new System.Drawing.Point(987, 21);
-            this.showResultButton.Name = "showResultButton";
-            this.showResultButton.Size = new System.Drawing.Size(263, 58);
-            this.showResultButton.TabIndex = 33;
-            this.showResultButton.Text = "Вывод результатов";
-            this.showResultButton.UseVisualStyleBackColor = true;
-            this.showResultButton.Click += new System.EventHandler(this.showResultButton_Click);
             // 
             // Form2
             // 

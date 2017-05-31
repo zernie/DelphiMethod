@@ -101,6 +101,7 @@ namespace DelphiMethod
             return ranks;
         }
 
+        // Индексы показателей, в которых достигнута согласованность мнений
         public List<int> DisabledRanks(int alphaIndex)
         {
             var disabledRanks = new List<int>();

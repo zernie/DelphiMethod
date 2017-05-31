@@ -181,7 +181,7 @@ namespace DelphiMethod
             return T;
         }
 
-        // S = Σ((Σ(r_ij - r, i = 1..m)) ^ 2, j = 1..n)
+        // Сумма квадратов отклонений S = Σ((Σ(r_ij - r, i = 1..m)) ^ 2, j = 1..n)
         public double S()
         {
             var s = 0.0;
@@ -194,7 +194,8 @@ namespace DelphiMethod
                 {
                     sum += X[i, j];
                 }
-                s += Math.Pow(sum - r, 2);
+                var pow = Math.Pow(sum - r, 2);
+                s += pow;
             }
             return s;
         }
@@ -212,10 +213,10 @@ namespace DelphiMethod
         // Согласованы ли мнения?
         public bool IsConsensusReached(PearsonCorrelation pearsonCorrelationTable, int alphaIndex)
         {
-            var d = pearsonCorrelationTable.P[N - 2, alphaIndex];
-
+            var x2 = pearsonCorrelationTable.P[N - 2, alphaIndex];
             var x2Alpha = X2();
-            return x2Alpha > d;
+
+            return x2 < x2Alpha;
         }
 
         // Критерий согласования Пирсона
@@ -233,6 +234,5 @@ namespace DelphiMethod
                 }
             }
         }
-
     }
 }
