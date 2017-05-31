@@ -79,7 +79,6 @@ namespace DelphiMethod
         // Проверить, достигнута ли согласованность
         private void CheckConsensus()
         {
-            label6.Text = $"Коэфф. конкордации = {_currentRank.W()}";
             var isConsensusReached = _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, alphaComboBox.SelectedIndex);
             isConsensusReachedLabel.Text = isConsensusReached ? "достигнута" : "не достигнута";
         }
