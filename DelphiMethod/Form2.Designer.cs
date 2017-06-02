@@ -42,7 +42,7 @@
             this.tourNumberLabel = new System.Windows.Forms.Label();
             this.calculateButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.fillWithRandomValuesButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.isConsensusReachedLabel = new System.Windows.Forms.Label();
             this.showResultButton = new System.Windows.Forms.Button();
@@ -186,16 +186,16 @@
             this.clearButton.UseVisualStyleBackColor = true;
             this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
-            // button1
+            // fillWithRandomValuesButton
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.button1.Location = new System.Drawing.Point(987, 156);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(263, 58);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "Заполнить случ. значениями";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.fillWithRandomValuesButton.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.fillWithRandomValuesButton.Location = new System.Drawing.Point(987, 156);
+            this.fillWithRandomValuesButton.Name = "fillWithRandomValuesButton";
+            this.fillWithRandomValuesButton.Size = new System.Drawing.Size(263, 58);
+            this.fillWithRandomValuesButton.TabIndex = 28;
+            this.fillWithRandomValuesButton.Text = "Заполнить случ. значениями";
+            this.fillWithRandomValuesButton.UseVisualStyleBackColor = true;
+            this.fillWithRandomValuesButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // label4
             // 
@@ -233,7 +233,7 @@
             this.groupBox1.Controls.Add(this.showResultButton);
             this.groupBox1.Controls.Add(this.isConsensusReachedLabel);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.fillWithRandomValuesButton);
             this.groupBox1.Controls.Add(this.clearButton);
             this.groupBox1.Controls.Add(this.calculateButton);
             this.groupBox1.Controls.Add(this.tourNumberLabel);
@@ -283,7 +283,7 @@
         private System.Windows.Forms.Label tourNumberLabel;
         private System.Windows.Forms.Button calculateButton;
         private System.Windows.Forms.Button clearButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button fillWithRandomValuesButton;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label isConsensusReachedLabel;
         private System.Windows.Forms.Button showResultButton;

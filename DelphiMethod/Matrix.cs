@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace DelphiMethod
 {
@@ -37,7 +38,7 @@ namespace DelphiMethod
 
         public double this[int row, int col] => X[row, col];
 
-        // Групповые оценки x_j^k = Σ(q^k * K_i * x_ij^k), i=1..m), j=1..n
+        // Групповые оценки xj^k = Σ(q^k * Ki * xij^k), i=1..m), j=1..n
         public List<double> GroupScores(List<double> competenceCoefficients)
         {
             var groupScores = new List<double>(N);
@@ -54,7 +55,7 @@ namespace DelphiMethod
             return groupScores;
         }
 
-        // Средние оценки объектов x_i = Σ(K_i * x_ij, i = 1..m), j = 1..n
+        // Средние оценки объектов xj = Σ(Ki * xij, i = 1..m), j = 1..n
         public List<double> AverageScores(List<double> competenceCoefficients)
         {
             var list = new List<double>(N);
@@ -73,7 +74,7 @@ namespace DelphiMethod
             return list;
         }
 
-        // Нормировочный коэффициент λ = Σ(Σ(x_i * x_ij, i = 1..m), j = 1..n)
+        // Нормировочный коэффициент λ = Σ(Σ(xi * xij, i = 1..m), j = 1..n)
         public double Lambda(List<double> averageScores)
         {
             var lambda = 0.0;
@@ -88,15 +89,23 @@ namespace DelphiMethod
             return lambda;
         }
 
-        public List<double> CompetenceCoefficients() => CompetenceCoefficients(InitialCompetenceCoefficient());
-
-        // Коэффициенты компетентности K_i = (1 / lambda) * Σ(x_j * x_ij, j = 1..n)
-        public List<double> CompetenceCoefficients(List<double> competenceCoefficients)
+        // Коэффициенты компетентности Ki = (1 / lambda) * Σ(xj * xij, j = 1..n)
+        public List<double> Ki()
         {
-            var data = new List<double>(M);
-            var averageScores = AverageScores(competenceCoefficients);
+            // Начальные коэффициенты компетентности экспертов Ki ^ 0 = 1 / m
+            var initialCoefficients = new List<double>(M);
+            for (var i = 0; i < M; i++)
+            {
+                initialCoefficients.Add(1.0 / M);
+            }
 
-            while (true)
+            var data = new List<double>(M);
+            // xi^t
+            var averageScores = AverageScores(initialCoefficients);
+            // xi^t-1
+            List<double> previousAverageScores;
+
+            do
             {
                 data.Clear();
 
@@ -111,31 +120,17 @@ namespace DelphiMethod
                     data.Add(1.0 / Lambda(averageScores) * sum);
                 }
 
-                // K_m = 1 - sum(K_i, i=1..m-1)
+                // Km = 1 - sum(Ki, i=1..m-1)
                 data.Add(1.0 - data.Sum());
 
-                // x_i^t-1
-                var previousAverageScores = averageScores;
-                // x_i^t
+                // xj^t-1
+                 previousAverageScores = averageScores;
+                // xj^t
                 averageScores = AverageScores(data);
                 // Признак окончания итерационного процесса
-                // max(|x_i^t - x_i^t-1|) < e
-                var max = Subtract(averageScores, previousAverageScores).Max();
-                if (Math.Abs(max) < E) break;
-            }
+                // max(|xj^t - xj^t-1|) < e
+            } while (Math.Abs(Subtract(averageScores, previousAverageScores).Max()) >= E);
             return data;
-        }
-
-        // Начальные коэффициенты компетентности экспертов K_i^0 = 1 / M
-        public List<double> InitialCompetenceCoefficient()
-        {
-            var coefficients = new List<double>(M);
-            for (var i = 0; i < M; i++)
-            {
-                coefficients.Add(1.0 / M);
-            }
-
-            return coefficients;
         }
 
         // Вычесть вектор из вектора
@@ -153,10 +148,10 @@ namespace DelphiMethod
 
         //                          Вычиcление согласованности экспертов
 
-        // Сумма показателей рангов ΣT_i, i=1..H_i. T_i=Σ(h_k^3 - h_k, k = 1..H_i)
-        public double T()
+        // Показатель рангов Ti = Σ(hk^3 - hk, k = 1..Hi)
+        public List<double> Ti()
         {
-            var T = 0.0;
+            var Ti = new List<double>(M);
             for (var i = 0; i < M; i++)
             {
                 var temp = new List<double>(N);
@@ -171,14 +166,15 @@ namespace DelphiMethod
                     .Select(g => g.Count())   // берем количество элементов в группе
                     .ToList();
 
-                var Ti = H.Sum(hk => (int)Math.Pow(hk, 3) - hk);
-
-                T += Ti;
+                Ti.Add(H.Sum(hk => (int) Math.Pow(hk, 3) - hk));
             }
-            return T;
+            return Ti;
         }
 
-        // Сумма квадратов отклонений S = Σ((Σx_ij - ΣΣx_ij / n, i = 1..m)^2), j = 1..n)
+        // Сумма показателей рангов ΣTi, i=1..Hi.
+        public double T() => Ti().Sum();
+
+        // Сумма квадратов отклонений S = Σ((Σxij - ΣΣxij / n, i = 1..m)^2), j = 1..n)
         public double S()
         {
             var sums = new List<double>(N);
@@ -205,7 +201,7 @@ namespace DelphiMethod
         }
 
         // Коэффициент конкордации Кенделла
-        // W = 12S / (m^2 (n^3 - n) - m * Σ(T_i, i=1..m))
+        // W = 12S / (m^2 (n^3 - n) - m * Σ(Ti, i=1..m))
         public double W() => 12 * S() /
                              (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * T());
 
@@ -214,6 +210,8 @@ namespace DelphiMethod
         {
             var x2 = pearsonCorrelationTable.P[N - 2, alphaIndex];
             var x2Alpha = X2();
+
+            MessageBox.Show($"W={W()}, S={S()}, x2alpha = {x2Alpha}, x2={x2}");
 
             return x2 < x2Alpha;
         }

@@ -65,24 +65,37 @@ namespace DelphiMethod
         private void NextTour()
         {
             _previousRank = _currentRank.X;
-            _currentRank = new Matrix(_currentRank.X, _indicator);
+            _ranks = new MatrixList(_config);
             Utils.FillDataGridView(dataGridView2, _currentRank.X);
+
+            fillWithRandomValuesButton.Enabled = true;
+            dataGridView2.Enabled = true;
             tourNumberLabel.Text = $"Номер тура: {++_tourNumber}";
         }
 
-        // Проверить, достигнута ли согласованность
-        private void CheckConsensus()
-        {
-            var isConsensusReached = _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, _config.AlphaIndex);
-            isConsensusReachedLabel.Text = isConsensusReached ? "достигнута" : "не достигнута";
-        }
-
+        
         // Провести анализ
         private void Calculate()
         {
             Utils.CalculateCoefficients(dataGridView2, _currentRank);
             Utils.FillGroupScores(dataGridView2, _currentRank);
-            CheckConsensus();
+
+            // Проверить, достигнута ли согласованность
+            var isConsensusReached =
+                _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, _config.AlphaIndex);
+            isConsensusReachedLabel.Text = isConsensusReached ? "достигнута" : "не достигнута";
+
+            if (isConsensusReached)
+            {
+                fillWithRandomValuesButton.Enabled = false;
+                dataGridView2.Enabled = false;
+            }
+
+            if (_ranks.IsAnalysisDone)
+            {
+                MessageBox.Show("Мнения экспертов согласованы во всех показателях!");
+                nextTourButton.Enabled = false;
+            }
         }
 
         // Экспорт из таблицы в файл
@@ -100,6 +113,8 @@ namespace DelphiMethod
             _disableTrigger = true;
             Utils.FillDataGridView(dataGridView2, _currentRank.X);
             Utils.ClearCalculatedValues(dataGridView2);
+            fillWithRandomValuesButton.Enabled = true;
+            dataGridView2.Enabled = true;
             try
             {
                 Calculate();
@@ -158,11 +173,6 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
                 Calculate();
-                if (_ranks.IsAnalysisDone)
-                {
-                    MessageBox.Show("Мнения экспертов согласованы во всех показателях!");
-                    nextTourButton.Enabled = false;
-                }
             }
             catch (ArithmeticException)
             {

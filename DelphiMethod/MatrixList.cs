@@ -45,7 +45,7 @@ namespace DelphiMethod
                 for (var j = 0; j < Configuration.IndicatorsCount; j++)
                 {
                     var matrix = Matrices[j];
-                    var data = matrix.GroupScores(matrix.CompetenceCoefficients());
+                    var data = matrix.GroupScores(matrix.Ki());
                     groupScores[i, j] = data[i];
                 }
             }

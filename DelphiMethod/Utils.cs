@@ -126,7 +126,7 @@ namespace DelphiMethod
         // Вычислить групповые оценки и вывести их на форму
         public static void FillGroupScores(DataGridView component, Matrix x)
         {
-            var groupScores = x.GroupScores(x.CompetenceCoefficients());
+            var groupScores = x.GroupScores(x.Ki());
 
             for (var i = 0; i < x.N; i++)
             {
@@ -137,7 +137,7 @@ namespace DelphiMethod
         // Вычислить коэффициенты компетентности и вывести их на форму
         public static void CalculateCoefficients(DataGridView component, Matrix x)
         {
-            var coefficients = x.CompetenceCoefficients();
+            var coefficients = x.Ki();
 
             for (var i = 0; i < x.M; i++)
             {
