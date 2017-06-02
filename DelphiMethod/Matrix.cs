@@ -38,7 +38,8 @@ namespace DelphiMethod
 
         public double this[int row, int col] => X[row, col];
 
-        // Групповые оценки xj^k = Σ(q^k * Ki * xij^k), i=1..m), j=1..n
+        // Групповые оценки
+        // xj^k = Σ(q^k * Ki * xij^k), i=1..m), j=1..n
         public List<double> GroupScores(List<double> competenceCoefficients)
         {
             var groupScores = new List<double>(N);
@@ -55,7 +56,8 @@ namespace DelphiMethod
             return groupScores;
         }
 
-        // Средние оценки объектов xj = Σ(Ki * xij, i = 1..m), j = 1..n
+        // Средние оценки объектов
+        // xj = Σ(Ki * xij, i = 1..m), j = 1..n
         public List<double> AverageScores(List<double> competenceCoefficients)
         {
             var list = new List<double>(N);
@@ -74,7 +76,8 @@ namespace DelphiMethod
             return list;
         }
 
-        // Нормировочный коэффициент λ = Σ(Σ(xi * xij, i = 1..m), j = 1..n)
+        // Нормировочный коэффициент
+        // λ = Σ(Σ(xi * xij, i = 1..m), j = 1..n)
         public double Lambda(List<double> averageScores)
         {
             var lambda = 0.0;
@@ -89,7 +92,8 @@ namespace DelphiMethod
             return lambda;
         }
 
-        // Коэффициенты компетентности Ki = (1 / lambda) * Σ(xj * xij, j = 1..n)
+        // Коэффициенты компетентности 
+        // Ki = (1 / lambda) * Σ(xj * xij, j = 1..n)
         public List<double> Ki()
         {
             // Начальные коэффициенты компетентности экспертов Ki ^ 0 = 1 / m
@@ -148,7 +152,8 @@ namespace DelphiMethod
 
         //                          Вычиcление согласованности экспертов
 
-        // Показатель рангов Ti = Σ(hk^3 - hk, k = 1..Hi)
+        // Показатель рангов 
+        // Ti = Σ(hk^3 - hk, k = 1..Hi)
         public List<double> Ti()
         {
             var Ti = new List<double>(M);
@@ -171,10 +176,8 @@ namespace DelphiMethod
             return Ti;
         }
 
-        // Сумма показателей рангов ΣTi, i=1..Hi.
-        public double T() => Ti().Sum();
-
-        // Сумма квадратов отклонений S = Σ((Σxij - ΣΣxij / n, i = 1..m)^2), j = 1..n)
+        // Сумма квадратов отклонений 
+        // S = Σ((Σxij - ΣΣxij / n, i = 1..m)^2), j = 1..n)
         public double S()
         {
             var sums = new List<double>(N);
@@ -203,19 +206,20 @@ namespace DelphiMethod
         // Коэффициент конкордации Кенделла
         // W = 12S / (m^2 (n^3 - n) - m * Σ(Ti, i=1..m))
         public double W() => 12 * S() /
-                             (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * T());
+                             (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * Ti().Sum());
+
+        // Критерий согласования Пирсона 
+        // m(n - 1) * W
+        public double X2() => M * (N - 1) * W();
 
         // Согласованы ли мнения?
         public bool IsConsensusReached(PearsonCorrelation pearsonCorrelationTable, int alphaIndex)
         {
-            var x2 = pearsonCorrelationTable.P[N - 2, alphaIndex];
-            var x2Alpha = X2();
+            var x2 = X2(); 
+            var x2Alpha = pearsonCorrelationTable.P[N - 2, alphaIndex];
 
-            return x2 < x2Alpha;
+            return x2Alpha < x2;
         }
-
-        // Критерий согласования Пирсона
-        public double X2() => M * (N - 1) * W();
 
         // Заполнить матрицу случайными значениями
         public void FillWithRandomValues()
