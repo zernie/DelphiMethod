@@ -18,8 +18,6 @@ namespace DelphiMethod
         {
             Configuration = configuration;
 
-            Matrices = new List<Matrix>(configuration.IndicatorsCount);
-
             Matrices = configuration.Indicators.Select(x =>
                 new Matrix(configuration.ExpertsCount, configuration.AlternativesCount, x)
             ).ToList();
@@ -118,6 +116,20 @@ namespace DelphiMethod
                 }
             }
             return disabledRanks;
+        }
+
+        // Очистить матрицы, где достигнута согласованность
+        public void ClearWhereConsensusIsReached(Indicator indicator)
+        {
+            foreach (var i in DisabledRanks())
+            {
+                Matrices[i] = new Matrix(Configuration.ExpertsCount, Configuration.AlternativesCount, indicator);
+            }
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

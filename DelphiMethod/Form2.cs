@@ -12,21 +12,12 @@ namespace DelphiMethod
         private int _tourNumber = 1; // Номер тура
 
         // Текущая матрица рангов
-        private Matrix _currentRank
-        {
-            get => _ranks[_indicatorIndex];
-            set => _ranks[_indicatorIndex] = value;
-        }
-        // Предыдущая матрица рангов
-        private double[,] _previousRank
-        {
-            get => _previousRanks[_indicatorIndex];
-            set => _previousRanks[_indicatorIndex] = value;
-        }
+        private Matrix _currentRank => _ranks[_indicatorIndex];
+
         // Список матриц рангов
         private MatrixList _ranks;
         // Предыдущие матрицы оценок
-        private List<double[,]> _previousRanks;
+        private MatrixList _initialRanks;
 
         // Текущий показатель
         private int _indicatorIndex => indicatorComboBox.SelectedIndex;
@@ -42,7 +33,7 @@ namespace DelphiMethod
 
             _config = ranks.Configuration;
             _ranks = ranks;
-            _previousRanks = ranks.Matrices.Select(rank => rank.X).ToList();
+            _initialRanks = (MatrixList)ranks.Clone();
 
             // Заполняем показатели
             indicatorComboBox.Items.AddRange(_config.Indicators.Select(x => x.Title).ToArray());
@@ -61,19 +52,6 @@ namespace DelphiMethod
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
         }
 
-        // Переход на след.тур
-        private void NextTour()
-        {
-            _previousRank = _currentRank.X;
-            _ranks = new MatrixList(_config);
-            Utils.FillDataGridView(dataGridView2, _currentRank.X);
-
-            fillWithRandomValuesButton.Enabled = true;
-            dataGridView2.Enabled = true;
-            tourNumberLabel.Text = $"Номер тура: {++_tourNumber}";
-        }
-
-        
         // Провести анализ
         private void Calculate()
         {
@@ -157,7 +135,13 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
                 Calculate();
-                NextTour();
+                _ranks.ClearWhereConsensusIsReached(_indicator);
+
+                Utils.FillDataGridView(dataGridView2, _currentRank.X);
+
+                fillWithRandomValuesButton.Enabled = true;
+                dataGridView2.Enabled = true;
+                tourNumberLabel.Text = $"Номер тура: {++_tourNumber}";
             }
             catch (ArithmeticException)
             {
@@ -185,9 +169,11 @@ namespace DelphiMethod
         private void clearButton_Click(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            _currentRank.X = _previousRank;
+            _ranks = _initialRanks;
             Utils.FillDataGridView(dataGridView2, _currentRank.X);
             Calculate();
+            _tourNumber = 1;
+            tourNumberLabel.Text = $"Номер тура: {_tourNumber}";
             _disableTrigger = false;
         }
 
