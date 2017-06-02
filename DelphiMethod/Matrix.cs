@@ -211,8 +211,6 @@ namespace DelphiMethod
             var x2 = pearsonCorrelationTable.P[N - 2, alphaIndex];
             var x2Alpha = X2();
 
-            MessageBox.Show($"W={W()}, S={S()}, x2alpha = {x2Alpha}, x2={x2}");
-
             return x2 < x2Alpha;
         }
 
