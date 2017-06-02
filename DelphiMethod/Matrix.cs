@@ -7,7 +7,7 @@ namespace DelphiMethod
 {
     // Матрица рангов
     [Serializable]
-    public class Matrix
+    public struct Matrix
     {
         public double[,] X;
         // Кол-во экспертов (ширина)

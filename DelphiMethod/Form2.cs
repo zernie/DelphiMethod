@@ -16,8 +16,6 @@ namespace DelphiMethod
 
         // Список матриц рангов
         private MatrixList _ranks;
-        // Предыдущие матрицы оценок
-        private MatrixList _initialRanks;
 
         // Текущий показатель
         private int _indicatorIndex => indicatorComboBox.SelectedIndex;
@@ -33,7 +31,6 @@ namespace DelphiMethod
 
             _config = ranks.Configuration;
             _ranks = ranks;
-            _initialRanks = (MatrixList)ranks.Clone();
 
             // Заполняем показатели
             indicatorComboBox.Items.AddRange(_config.Indicators.Select(x => x.Title).ToArray());
@@ -61,6 +58,8 @@ namespace DelphiMethod
             // Проверить, достигнута ли согласованность
             var isConsensusReached =
                 _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, _config.AlphaIndex);
+            concordLabel.Text = Math.Round(_currentRank.W(), 3).ToString();
+
             isConsensusReachedLabel.Text = isConsensusReached ? "достигнута" : "не достигнута";
 
             if (isConsensusReached)
@@ -101,6 +100,7 @@ namespace DelphiMethod
             {
                 Utils.ClearCalculatedValues(dataGridView2);
                 isConsensusReachedLabel.Text = "...";
+                concordLabel.Text = "...";
             }
             _disableTrigger = false;
         }
@@ -169,9 +169,9 @@ namespace DelphiMethod
         private void clearButton_Click(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            _ranks = _initialRanks;
+            _ranks.ReturnToInitialValues();
             Utils.FillDataGridView(dataGridView2, _currentRank.X);
-            Calculate();
+            Utils.ClearCalculatedValues(dataGridView2);
             _tourNumber = 1;
             tourNumberLabel.Text = $"Номер тура: {_tourNumber}";
             _disableTrigger = false;

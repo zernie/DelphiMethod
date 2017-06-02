@@ -13,6 +13,7 @@ namespace DelphiMethod
 
         // Матрицы рангов
         public List<Matrix> Matrices;
+        public List<Matrix> InitialMatrices;
 
         public MatrixList(Config configuration)
         {
@@ -21,6 +22,8 @@ namespace DelphiMethod
             Matrices = configuration.Indicators.Select(x =>
                 new Matrix(configuration.ExpertsCount, configuration.AlternativesCount, x)
             ).ToList();
+
+            InitialMatrices =new List<Matrix>(Matrices);
         }
 
         public Matrix this[int index]
@@ -127,9 +130,9 @@ namespace DelphiMethod
             }
         }
 
-        public object Clone()
+        public void ReturnToInitialValues()
         {
-            return this.MemberwiseClone();
+            Matrices = InitialMatrices;
         }
     }
 }

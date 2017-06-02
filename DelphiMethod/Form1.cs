@@ -19,6 +19,7 @@ namespace DelphiMethod
             var lines = ReadPearsonCorrelationFromFile();
             if (lines == null) Application.Exit();
             PearsonCorrelationTable = new PearsonCorrelation(lines);
+            alternativesCountNumericUpDown.Maximum = PearsonCorrelationTable.Length;
 
             // Заполняем уровни значимости критерия α
             foreach (var alpha in PearsonCorrelationTable.Alphas)
@@ -170,6 +171,61 @@ namespace DelphiMethod
                 MessageBox.Show($"Не удалось загрузить таблицу критических значений корреляции Пирсона: {e.Message}");
             }
             return null;
+        }
+
+        private void UpdateCounter(TextBoxBase component,NumericUpDown counter)
+        {
+            var length = component.Lines.Length;
+            var min = counter.Minimum;
+            var max = counter.Maximum;
+            if (length >= min && length <= max)
+                counter.Value = length;
+            else
+            {
+                component.Undo();
+                MessageBox.Show($"Введите не менее {min} и не более {max} значений.");
+            }
+        }
+
+        private void UpdateTextBox(TextBoxBase component, NumericUpDown counter, string text)
+        {
+            var value = (int)counter.Value;
+            var lines = alternativesRichTextBox.Lines;
+
+            if (value > component.Lines.Length)
+            {
+                var newLines = new List<string>();
+                for (var i = 1; i <= value - lines.Length; i++)
+                {
+                    newLines.Add($"{text}{lines.Length + i}");
+                }
+
+                component.Lines = lines.Concat(newLines).ToArray();
+            }
+            else
+            {
+                component.Lines = lines.Take(value).ToArray();
+            }
+        }
+
+        private void alternativesRichTextBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateCounter((RichTextBox)sender, alternativesCountNumericUpDown);
+        }
+
+        private void expertsRichTextBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateCounter((RichTextBox)sender, expertsCountNumericUpDown);
+        }
+
+        private void alternativesCountNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateTextBox(alternativesRichTextBox, (NumericUpDown) sender, "Альтернатива x");
+        }
+
+        private void expertsCountNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateTextBox(expertsRichTextBox, (NumericUpDown)sender, "Эксперт ");
         }
     }
 }
