@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.configOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.label5 = new System.Windows.Forms.Label();
             this.indicatorsDataGridView = new System.Windows.Forms.DataGridView();
@@ -42,17 +42,17 @@
             this.button1 = new System.Windows.Forms.Button();
             this.alternativesLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.expertsCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.alternativesCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.expertsRichTextBox = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.alternativesRichTextBox = new System.Windows.Forms.RichTextBox();
             this.alphaComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.alternativesCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.expertsCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.indicatorsDataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.alternativesCountNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.expertsCountNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.alternativesCountNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // configOpenFileDialog
@@ -77,14 +77,14 @@
             this.Title,
             this.Weight,
             this.Remove});
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.indicatorsDataGridView.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.indicatorsDataGridView.DefaultCellStyle = dataGridViewCellStyle4;
             this.indicatorsDataGridView.Location = new System.Drawing.Point(850, 78);
             this.indicatorsDataGridView.Name = "indicatorsDataGridView";
             this.indicatorsDataGridView.RowTemplate.Height = 24;
@@ -195,16 +195,62 @@
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             // 
+            // expertsCountNumericUpDown
+            // 
+            this.expertsCountNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.expertsCountNumericUpDown.Location = new System.Drawing.Point(736, 79);
+            this.expertsCountNumericUpDown.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.expertsCountNumericUpDown.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.expertsCountNumericUpDown.Name = "expertsCountNumericUpDown";
+            this.expertsCountNumericUpDown.Size = new System.Drawing.Size(90, 38);
+            this.expertsCountNumericUpDown.TabIndex = 26;
+            this.expertsCountNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.expertsCountNumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.expertsCountNumericUpDown.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.expertsCountNumericUpDown.ValueChanged += new System.EventHandler(this.expertsCountNumericUpDown_ValueChanged);
+            // 
+            // alternativesCountNumericUpDown
+            // 
+            this.alternativesCountNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.alternativesCountNumericUpDown.Location = new System.Drawing.Point(316, 79);
+            this.alternativesCountNumericUpDown.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.alternativesCountNumericUpDown.Name = "alternativesCountNumericUpDown";
+            this.alternativesCountNumericUpDown.Size = new System.Drawing.Size(90, 38);
+            this.alternativesCountNumericUpDown.TabIndex = 25;
+            this.alternativesCountNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.alternativesCountNumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.alternativesCountNumericUpDown.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            this.alternativesCountNumericUpDown.ValueChanged += new System.EventHandler(this.alternativesCountNumericUpDown_ValueChanged);
+            // 
             // expertsRichTextBox
             // 
             this.expertsRichTextBox.BackColor = System.Drawing.Color.PaleGoldenrod;
             this.expertsRichTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.expertsRichTextBox.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.expertsRichTextBox.Location = new System.Drawing.Point(426, 78);
             this.expertsRichTextBox.Name = "expertsRichTextBox";
             this.expertsRichTextBox.Size = new System.Drawing.Size(400, 400);
             this.expertsRichTextBox.TabIndex = 24;
-            this.expertsRichTextBox.Text = "Александр\nЕвгений\nБорис\nЖанна\nЕлизавета";
+            this.expertsRichTextBox.Text = "";
             this.expertsRichTextBox.TextChanged += new System.EventHandler(this.expertsRichTextBox_TextChanged);
             // 
             // label1
@@ -225,7 +271,7 @@
             this.alternativesRichTextBox.Name = "alternativesRichTextBox";
             this.alternativesRichTextBox.Size = new System.Drawing.Size(400, 400);
             this.alternativesRichTextBox.TabIndex = 22;
-            this.alternativesRichTextBox.Text = "Авто-Евро\nЮником\nЧойс\nТехкомСервис\nФаэтон\nСоколАвто";
+            this.alternativesRichTextBox.Text = "";
             this.alternativesRichTextBox.TextChanged += new System.EventHandler(this.alternativesRichTextBox_TextChanged);
             // 
             // alphaComboBox
@@ -247,49 +293,6 @@
             this.label2.Size = new System.Drawing.Size(379, 32);
             this.label2.TabIndex = 33;
             this.label2.Text = "Уровень значимости критерия α";
-            // 
-            // alternativesCountNumericUpDown
-            // 
-            this.alternativesCountNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.alternativesCountNumericUpDown.Location = new System.Drawing.Point(286, 79);
-            this.alternativesCountNumericUpDown.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.alternativesCountNumericUpDown.Name = "alternativesCountNumericUpDown";
-            this.alternativesCountNumericUpDown.Size = new System.Drawing.Size(120, 38);
-            this.alternativesCountNumericUpDown.TabIndex = 25;
-            this.alternativesCountNumericUpDown.Value = new decimal(new int[] {
-            6,
-            0,
-            0,
-            0});
-            this.alternativesCountNumericUpDown.ValueChanged += new System.EventHandler(this.alternativesCountNumericUpDown_ValueChanged);
-            // 
-            // expertsCountNumericUpDown
-            // 
-            this.expertsCountNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expertsCountNumericUpDown.Location = new System.Drawing.Point(706, 78);
-            this.expertsCountNumericUpDown.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.expertsCountNumericUpDown.Minimum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.expertsCountNumericUpDown.Name = "expertsCountNumericUpDown";
-            this.expertsCountNumericUpDown.Size = new System.Drawing.Size(120, 38);
-            this.expertsCountNumericUpDown.TabIndex = 26;
-            this.expertsCountNumericUpDown.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.expertsCountNumericUpDown.ValueChanged += new System.EventHandler(this.expertsCountNumericUpDown_ValueChanged);
             // 
             // Form1
             // 
@@ -313,8 +316,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.indicatorsDataGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.alternativesCountNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.expertsCountNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.alternativesCountNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

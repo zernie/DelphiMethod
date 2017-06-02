@@ -8,29 +8,9 @@ namespace DelphiMethod
 {
     public partial class Form1 : Form
     {
-        public Form1()
-        {
-            InitializeComponent();
-            indicatorsDataGridView.Rows.Add("Полнота поиска", 0.3);
-            indicatorsDataGridView.Rows.Add("Точность поиска", 0.2);
-            indicatorsDataGridView.Rows.Add("Усилия, затрачиваемые на формулирование запросов", 0.3);
-            indicatorsDataGridView.Rows.Add("Форма представления найденной информации", 0.1);
-            indicatorsDataGridView.Rows.Add("Полнота информационного массива", 0.1);
-            var lines = ReadPearsonCorrelationFromFile();
-            if (lines == null) Application.Exit();
-            PearsonCorrelationTable = new PearsonCorrelation(lines);
-            alternativesCountNumericUpDown.Maximum = PearsonCorrelationTable.Length;
-
-            // Заполняем уровни значимости критерия α
-            foreach (var alpha in PearsonCorrelationTable.Alphas)
-                alphaComboBox.Items.Add(alpha);
-            alphaComboBox.SelectedIndex = PearsonCorrelationTable.Alphas.Count / 2;
-
-
-            indicatorsDataGridView.CellValueChanged += dataGridView1_CellValueChanged;
-        }
-
+        // Альтернативы
         private List<string> Alternatives => alternativesRichTextBox.Lines.ToList();
+        // Эксперты
         private List<string> Experts => expertsRichTextBox.Lines.ToList();
 
         // Показатели, их названия и веса q^k
@@ -48,7 +28,7 @@ namespace DelphiMethod
             return indicators;
         }
 
-        // Таблица корреляции
+        // Таблица критических значений x2
         private PearsonCorrelation PearsonCorrelationTable;
 
         // Шкала оценок
@@ -56,6 +36,32 @@ namespace DelphiMethod
 
         // Сумма весов коэффициентов
         private double IndicatorsWeightSum => Indicators().Sum(x => x.Weight);
+
+        public Form1()
+        {
+            InitializeComponent();
+            // Кол-во показателей
+            const int indicatorsCount = 3;
+            for (var i = 1; i <= indicatorsCount; i++)
+            {
+                indicatorsDataGridView.Rows.Add($"Показатель z{i}", Math.Round(1.0 / indicatorsCount, 3));
+            }
+            PearsonCorrelationTable = new PearsonCorrelation(ReadPearsonCorrelationFromFile());
+
+            // Заполняем уровни значимости критерия α
+            foreach (var alpha in PearsonCorrelationTable.Alphas)
+                alphaComboBox.Items.Add(alpha);
+            alphaComboBox.SelectedIndex = (PearsonCorrelationTable.Alphas.Count / 2); ;
+
+            // Заполняем экспертов и альтернативы
+            alternativesCountNumericUpDown.Maximum = PearsonCorrelationTable.Length;
+            alternativesCountNumericUpDown.Value = 10;
+            expertsCountNumericUpDown.Value = 10;
+
+            indicatorsDataGridView.CellValueChanged += dataGridView1_CellValueChanged;
+        }
+
+
 
 
         // Пуск
@@ -73,7 +79,11 @@ namespace DelphiMethod
                     AlphaIndex = alphaComboBox.SelectedIndex,
                 };
 
-                if (!CheckInput()) return;
+                if (Math.Abs(IndicatorsWeightSum - 1.0) > 0.01)
+                {
+                    MessageBox.Show($"Сумма коэффициентов весов показателей = {IndicatorsWeightSum}, а должна равняться 1");
+                    return;
+                }
 
                 var matrixList = new MatrixList(configuration);
 
@@ -98,31 +108,6 @@ namespace DelphiMethod
             Hide();
             var form = new Form2(matrixList, true);
             if (form.ShowDialog() == DialogResult.Cancel) Show();
-        }
-
-        // Проверка на верность введенных данных
-        private bool CheckInput()
-        {
-            if (IndicatorsWeightSum != 1.0)
-            {
-                MessageBox.Show($"Сумма коэффициентов весов показателей = {IndicatorsWeightSum}, а должна равняться 1");
-                return false;
-            }
-
-            if (Alternatives.Count < 2)
-            {
-                MessageBox.Show($"Пожалуйста, введите не менее 2 альтернатив");
-                return false;
-
-            }
-
-            if (Experts.Count < 3)
-            {
-                MessageBox.Show($"Пожалуйста, введите не менее 3 экспертов");
-                return false;
-
-            }
-            return true;
         }
 
         // Удаление показателя из таблицы
@@ -169,11 +154,37 @@ namespace DelphiMethod
             catch (IOException e)
             {
                 MessageBox.Show($"Не удалось загрузить таблицу критических значений корреляции Пирсона: {e.Message}");
+                Environment.Exit(1);
             }
             return null;
         }
 
-        private void UpdateCounter(TextBoxBase component,NumericUpDown counter)
+        
+        // Изменение названий альтернатив
+        private void alternativesRichTextBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateCounter((RichTextBox)sender, alternativesCountNumericUpDown);
+        }
+
+        // Изменение имен экспертов
+        private void expertsRichTextBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateCounter((RichTextBox)sender, expertsCountNumericUpDown);
+        }
+
+        // Изменение кол-ва альтернатив
+        private void alternativesCountNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateTextBox(alternativesRichTextBox, (NumericUpDown)sender, "Альтернатива x");
+        }
+
+        // Изменение кол-ва экспертов
+        private void expertsCountNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateTextBox(expertsRichTextBox, (NumericUpDown)sender, "Эксперт ");
+        }
+
+        private void UpdateCounter(TextBoxBase component, NumericUpDown counter)
         {
             var length = component.Lines.Length;
             var min = counter.Minimum;
@@ -190,7 +201,7 @@ namespace DelphiMethod
         private void UpdateTextBox(TextBoxBase component, NumericUpDown counter, string text)
         {
             var value = (int)counter.Value;
-            var lines = alternativesRichTextBox.Lines;
+            var lines = component.Lines;
 
             if (value > component.Lines.Length)
             {
@@ -206,26 +217,6 @@ namespace DelphiMethod
             {
                 component.Lines = lines.Take(value).ToArray();
             }
-        }
-
-        private void alternativesRichTextBox_TextChanged(object sender, EventArgs e)
-        {
-            UpdateCounter((RichTextBox)sender, alternativesCountNumericUpDown);
-        }
-
-        private void expertsRichTextBox_TextChanged(object sender, EventArgs e)
-        {
-            UpdateCounter((RichTextBox)sender, expertsCountNumericUpDown);
-        }
-
-        private void alternativesCountNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateTextBox(alternativesRichTextBox, (NumericUpDown) sender, "Альтернатива x");
-        }
-
-        private void expertsCountNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateTextBox(expertsRichTextBox, (NumericUpDown)sender, "Эксперт ");
         }
     }
 }
