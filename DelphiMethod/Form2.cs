@@ -18,6 +18,8 @@ namespace DelphiMethod
         // Список матриц рангов
         public MatrixList Matrices;
 
+        public List<Matrix> InitialMatrices;
+
         // Текущий показатель
         public int IndicatorIndex => indicatorComboBox.SelectedIndex;
         // Вес и название коэффициента текущего показателя
@@ -38,6 +40,7 @@ namespace DelphiMethod
 
             Config = matrices.Configuration;
             Matrices = matrices;
+            InitialMatrices = new List<Matrix>(Matrices.Matrices);
 
             // Заполняем показатели
             indicatorComboBox.Items.AddRange(Config.Indicators.Select(x => x.Title).ToArray());
@@ -57,7 +60,7 @@ namespace DelphiMethod
             indicatorComboBox.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
         }
-
+        
         // Экспорт из таблицы в файл
         private void exportButton_Click(object sender, EventArgs e)
         {
@@ -138,6 +141,7 @@ namespace DelphiMethod
                 {
                     MessageBox.Show("Мнения экспертов согласованы во всех показателях!");
                     nextTourButton.Enabled = false;
+                    showResultButton.PerformClick();
                 }
                 tourNumberLabel.Text = $"Номер тура: {++TourNumber}";
             }
@@ -166,14 +170,17 @@ namespace DelphiMethod
         // Начать заново
         private void clearButton_Click(object sender, EventArgs e)
         {
-            _disableTrigger = true;
-            //!!!
-            Matrices.ReturnToInitialValues();
-            Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
-            Utils.ClearCalculatedValues(dataGridView2);
-            TourNumber = 1;
-            tourNumberLabel.Text = $"Номер тура: {TourNumber}";
-            _disableTrigger = false;
+
+            var form = new Form2(new MatrixList(Config, InitialMatrices));
+            form.ShowDialog();
+            Close();
+//            _disableTrigger = true;
+//            //!!!
+//            Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
+//            Utils.ClearCalculatedValues(dataGridView2);
+//            TourNumber = 1;
+//            tourNumberLabel.Text = $"Номер тура: {TourNumber}";
+//            _disableTrigger = false;
         }
 
         // Заполнить случ. значениями
@@ -223,8 +230,8 @@ namespace DelphiMethod
             dataGridView2.Enabled = false;
             dataGridView2.DefaultCellStyle.BackColor = Color.LightGray;
         }
-        // Включить редактирование
 
+        // Включить редактирование
         private void EnableEdit()
         {
             calculateButton.Enabled = true;

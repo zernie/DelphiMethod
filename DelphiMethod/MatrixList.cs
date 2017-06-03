@@ -13,7 +13,6 @@ namespace DelphiMethod
 
         // Матрицы рангов
         public List<Matrix> Matrices;
-        public List<Matrix> InitialMatrices;
 
         public MatrixList(Config configuration)
         {
@@ -22,8 +21,13 @@ namespace DelphiMethod
             Matrices = configuration.Indicators.Select(x =>
                 new Matrix(configuration.M, configuration.N, x)
             ).ToList();
+        }
 
-            InitialMatrices = new List<Matrix>(Matrices);
+        public MatrixList(Config configuration, List<Matrix> matrices)
+        {
+            Configuration = configuration;
+
+            Matrices = matrices;
         }
 
         public Matrix this[int index]
@@ -127,16 +131,11 @@ namespace DelphiMethod
         public void ClearWhereConsensusIsNotReached(Indicator indicator)
         {
             var matrices = ConsensusReachedMatrices();
-            for (var i = 0; i < matrices.Count; i++)
+            for (var i = 0; i <= matrices.Count; i++)
             {
                 if (!matrices.Contains(i))
                     Matrices[i] = new Matrix(Configuration.M, Configuration.N, indicator);
             }
-        }
-
-        public void ReturnToInitialValues()
-        {
-            Matrices = InitialMatrices;
         }
     }
 }
