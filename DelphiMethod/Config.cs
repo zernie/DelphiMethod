@@ -8,11 +8,11 @@ namespace DelphiMethod
     public struct Config
     {
         // Кол-во альтернатив n
-        public int N => Alternatives.Count;
+        public int n => Alternatives.Count;
         // Кол-во экспертов m
-        public int M => Experts.Count;
+        public int m => Experts.Count;
         // Кол-во показателей l
-        public int L => Indicators.Count;
+        public int l => Indicators.Count;
 
         // Названия альтернатив
         public List<string> Alternatives;

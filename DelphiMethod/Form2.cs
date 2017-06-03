@@ -54,7 +54,7 @@ namespace DelphiMethod
 
             // Выводим матрицу
             Utils.InitInputDataGridView(dataGridView2, Config);
-            Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
+            Utils.FillDataGridView(dataGridView2, CurrentMatrix.x);
 
             if (calculate) Calculate();
 
@@ -75,7 +75,7 @@ namespace DelphiMethod
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
+            Utils.FillDataGridView(dataGridView2, CurrentMatrix.x);
             Utils.ClearCalculatedValues(dataGridView2);
             if (IsConsensusReached)
                 DisableEdit();
@@ -104,7 +104,7 @@ namespace DelphiMethod
                 var value = Convert.ToDouble(dataGridView2[e.ColumnIndex, e.RowIndex].Value);
 
                 if (Config.RatingScale.Includes(value))
-                    CurrentMatrix.X[e.RowIndex, e.ColumnIndex] = value;
+                    CurrentMatrix.x[e.RowIndex, e.ColumnIndex] = value;
                 else
                     throw new FormatException($"Оценка вышла за пределы шкалы {Config.RatingScale}");
             }
@@ -125,7 +125,7 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
                 TourNumber++;
-                Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
+                Utils.FillDataGridView(dataGridView2, CurrentMatrix.x);
                 Calculate();
                 Matrices.ClearWhereConsensusIsNotReached();
 
@@ -186,7 +186,7 @@ namespace DelphiMethod
         {
             _disableTrigger = true;
             CurrentMatrix.FillWithRandomValues();
-            Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
+            Utils.FillDataGridView(dataGridView2, CurrentMatrix.x);
             Calculate();
             _disableTrigger = false;
         }

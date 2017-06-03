@@ -16,12 +16,12 @@ namespace DelphiMethod
         // Инициализировать таблицу рангов заданным количеством строк и столбцов
         public static void InitInputDataGridView(DataGridView component, Config config)
         {
-            for (var i = 0; i < config.M; i++)
+            for (var i = 0; i < config.m; i++)
             {
                 component.Columns.Add(i.ToString(), config.Experts[i]);
             }
 
-            for (var i = 0; i < config.N; i++)
+            for (var i = 0; i < config.n; i++)
             {
                 component.Rows.Add(new DataGridViewRow
                 {
@@ -51,7 +51,7 @@ namespace DelphiMethod
         {
             var config = matrices.Configuration;
 
-            for (var i = 0; i < config.L; i++)
+            for (var i = 0; i < config.l; i++)
             {
                 var indicator = config.Indicators[i].Title;
                 component.Columns.Add(new DataGridViewTextBoxColumn
@@ -65,7 +65,7 @@ namespace DelphiMethod
                 });
             }
 
-            for (var i = 0; i < config.N; i++)
+            for (var i = 0; i < config.n; i++)
             {
                 component.Rows.Add(new DataGridViewRow
                 {
@@ -115,9 +115,9 @@ namespace DelphiMethod
         {
             var coefficients = x.Ki();
 
-            for (var i = 0; i < x.M; i++)
+            for (var i = 0; i < x.m; i++)
             {
-                component[i, x.N].Value = Math.Round(coefficients[i], 3);
+                component[i, x.n].Value = Math.Round(coefficients[i], 3);
             }
         }
 

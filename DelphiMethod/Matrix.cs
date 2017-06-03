@@ -9,48 +9,48 @@ namespace DelphiMethod
     public class Matrix
     {
         // Матрица рангов xij^k
-        public double[,] X { get; set; }
+        public double[,] x { get; set; }
         // Кол-во экспертов (ширина)
-        public int M;
+        public int m;
         // Кол-во альтернатив (высота)
-        public int N;
+        public int n;
         // Вес коэффициента показателя
         public double qk => Indicator.Weight;
         // Точность вычисления коэффициентов компетентности
-        public const double E = 0.001;
+        public const double e = 0.001;
         // Показатель
         public Indicator Indicator;
 
         public Matrix(double[,] x, Indicator indicator)
         {
-            X = x;
-            N = x.GetLength(0);
-            M = x.GetLength(1);
+            this.x = x;
+            n = x.GetLength(0);
+            m = x.GetLength(1);
             Indicator = indicator;
         }
 
         public Matrix(int m, int n, Indicator indicator)
         {
-            M = m;
-            N = n;
+            this.m = m;
+            this.n = n;
             Indicator = indicator;
             // заполняем нулями
-            X = new double[n, m];
+            x = new double[n, m];
         }
 
-        public double this[int row, int col] => X[row, col];
+        public double this[int row, int col] => x[row, col];
 
         // Групповые оценки k показателя
         // xj^k = Σ(q^k * Ki * xij^k), i=1..m), j=1..n
         public List<double> xjk(List<double> Ki)
         {
-            var xjk = new List<double>(N);
-            for (var i = 0; i < N; i++)
+            var xjk = new List<double>(n);
+            for (var i = 0; i < n; i++)
             {
                 var sum = 0.0;
-                for (var j = 0; j < M; j++)
+                for (var j = 0; j < m; j++)
                 {
-                    sum += qk * Ki[j] * X[i, j];
+                    sum += qk * Ki[j] * x[i, j];
                 }
                 xjk.Add(sum);
             }
@@ -59,16 +59,16 @@ namespace DelphiMethod
         }
 
         // Средние оценки объектов
-        // xj = Σ(Ki * xij, i = 1..m), j = 1..n
-        public List<double> xjt(List<double> competenceCoefficients)
+        // xi = Σ(Ki * xij, i = 1..m), j = 1..n
+        public List<double> xi(List<double> Ki)
         {
-            var list = new List<double>(N);
-            for (var i = 0; i < N; i++)
+            var list = new List<double>(n);
+            for (var i = 0; i < n; i++)
             {
                 var sum = 0.0;
-                for (var j = 0; j < M; j++)
+                for (var j = 0; j < m; j++)
                 {
-                    sum += X[i, j] * competenceCoefficients[j];
+                    sum += x[i, j] * Ki[j];
                 }
 
                 if (sum == 0.0) throw new ArithmeticException($"Данные в показателе '{Indicator.Title}' введены неправильно");
@@ -80,14 +80,14 @@ namespace DelphiMethod
 
         // Нормировочный коэффициент
         // λ = Σ(Σ(xi * xij, i = 1..m), j = 1..n)
-        public double Lambda(List<double> averageScores)
+        public double Lambda(List<double> xi)
         {
             var lambda = 0.0;
-            for (var i = 0; i < N; i++)
+            for (var i = 0; i < n; i++)
             {
-                for (var j = 0; j < M; j++)
+                for (var j = 0; j < m; j++)
                 {
-                    lambda += X[i, j] * averageScores[i];
+                    lambda += x[i, j] * xi[i];
                 }
             }
 
@@ -99,15 +99,15 @@ namespace DelphiMethod
         public List<double> Ki()
         {
             // Начальные коэффициенты компетентности экспертов Ki^0 = 1 / m
-            var initialCoefficients = new List<double>(M);
-            for (var i = 0; i < M; i++)
+            var initialCoefficients = new List<double>(m);
+            for (var i = 0; i < m; i++)
             {
-                initialCoefficients.Add(1.0 / M);
+                initialCoefficients.Add(1.0 / m);
             }
 
-            var data = new List<double>(M);
+            var data = new List<double>(m);
             // xi^t
-            var averageScores = xjt(initialCoefficients);
+            var averageScores = xi(initialCoefficients);
             // xi^t-1
             List<double> previousAverageScores;
 
@@ -115,13 +115,13 @@ namespace DelphiMethod
             {
                 data.Clear();
 
-                for (var i = 0; i < M - 1; i++)
+                for (var i = 0; i < m - 1; i++)
                 {
                     var sum = 0.0;
 
-                    for (var j = 0; j < N; j++)
+                    for (var j = 0; j < n; j++)
                     {
-                        sum += X[j, i] * averageScores[j];
+                        sum += x[j, i] * averageScores[j];
                     }
                     data.Add(1.0 / Lambda(averageScores) * sum);
                 }
@@ -130,12 +130,12 @@ namespace DelphiMethod
                 data.Add(1.0 - data.Sum());
 
                 // xj^t-1
-                 previousAverageScores = averageScores;
+                previousAverageScores = averageScores;
                 // xj^t
-                averageScores = xjt(data);
+                averageScores = xi(data);
                 // Признак окончания итерационного процесса
                 // max(|xj^t - xj^t-1|) < e
-            } while (Math.Abs(Subtract(averageScores, previousAverageScores).Max()) >= E);
+            } while (Math.Abs(Subtract(averageScores, previousAverageScores).Max()) >= e);
             return data;
         }
 
@@ -158,13 +158,13 @@ namespace DelphiMethod
         // Ti = Σ(hk^3 - hk, k = 1..Hi)
         public List<double> Ti()
         {
-            var Ti = new List<double>(M);
-            for (var i = 0; i < M; i++)
+            var Ti = new List<double>(m);
+            for (var i = 0; i < m; i++)
             {
-                var temp = new List<double>(N);
-                for (var j = 0; j < N; j++)
+                var temp = new List<double>(n);
+                for (var j = 0; j < n; j++)
                 {
-                    temp.Add(X[j, i]);
+                    temp.Add(x[j, i]);
                 }
 
                 var H = temp
@@ -173,7 +173,7 @@ namespace DelphiMethod
                     .Select(g => g.Count())   // берем количество элементов в группе
                     .ToList();
 
-                Ti.Add(H.Sum(hk => (int) Math.Pow(hk, 3) - hk));
+                Ti.Add(H.Sum(hk => (int)Math.Pow(hk, 3) - hk));
             }
             return Ti;
         }
@@ -182,24 +182,24 @@ namespace DelphiMethod
         // S = Σ((Σxij - ΣΣxij / n, i = 1..m)^2), j = 1..n)
         public double S()
         {
-            var sums = new List<double>(N);
+            var sums = new List<double>(n);
             var s = 0.0;
             var sum = 0.0;
 
-            for (var i = 0; i < N; i++)
+            for (var i = 0; i < n; i++)
             {
                 var temp = 0.0;
-                for (var j = 0; j < M; j++)
+                for (var j = 0; j < m; j++)
                 {
-                    temp += X[i, j];
+                    temp += x[i, j];
                 }
                 sum += temp;
                 sums.Add(temp);
             }
 
-            for (var i = 0; i < N; i++)
+            for (var i = 0; i < n; i++)
             {
-                s += Math.Pow(sums[i] - sum / N, 2);
+                s += Math.Pow(sums[i] - sum / n, 2);
             }
 
             return s;
@@ -208,17 +208,17 @@ namespace DelphiMethod
         // Коэффициент конкордации Кенделла
         // W = 12S / (m^2 (n^3 - n) - m * Σ(Ti, i=1..m))
         public double W() => 12 * S() /
-                             (Math.Pow(M, 2) * (Math.Pow(N, 3) - N) - M * Ti().Sum());
+                             (Math.Pow(m, 2) * (Math.Pow(n, 3) - n) - m * Ti().Sum());
 
         // Критерий согласования Пирсона 
         // m(n - 1) * W
-        public double X2() => M * (N - 1) * W();
+        public double X2() => m * (n - 1) * W();
 
         // Согласованы ли мнения?
         public bool IsConsensusReached(PearsonCorrelation pearsonCorrelationTable, int alphaIndex)
         {
-            var x2 = X2(); 
-            var x2Alpha = pearsonCorrelationTable.P[N - 2, alphaIndex];
+            var x2 = X2();
+            var x2Alpha = pearsonCorrelationTable.P[n - 2, alphaIndex];
 
             return x2Alpha < x2;
         }
@@ -227,11 +227,11 @@ namespace DelphiMethod
         public void FillWithRandomValues()
         {
             var rand = new Random();
-            for (var i = 0; i < N; i++)
+            for (var i = 0; i < n; i++)
             {
-                for (var j = 0; j < M; j++)
+                for (var j = 0; j < m; j++)
                 {
-                    X[i, j] = Math.Round(rand.NextDouble() * 10, 1);
+                    x[i, j] = Math.Round(rand.NextDouble() * 10, 1);
                 }
             }
         }

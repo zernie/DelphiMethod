@@ -22,7 +22,7 @@ namespace DelphiMethod
             Configuration = configuration;
 
             Matrices = configuration.Indicators.Select(x =>
-                new Matrix(configuration.M, configuration.N, x)
+                new Matrix(configuration.m, configuration.n, x)
             ).ToList();
         }
 
@@ -47,11 +47,11 @@ namespace DelphiMethod
         // Матрица групповых оценок альтернатив по показателям
         public double[,] GroupScores()
         {
-            var groupScores = new double[Configuration.N, Configuration.L];
+            var groupScores = new double[Configuration.n, Configuration.l];
 
-            for (var i = 0; i < Configuration.N; i++)
+            for (var i = 0; i < Configuration.n; i++)
             {
-                for (var j = 0; j < Configuration.L; j++)
+                for (var j = 0; j < Configuration.l; j++)
                 {
                     var matrix = Matrices[j];
                     var data = matrix.xjk(matrix.Ki());
@@ -66,12 +66,12 @@ namespace DelphiMethod
         // xj = Σ(q^k * Ki * xij^k), i=1..m), j=1..n, k=1..l
         public List<double> xj(double[,] xjk)
         {
-            var sums = new List<double>(Configuration.N);
+            var sums = new List<double>(Configuration.n);
 
-            for (var i = 0; i < Configuration.N; i++)
+            for (var i = 0; i < Configuration.n; i++)
             {
                 var sum = 0.0;
-                for (var j = 0; j < Configuration.L; j++)
+                for (var j = 0; j < Configuration.l; j++)
                 {
                     sum += xjk[i, j];
                 }
@@ -125,10 +125,10 @@ namespace DelphiMethod
         public void ClearWhereConsensusIsNotReached()
         {
             var matrices = ConsensusReachedMatrices();
-            for (var i = 0; i < Configuration.L; i++)
+            for (var i = 0; i < Configuration.l; i++)
             {
                 if (!matrices.Contains(Matrices[i]))
-                    Matrices[i].X = new double[Configuration.N, Configuration.M];
+                    Matrices[i].x = new double[Configuration.n, Configuration.m];
             }
         }
 

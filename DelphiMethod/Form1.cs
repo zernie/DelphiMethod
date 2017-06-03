@@ -162,7 +162,7 @@ namespace DelphiMethod
             return null;
         }
 
-        
+
         // Изменение названий альтернатив
         private void alternativesRichTextBox_TextChanged(object sender, EventArgs e)
         {
