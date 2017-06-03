@@ -148,7 +148,10 @@ namespace DelphiMethod
         {
             try
             {
-                var path = Path.Combine(Path.GetFullPath(@"..\..\"), "P.csv");
+                var path = Path.Combine(Environment.CurrentDirectory, "P.csv");
+                if (!File.Exists(path))
+                    path = Path.Combine(Path.GetFullPath(@"..\..\"), "P.csv");
+
                 return File.ReadAllLines(path);
             }
             catch (IOException e)
