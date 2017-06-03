@@ -23,7 +23,7 @@ namespace DelphiMethod
                 new Matrix(configuration.M, configuration.N, x)
             ).ToList();
 
-            InitialMatrices =new List<Matrix>(Matrices);
+            InitialMatrices = new List<Matrix>(Matrices);
         }
 
         public Matrix this[int index]
@@ -56,7 +56,7 @@ namespace DelphiMethod
         }
 
         // Групповые оценки
-        // xj = Σ(q^k * Ki * xij^k), i=1..m), j=1..n
+        // xj = Σ(q^k * Ki * xij^k), i=1..m), j=1..n, k=1..l
         public List<double> xj(double[,] groupScores)
         {
             var sums = new List<double>(Configuration.N);
@@ -126,7 +126,7 @@ namespace DelphiMethod
         // Очистить матрицы, где НЕ достигнута согласованность
         public void ClearWhereConsensusIsNotReached(Indicator indicator)
         {
-            var matrices = this.ConsensusReachedMatrices();
+            var matrices = ConsensusReachedMatrices();
             for (var i = 0; i < matrices.Count; i++)
             {
                 if (!matrices.Contains(i))

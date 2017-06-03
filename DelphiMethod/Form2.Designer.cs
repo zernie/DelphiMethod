@@ -47,8 +47,10 @@
             this.isConsensusReachedLabel = new System.Windows.Forms.Label();
             this.showResultButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.concordLabel = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.alphaTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -109,7 +111,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(12, 156);
+            this.label3.Location = new System.Drawing.Point(12, 127);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(175, 32);
             this.label3.TabIndex = 24;
@@ -151,7 +153,7 @@
             // 
             this.ratingScaleTextBox.Enabled = false;
             this.ratingScaleTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ratingScaleTextBox.Location = new System.Drawing.Point(405, 153);
+            this.ratingScaleTextBox.Location = new System.Drawing.Point(396, 124);
             this.ratingScaleTextBox.Name = "ratingScaleTextBox";
             this.ratingScaleTextBox.Size = new System.Drawing.Size(151, 38);
             this.ratingScaleTextBox.TabIndex = 25;
@@ -160,7 +162,7 @@
             // 
             this.tourNumberLabel.AutoSize = true;
             this.tourNumberLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tourNumberLabel.Location = new System.Drawing.Point(12, 71);
+            this.tourNumberLabel.Location = new System.Drawing.Point(12, 63);
             this.tourNumberLabel.Name = "tourNumberLabel";
             this.tourNumberLabel.Size = new System.Drawing.Size(170, 32);
             this.tourNumberLabel.TabIndex = 20;
@@ -203,7 +205,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(430, 208);
+            this.label4.Location = new System.Drawing.Point(410, 208);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(296, 32);
             this.label4.TabIndex = 29;
@@ -213,7 +215,7 @@
             // 
             this.isConsensusReachedLabel.AutoSize = true;
             this.isConsensusReachedLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.isConsensusReachedLabel.Location = new System.Drawing.Point(712, 208);
+            this.isConsensusReachedLabel.Location = new System.Drawing.Point(698, 208);
             this.isConsensusReachedLabel.Name = "isConsensusReachedLabel";
             this.isConsensusReachedLabel.Size = new System.Drawing.Size(30, 32);
             this.isConsensusReachedLabel.TabIndex = 30;
@@ -232,6 +234,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.alphaTextBox);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.concordLabel);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.showResultButton);
@@ -254,25 +258,44 @@
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
             // 
+            // concordLabel
+            // 
+            this.concordLabel.AutoSize = true;
+            this.concordLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.concordLabel.Location = new System.Drawing.Point(250, 95);
+            this.concordLabel.Name = "concordLabel";
+            this.concordLabel.Size = new System.Drawing.Size(30, 32);
+            this.concordLabel.TabIndex = 35;
+            this.concordLabel.Text = "...";
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 118);
+            this.label5.Location = new System.Drawing.Point(12, 95);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(245, 32);
             this.label5.TabIndex = 34;
             this.label5.Text = "Коэфф. конкордации";
             // 
-            // concordLabel
+            // label6
             // 
-            this.concordLabel.AutoSize = true;
-            this.concordLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.concordLabel.Location = new System.Drawing.Point(246, 119);
-            this.concordLabel.Name = "concordLabel";
-            this.concordLabel.Size = new System.Drawing.Size(30, 32);
-            this.concordLabel.TabIndex = 35;
-            this.concordLabel.Text = "...";
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(12, 167);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(379, 32);
+            this.label6.TabIndex = 36;
+            this.label6.Text = "Уровень значимости критерия α";
+            // 
+            // alphaTextBox
+            // 
+            this.alphaTextBox.Enabled = false;
+            this.alphaTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.alphaTextBox.Location = new System.Drawing.Point(397, 168);
+            this.alphaTextBox.Name = "alphaTextBox";
+            this.alphaTextBox.Size = new System.Drawing.Size(150, 38);
+            this.alphaTextBox.TabIndex = 37;
             // 
             // Form2
             // 
@@ -314,5 +337,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label concordLabel;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox alphaTextBox;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -19,11 +20,14 @@ namespace DelphiMethod
 
         // Текущий показатель
         public int IndicatorIndex => indicatorComboBox.SelectedIndex;
-        // Вес коэффициента текущего показателя
+        // Вес и название коэффициента текущего показателя
         public Indicator Indicator => Config.Indicators[IndicatorIndex];
 
         // Достигнута ли согласованность значений в текущем показателе?
-        public bool IsConsensusReached => CurrentMatrix.IsConsensusReached(Config.PearsonCorrelationTable, Config.AlphaIndex);
+        public bool IsConsensusReached => ConsensusReachedMatrices.Contains(IndicatorIndex);
+
+        // Согласованные матрицы
+        public List<int> ConsensusReachedMatrices = new List<int>();
 
         // Включить проверку введенных значений?
         private bool _disableTrigger;
@@ -42,6 +46,8 @@ namespace DelphiMethod
             // Заполняем шкалу оценок
             ratingScaleTextBox.Text = Config.RatingScale.ToString();
 
+            alphaTextBox.Text = Config.Alpha.ToString();
+
             // Выводим матрицу
             Utils.InitInputDataGridView(dataGridView2, Config);
             Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
@@ -50,16 +56,6 @@ namespace DelphiMethod
 
             indicatorComboBox.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
-        }
-
-        // Провести анализ
-        private void Calculate()
-        {
-            Utils.CalculateCoefficients(dataGridView2, CurrentMatrix);
-            concordLabel.Text = Math.Round(CurrentMatrix.W(), 3).ToString();
-
-            isConsensusReachedLabel.Text = IsConsensusReached ? "достигнута" : "не достигнута";
-
         }
 
         // Экспорт из таблицы в файл
@@ -77,8 +73,11 @@ namespace DelphiMethod
             _disableTrigger = true;
             Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
             Utils.ClearCalculatedValues(dataGridView2);
-            fillWithRandomValuesButton.Enabled = true;
-            dataGridView2.Enabled = true;
+            if (IsConsensusReached)
+                DisableEdit();
+            else
+                EnableEdit();
+
             try
             {
                 Calculate();
@@ -126,12 +125,13 @@ namespace DelphiMethod
 
                 Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
 
+                ConsensusReachedMatrices = Matrices.ConsensusReachedMatrices();
+
                 // Проверить, достигнута ли согласованность
 
-                if (IsConsensusReached)
+                if (ConsensusReachedMatrices.Contains(IndicatorIndex))
                 {
-                    fillWithRandomValuesButton.Enabled = false;
-                    dataGridView2.Enabled = false;
+                    DisableEdit();
                 }
 
                 if (Matrices.IsAnalysisDone)
@@ -139,9 +139,6 @@ namespace DelphiMethod
                     MessageBox.Show("Мнения экспертов согласованы во всех показателях!");
                     nextTourButton.Enabled = false;
                 }
-
-                fillWithRandomValuesButton.Enabled = true;
-                dataGridView2.Enabled = true;
                 tourNumberLabel.Text = $"Номер тура: {++TourNumber}";
             }
             catch (ArithmeticException)
@@ -206,6 +203,34 @@ namespace DelphiMethod
                 MessageBox.Show(exception.Message);
             }
             _disableTrigger = false;
+        }
+
+        // Провести анализ
+        private void Calculate()
+        {
+            Utils.CalculateCoefficients(dataGridView2, CurrentMatrix);
+            concordLabel.Text = Math.Round(CurrentMatrix.W(), 3).ToString();
+
+            var isConsensusReached = CurrentMatrix.IsConsensusReached(Config.PearsonCorrelationTable, Config.AlphaIndex);
+            isConsensusReachedLabel.Text = isConsensusReached ? "достигнута" : "не достигнута";
+        }
+
+        // Отключить редактирование
+        private void DisableEdit()
+        {
+            calculateButton.Enabled = false;
+            fillWithRandomValuesButton.Enabled = false;
+            dataGridView2.Enabled = false;
+            dataGridView2.DefaultCellStyle.BackColor = Color.LightGray;
+        }
+        // Включить редактирование
+
+        private void EnableEdit()
+        {
+            calculateButton.Enabled = true;
+            fillWithRandomValuesButton.Enabled = true;
+            dataGridView2.Enabled = true;
+            dataGridView2.DefaultCellStyle.BackColor = Color.White;
         }
     }
 }

@@ -21,7 +21,8 @@ namespace DelphiMethod
         // Весовые коэффиценты q^k и их названия
         public List<Indicator> Indicators;
 
-
+        // Уровень значимости критерия α
+        public double Alpha => PearsonCorrelationTable.Alphas[AlphaIndex];
         // Индекс уровня значимости критерия α
         public int AlphaIndex;
         // Шкала оценок
