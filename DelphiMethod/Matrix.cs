@@ -14,7 +14,7 @@ namespace DelphiMethod
         public int M;
         // Кол-во альтернатив (высота)
         public int N;
-        // Показатель
+        // Вес коэффициента показателя
         public double qk => Indicator.Weight;
         // Точность вычисления коэффициентов компетентности
         public const double E = 0.001;
@@ -98,7 +98,7 @@ namespace DelphiMethod
         // Ki = (1 / lambda) * Σ(xj * xij, j = 1..n)
         public List<double> Ki()
         {
-            // Начальные коэффициенты компетентности экспертов Ki ^ 0 = 1 / m
+            // Начальные коэффициенты компетентности экспертов Ki^0 = 1 / m
             var initialCoefficients = new List<double>(M);
             for (var i = 0; i < M; i++)
             {

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DelphiMethod
 {
@@ -8,7 +11,7 @@ namespace DelphiMethod
     [Serializable]
     public class MatrixList
     {
-        // Конфигурация
+        // Настройки
         public Config Configuration;
 
         // Матрицы рангов
@@ -23,11 +26,15 @@ namespace DelphiMethod
             ).ToList();
         }
 
-        public MatrixList(Config configuration, List<Matrix> matrices)
+        public MatrixList(Config configuration, List<double[,]> matrices)
         {
             Configuration = configuration;
 
-            Matrices = matrices;
+            Matrices = new List<Matrix>();
+            for (var i = 0; i < matrices.Count; i++)
+            {
+                Matrices.Add(new Matrix(matrices[i], configuration.Indicators[i]));
+            }
         }
 
         public Matrix this[int index]
@@ -135,6 +142,24 @@ namespace DelphiMethod
             {
                 if (!matrices.Contains(i))
                     Matrices[i] = new Matrix(Configuration.M, Configuration.N, indicator);
+            }
+        }
+
+        // Скопировать список матриц рангов
+        public static MatrixList Clone( MatrixList source)
+        {
+            if (ReferenceEquals(source, null))
+            {
+                return default(MatrixList);
+            }
+
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new MemoryStream();
+            using (stream)
+            {
+                formatter.Serialize(stream, source);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (MatrixList)formatter.Deserialize(stream);
             }
         }
     }

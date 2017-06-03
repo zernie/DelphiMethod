@@ -18,7 +18,7 @@ namespace DelphiMethod
         // Список матриц рангов
         public MatrixList Matrices;
 
-        public List<Matrix> InitialMatrices;
+        public MatrixList InitialMatrices;
 
         // Текущий показатель
         public int IndicatorIndex => indicatorComboBox.SelectedIndex;
@@ -40,7 +40,7 @@ namespace DelphiMethod
 
             Config = matrices.Configuration;
             Matrices = matrices;
-            InitialMatrices = new List<Matrix>(Matrices.Matrices);
+            InitialMatrices = MatrixList.Clone(matrices);
 
             // Заполняем показатели
             indicatorComboBox.Items.AddRange(Config.Indicators.Select(x => x.Title).ToArray());
@@ -170,17 +170,12 @@ namespace DelphiMethod
         // Начать заново
         private void clearButton_Click(object sender, EventArgs e)
         {
+            Hide();
 
-            var form = new Form2(new MatrixList(Config, InitialMatrices));
-            form.ShowDialog();
-            Close();
-//            _disableTrigger = true;
-//            //!!!
-//            Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
-//            Utils.ClearCalculatedValues(dataGridView2);
-//            TourNumber = 1;
-//            tourNumberLabel.Text = $"Номер тура: {TourNumber}";
-//            _disableTrigger = false;
+            using (var form = new Form2(InitialMatrices))
+            {
+                form.ShowDialog();
+            }
         }
 
         // Заполнить случ. значениями

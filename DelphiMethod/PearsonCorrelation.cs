@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DelphiMethod
 {
-    // Распределение Пирсона
+    // Таблица критических значений корреляции Пирсона
     [Serializable]
     public struct PearsonCorrelation
     {
