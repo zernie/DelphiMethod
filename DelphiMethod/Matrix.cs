@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace DelphiMethod
 {
@@ -9,15 +8,18 @@ namespace DelphiMethod
     [Serializable]
     public struct Matrix
     {
+        // Матрица рангов xij^k
         public double[,] X;
         // Кол-во экспертов (ширина)
         public int M;
         // Кол-во альтернатив (высота)
         public int N;
         // Показатель
-        public Indicator Indicator;
+        public double qk => Indicator.Weight;
         // Точность вычисления коэффициентов компетентности
         public const double E = 0.001;
+        // Показатель
+        public Indicator Indicator;
 
         public Matrix(double[,] x, Indicator indicator)
         {
@@ -38,27 +40,27 @@ namespace DelphiMethod
 
         public double this[int row, int col] => X[row, col];
 
-        // Групповые оценки
+        // Групповые оценки k показателя
         // xj^k = Σ(q^k * Ki * xij^k), i=1..m), j=1..n
-        public List<double> GroupScores(List<double> competenceCoefficients)
+        public List<double> xjk(List<double> Ki)
         {
-            var groupScores = new List<double>(N);
+            var xjk = new List<double>(N);
             for (var i = 0; i < N; i++)
             {
                 var sum = 0.0;
                 for (var j = 0; j < M; j++)
                 {
-                    sum += Indicator.Weight * competenceCoefficients[j] * X[i, j];
+                    sum += qk * Ki[j] * X[i, j];
                 }
-                groupScores.Add(sum);
+                xjk.Add(sum);
             }
 
-            return groupScores;
+            return xjk;
         }
 
         // Средние оценки объектов
         // xj = Σ(Ki * xij, i = 1..m), j = 1..n
-        public List<double> AverageScores(List<double> competenceCoefficients)
+        public List<double> xjt(List<double> competenceCoefficients)
         {
             var list = new List<double>(N);
             for (var i = 0; i < N; i++)
@@ -105,7 +107,7 @@ namespace DelphiMethod
 
             var data = new List<double>(M);
             // xi^t
-            var averageScores = AverageScores(initialCoefficients);
+            var averageScores = xjt(initialCoefficients);
             // xi^t-1
             List<double> previousAverageScores;
 
@@ -130,7 +132,7 @@ namespace DelphiMethod
                 // xj^t-1
                  previousAverageScores = averageScores;
                 // xj^t
-                averageScores = AverageScores(data);
+                averageScores = xjt(data);
                 // Признак окончания итерационного процесса
                 // max(|xj^t - xj^t-1|) < e
             } while (Math.Abs(Subtract(averageScores, previousAverageScores).Max()) >= E);

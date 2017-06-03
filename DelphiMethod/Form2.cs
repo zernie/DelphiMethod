@@ -7,41 +7,44 @@ namespace DelphiMethod
 {
     public partial class Form2 : Form
     {
-        private Config _config; // Исходные данные
+        public Config Config; // Исходные данные
 
-        private int _tourNumber = 1; // Номер тура
+        public int TourNumber = 1; // Номер тура
 
         // Текущая матрица рангов
-        private Matrix _currentRank => _ranks[_indicatorIndex];
+        private Matrix CurrentMatrix => Matrices[IndicatorIndex];
 
         // Список матриц рангов
-        private MatrixList _ranks;
+        public MatrixList Matrices;
 
         // Текущий показатель
-        private int _indicatorIndex => indicatorComboBox.SelectedIndex;
-        // Вес коэффициента
-        private Indicator _indicator => _config.Indicators[_indicatorIndex];
+        public int IndicatorIndex => indicatorComboBox.SelectedIndex;
+        // Вес коэффициента текущего показателя
+        public Indicator Indicator => Config.Indicators[IndicatorIndex];
+
+        // Достигнута ли согласованность значений в текущем показателе?
+        public bool IsConsensusReached => CurrentMatrix.IsConsensusReached(Config.PearsonCorrelationTable, Config.AlphaIndex);
 
         // Включить проверку введенных значений?
         private bool _disableTrigger;
 
-        public Form2(MatrixList ranks, bool calculate = false)
+        public Form2(MatrixList matrices, bool calculate = false)
         {
             InitializeComponent();
 
-            _config = ranks.Configuration;
-            _ranks = ranks;
+            Config = matrices.Configuration;
+            Matrices = matrices;
 
             // Заполняем показатели
-            indicatorComboBox.Items.AddRange(_config.Indicators.Select(x => x.Title).ToArray());
+            indicatorComboBox.Items.AddRange(Config.Indicators.Select(x => x.Title).ToArray());
             indicatorComboBox.SelectedIndex = 0;
 
             // Заполняем шкалу оценок
-            ratingScaleTextBox.Text = _config.RatingScale.ToString();
+            ratingScaleTextBox.Text = Config.RatingScale.ToString();
 
             // Выводим матрицу
-            Utils.InitInputDataGridView(dataGridView2, _config);
-            Utils.FillDataGridView(dataGridView2, _currentRank.X);
+            Utils.InitInputDataGridView(dataGridView2, Config);
+            Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
 
             if (calculate) Calculate();
 
@@ -52,27 +55,11 @@ namespace DelphiMethod
         // Провести анализ
         private void Calculate()
         {
-            Utils.CalculateCoefficients(dataGridView2, _currentRank);
-            Utils.FillGroupScores(dataGridView2, _currentRank);
+            Utils.CalculateCoefficients(dataGridView2, CurrentMatrix);
+            concordLabel.Text = Math.Round(CurrentMatrix.W(), 3).ToString();
 
-            // Проверить, достигнута ли согласованность
-            var isConsensusReached =
-                _currentRank.IsConsensusReached(_config.PearsonCorrelationTable, _config.AlphaIndex);
-            concordLabel.Text = Math.Round(_currentRank.W(), 3).ToString();
+            isConsensusReachedLabel.Text = IsConsensusReached ? "достигнута" : "не достигнута";
 
-            isConsensusReachedLabel.Text = isConsensusReached ? "достигнута" : "не достигнута";
-
-            if (isConsensusReached)
-            {
-                fillWithRandomValuesButton.Enabled = false;
-                dataGridView2.Enabled = false;
-            }
-
-            if (_ranks.IsAnalysisDone)
-            {
-                MessageBox.Show("Мнения экспертов согласованы во всех показателях!");
-                nextTourButton.Enabled = false;
-            }
         }
 
         // Экспорт из таблицы в файл
@@ -80,7 +67,7 @@ namespace DelphiMethod
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                Utils.ExportToFile(saveFileDialog1.FileName, _ranks);
+                Utils.ExportToFile(saveFileDialog1.FileName, Matrices);
             }
         }
 
@@ -88,7 +75,7 @@ namespace DelphiMethod
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            Utils.FillDataGridView(dataGridView2, _currentRank.X);
+            Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
             Utils.ClearCalculatedValues(dataGridView2);
             fillWithRandomValuesButton.Enabled = true;
             dataGridView2.Enabled = true;
@@ -113,8 +100,8 @@ namespace DelphiMethod
                 if (_disableTrigger) return;
                 var value = Convert.ToDouble(dataGridView2[e.ColumnIndex, e.RowIndex].Value);
 
-                if (_config.RatingScale.Includes(value))
-                    _currentRank.X[e.RowIndex, e.ColumnIndex] = value;
+                if (Config.RatingScale.Includes(value))
+                    CurrentMatrix.X[e.RowIndex, e.ColumnIndex] = value;
                 else
                     throw new FormatException("Оценка вышла за пределы шкалы");
             }
@@ -135,13 +122,27 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
                 Calculate();
-                _ranks.ClearWhereConsensusIsReached(_indicator);
+                Matrices.ClearWhereConsensusIsNotReached(Indicator);
 
-                Utils.FillDataGridView(dataGridView2, _currentRank.X);
+                Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
+
+                // Проверить, достигнута ли согласованность
+
+                if (IsConsensusReached)
+                {
+                    fillWithRandomValuesButton.Enabled = false;
+                    dataGridView2.Enabled = false;
+                }
+
+                if (Matrices.IsAnalysisDone)
+                {
+                    MessageBox.Show("Мнения экспертов согласованы во всех показателях!");
+                    nextTourButton.Enabled = false;
+                }
 
                 fillWithRandomValuesButton.Enabled = true;
                 dataGridView2.Enabled = true;
-                tourNumberLabel.Text = $"Номер тура: {++_tourNumber}";
+                tourNumberLabel.Text = $"Номер тура: {++TourNumber}";
             }
             catch (ArithmeticException)
             {
@@ -169,11 +170,12 @@ namespace DelphiMethod
         private void clearButton_Click(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            _ranks.ReturnToInitialValues();
-            Utils.FillDataGridView(dataGridView2, _currentRank.X);
+            //!!!
+            Matrices.ReturnToInitialValues();
+            Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
             Utils.ClearCalculatedValues(dataGridView2);
-            _tourNumber = 1;
-            tourNumberLabel.Text = $"Номер тура: {_tourNumber}";
+            TourNumber = 1;
+            tourNumberLabel.Text = $"Номер тура: {TourNumber}";
             _disableTrigger = false;
         }
 
@@ -181,8 +183,8 @@ namespace DelphiMethod
         private void button1_Click(object sender, EventArgs e)
         {
             _disableTrigger = true;
-            _currentRank.FillWithRandomValues();
-            Utils.FillDataGridView(dataGridView2, _currentRank.X);
+            CurrentMatrix.FillWithRandomValues();
+            Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
             Calculate();
             _disableTrigger = false;
         }
@@ -194,7 +196,7 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
 
-                using (var form = new Result(_ranks))
+                using (var form = new Result(Matrices))
                 {
                     form.ShowDialog();
                 }

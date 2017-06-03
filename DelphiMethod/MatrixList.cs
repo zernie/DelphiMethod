@@ -20,7 +20,7 @@ namespace DelphiMethod
             Configuration = configuration;
 
             Matrices = configuration.Indicators.Select(x =>
-                new Matrix(configuration.ExpertsCount, configuration.AlternativesCount, x)
+                new Matrix(configuration.M, configuration.N, x)
             ).ToList();
 
             InitialMatrices =new List<Matrix>(Matrices);
@@ -36,17 +36,18 @@ namespace DelphiMethod
         public bool IsAnalysisDone =>
             Matrices.All(rank => rank.IsConsensusReached(Configuration.PearsonCorrelationTable, Configuration.AlphaIndex));
 
+        // xjk = Σ(q^k * Ki * xij^k), i=1..m), j=1..n
         // Матрица групповых оценок альтернатив по показателям
         public double[,] GroupScores()
         {
-            var groupScores = new double[Configuration.AlternativesCount, Configuration.IndicatorsCount];
+            var groupScores = new double[Configuration.N, Configuration.L];
 
-            for (var i = 0; i < Configuration.AlternativesCount; i++)
+            for (var i = 0; i < Configuration.N; i++)
             {
-                for (var j = 0; j < Configuration.IndicatorsCount; j++)
+                for (var j = 0; j < Configuration.L; j++)
                 {
                     var matrix = Matrices[j];
-                    var data = matrix.GroupScores(matrix.Ki());
+                    var data = matrix.xjk(matrix.Ki());
                     groupScores[i, j] = data[i];
                 }
             }
@@ -54,15 +55,16 @@ namespace DelphiMethod
             return groupScores;
         }
 
-        // Суммы групповых оценок по показателям
-        public List<double> GroupScoresSums(double[,] groupScores)
+        // Групповые оценки
+        // xj = Σ(q^k * Ki * xij^k), i=1..m), j=1..n
+        public List<double> xj(double[,] groupScores)
         {
-            var sums = new List<double>(Configuration.AlternativesCount);
+            var sums = new List<double>(Configuration.N);
 
-            for (var i = 0; i < Configuration.AlternativesCount; i++)
+            for (var i = 0; i < Configuration.N; i++)
             {
                 var sum = 0.0;
-                for (var j = 0; j < Configuration.IndicatorsCount; j++)
+                for (var j = 0; j < Configuration.L; j++)
                 {
                     sum += groupScores[i, j];
                 }
@@ -107,26 +109,28 @@ namespace DelphiMethod
         }
 
         // Индексы показателей, в которых достигнута согласованность мнений
-        public List<int> DisabledRanks()
+        public List<int> ConsensusReachedMatrices()
         {
-            var disabledRanks = new List<int>();
+            var data = new List<int>();
             for (var i = 0; i < Matrices.Count; i++)
             {
                 var rank = Matrices[i];
                 if (rank.IsConsensusReached(Configuration.PearsonCorrelationTable, Configuration.AlphaIndex))
                 {
-                    disabledRanks.Add(i);
+                    data.Add(i);
                 }
             }
-            return disabledRanks;
+            return data;
         }
 
-        // Очистить матрицы, где достигнута согласованность
-        public void ClearWhereConsensusIsReached(Indicator indicator)
+        // Очистить матрицы, где НЕ достигнута согласованность
+        public void ClearWhereConsensusIsNotReached(Indicator indicator)
         {
-            foreach (var i in DisabledRanks())
+            var matrices = this.ConsensusReachedMatrices();
+            for (var i = 0; i < matrices.Count; i++)
             {
-                Matrices[i] = new Matrix(Configuration.ExpertsCount, Configuration.AlternativesCount, indicator);
+                if (!matrices.Contains(i))
+                    Matrices[i] = new Matrix(Configuration.M, Configuration.N, indicator);
             }
         }
 

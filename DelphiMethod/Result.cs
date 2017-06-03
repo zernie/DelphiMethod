@@ -11,9 +11,9 @@ namespace DelphiMethod
             try
             {
                 var z = ranks.GroupScores();
-                var sums = ranks.GroupScoresSums(z);
+                var sums = ranks.xj(z);
                 var ranksStrings = ranks.Ranks(sums);
-                var disabledRanks = ranks.DisabledRanks();
+                var disabledRanks = ranks.ConsensusReachedMatrices();
 
                 Utils.InitResultDataGridView(dataGridView1, ranks.Configuration, disabledRanks);
                 Utils.FillDataGridView(dataGridView1, z);

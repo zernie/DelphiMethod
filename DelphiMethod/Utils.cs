@@ -16,12 +16,12 @@ namespace DelphiMethod
         // Инициализировать таблицу рангов заданным количеством строк и столбцов
         public static void InitInputDataGridView(DataGridView component, Config config)
         {
-            for (var i = 0; i < config.ExpertsCount; i++)
+            for (var i = 0; i < config.M; i++)
             {
                 component.Columns.Add(i.ToString(), config.Experts[i]);
             }
 
-            for (var i = 0; i < config.AlternativesCount; i++)
+            for (var i = 0; i < config.N; i++)
             {
                 component.Rows.Add(new DataGridViewRow
                 {
@@ -32,16 +32,6 @@ namespace DelphiMethod
                 });
             }
 
-            component.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "groupScore",
-                HeaderText = "Групповые оценки",
-                ReadOnly = true,
-                DefaultCellStyle =
-                {
-                    BackColor = Color.Gold,
-                }
-            });
             component.Rows.Add(new DataGridViewRow
             {
                 ReadOnly = true,
@@ -59,7 +49,7 @@ namespace DelphiMethod
         // Инициализировать таблицу групповых оценок заданным количеством строк и столбцов
         public static void InitResultDataGridView(DataGridView component, Config config, List<int> disabled)
         {
-            for (var i = 0; i < config.IndicatorsCount; i++)
+            for (var i = 0; i < config.L; i++)
             {
                 var indicator = config.Indicators[i].Title;
                 component.Columns.Add(new DataGridViewTextBoxColumn
@@ -73,14 +63,14 @@ namespace DelphiMethod
                 });
             }
 
-            for (var i = 0; i < config.AlternativesCount; i++)
+            for (var i = 0; i < config.N; i++)
             {
                 component.Rows.Add(new DataGridViewRow
                 {
                     ReadOnly = true,
                     HeaderCell = new DataGridViewRowHeaderCell
                     {
-                        Value = $"Групповая оценка {config.Alternatives[i]}"
+                        Value = config.Alternatives[i]
                     }
                 });
             }
@@ -88,7 +78,7 @@ namespace DelphiMethod
             component.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "sum",
-                HeaderText = "Сумма",
+                HeaderText = "xj",
                 ReadOnly = true,
                 DefaultCellStyle =
                 {
@@ -112,25 +102,9 @@ namespace DelphiMethod
         // Очистить коэффициенты компетентности и групповые оценки
         public static void ClearCalculatedValues(DataGridView component)
         {
-            for (var i = 0; i < component.RowCount; i++)
-            {
-                component["groupScore", i].Value = "";
-            }
-
             for (var i = 0; i < component.ColumnCount; i++)
             {
                 component[i, component.RowCount - 1].Value = "";
-            }
-        }
-
-        // Вычислить групповые оценки и вывести их на форму
-        public static void FillGroupScores(DataGridView component, Matrix x)
-        {
-            var groupScores = x.GroupScores(x.Ki());
-
-            for (var i = 0; i < x.N; i++)
-            {
-                component["groupScore", i].Value = Math.Round(groupScores[i], DigitsAfterPoint);
             }
         }
 
@@ -177,7 +151,7 @@ namespace DelphiMethod
         }
 
         // Экспорт в файл
-        public static void ExportToFile(string filename, MatrixList matrixList)
+        public static void ExportToFile(string filename, MatrixList ranks)
         {
             try
             {
@@ -185,7 +159,7 @@ namespace DelphiMethod
 
                 using (var fs = new FileStream(filename, FileMode.OpenOrCreate))
                 {
-                    x.Serialize(fs, matrixList);
+                    x.Serialize(fs, ranks);
                 }
                 MessageBox.Show("Файл сохранен.");
             }
