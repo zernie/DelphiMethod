@@ -26,15 +26,11 @@ namespace DelphiMethod
             ).ToList();
         }
 
-        public MatrixList(Config configuration, List<double[,]> matrices)
+        public MatrixList(Config configuration, List<Matrix> matrices)
         {
             Configuration = configuration;
 
-            Matrices = new List<Matrix>();
-            for (var i = 0; i < matrices.Count; i++)
-            {
-                Matrices.Add(new Matrix(matrices[i], configuration.Indicators[i]));
-            }
+            Matrices = matrices;
         }
 
         public Matrix this[int index]
@@ -68,7 +64,7 @@ namespace DelphiMethod
 
         // Групповые оценки
         // xj = Σ(q^k * Ki * xij^k), i=1..m), j=1..n, k=1..l
-        public List<double> xj(double[,] groupScores)
+        public List<double> xj(double[,] xjk)
         {
             var sums = new List<double>(Configuration.N);
 
@@ -77,7 +73,7 @@ namespace DelphiMethod
                 var sum = 0.0;
                 for (var j = 0; j < Configuration.L; j++)
                 {
-                    sum += groupScores[i, j];
+                    sum += xjk[i, j];
                 }
                 sums.Add(sum);
             }
@@ -119,29 +115,20 @@ namespace DelphiMethod
             return ranks;
         }
 
-        // Индексы показателей, в которых достигнута согласованность мнений
-        public List<int> ConsensusReachedMatrices()
-        {
-            var data = new List<int>();
-            for (var i = 0; i < Matrices.Count; i++)
-            {
-                var rank = Matrices[i];
-                if (rank.IsConsensusReached(Configuration.PearsonCorrelationTable, Configuration.AlphaIndex))
-                {
-                    data.Add(i);
-                }
-            }
-            return data;
-        }
+        // Матрицы показателей, в которых достигнута согласованность мнений
+        public List<Matrix> ConsensusReachedMatrices() => 
+            Matrices
+            .Where(rank => rank.IsConsensusReached(Configuration.PearsonCorrelationTable, Configuration.AlphaIndex))
+            .ToList();
 
         // Очистить матрицы, где НЕ достигнута согласованность
-        public void ClearWhereConsensusIsNotReached(Indicator indicator)
+        public void ClearWhereConsensusIsNotReached()
         {
             var matrices = ConsensusReachedMatrices();
-            for (var i = 0; i <= matrices.Count; i++)
+            for (var i = 0; i < Configuration.L; i++)
             {
-                if (!matrices.Contains(i))
-                    Matrices[i] = new Matrix(Configuration.M, Configuration.N, indicator);
+                if (!matrices.Contains(Matrices[i]))
+                    Matrices[i].X = new double[Configuration.N, Configuration.M];
             }
         }
 

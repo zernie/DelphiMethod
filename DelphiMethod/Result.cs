@@ -5,17 +5,17 @@ namespace DelphiMethod
 {
     public partial class Result : Form
     {
-        public Result(MatrixList ranks)
+        public Result(MatrixList matrices)
         {
             InitializeComponent();
             try
             {
-                var z = ranks.GroupScores();
-                var sums = ranks.xj(z);
-                var ranksStrings = ranks.Ranks(sums);
-                var disabledRanks = ranks.ConsensusReachedMatrices();
+                var z = matrices.GroupScores();
+                var sums = matrices.xj(z);
+                var ranksStrings = matrices.Ranks(sums);
+                var disabledRanks = matrices.ConsensusReachedMatrices();
 
-                Utils.InitResultDataGridView(dataGridView1, ranks.Configuration, disabledRanks);
+                Utils.InitResultDataGridView(dataGridView1, matrices, disabledRanks);
                 Utils.FillDataGridView(dataGridView1, z);
                 Utils.CalculateGroupScoreSums(dataGridView1, sums);
 

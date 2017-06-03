@@ -18,6 +18,7 @@ namespace DelphiMethod
         // Список матриц рангов
         public MatrixList Matrices;
 
+        // Начальный список матриц рангов (для кнопки начать заново)
         public MatrixList InitialMatrices;
 
         // Текущий показатель
@@ -26,10 +27,10 @@ namespace DelphiMethod
         public Indicator Indicator => Config.Indicators[IndicatorIndex];
 
         // Достигнута ли согласованность значений в текущем показателе?
-        public bool IsConsensusReached => ConsensusReachedMatrices.Contains(IndicatorIndex);
+        public bool IsConsensusReached => ConsensusReachedMatrices.Contains(CurrentMatrix);
 
         // Согласованные матрицы
-        public List<int> ConsensusReachedMatrices = new List<int>();
+        public List<Matrix> ConsensusReachedMatrices = new List<Matrix>();
 
         // Включить проверку введенных значений?
         private bool _disableTrigger;
@@ -60,7 +61,7 @@ namespace DelphiMethod
             indicatorComboBox.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             dataGridView2.CellValueChanged += dataGridView2_CellValueChanged;
         }
-        
+
         // Экспорт из таблицы в файл
         private void exportButton_Click(object sender, EventArgs e)
         {
@@ -105,7 +106,7 @@ namespace DelphiMethod
                 if (Config.RatingScale.Includes(value))
                     CurrentMatrix.X[e.RowIndex, e.ColumnIndex] = value;
                 else
-                    throw new FormatException("Оценка вышла за пределы шкалы");
+                    throw new FormatException($"Оценка вышла за пределы шкалы {Config.RatingScale}");
             }
             // в случае ввода нечисловых данных выдаем ошибку
             catch (FormatException exception)
@@ -117,22 +118,23 @@ namespace DelphiMethod
             }
         }
 
-        // След. тур
+        // Следующий тур
         private void nextTourButton_Click(object sender, EventArgs e)
         {
             try
             {
                 _disableTrigger = true;
-                Calculate();
-                Matrices.ClearWhereConsensusIsNotReached(Indicator);
-
+                TourNumber++;
                 Utils.FillDataGridView(dataGridView2, CurrentMatrix.X);
+                Calculate();
+                Matrices.ClearWhereConsensusIsNotReached();
+
 
                 ConsensusReachedMatrices = Matrices.ConsensusReachedMatrices();
+                if (!ConsensusReachedMatrices.Any()) return;
 
                 // Проверить, достигнута ли согласованность
-
-                if (ConsensusReachedMatrices.Contains(IndicatorIndex))
+                if (IsConsensusReached)
                 {
                     DisableEdit();
                 }
@@ -142,14 +144,16 @@ namespace DelphiMethod
                     MessageBox.Show("Мнения экспертов согласованы во всех показателях!");
                     nextTourButton.Enabled = false;
                     showResultButton.PerformClick();
+                    return;
                 }
-                tourNumberLabel.Text = $"Номер тура: {++TourNumber}";
+
+                var s = string.Join(", ", ConsensusReachedMatrices.Select(matrix => matrix.Indicator.Title).ToArray());
+                MessageBox.Show($"Оценки экспертов в показателях '{s}' были согласованы.");
             }
             catch (ArithmeticException)
             {
                 MessageBox.Show("Заполните матрицу рангов");
             }
-            _disableTrigger = false;
         }
 
         // Посчитать
@@ -171,7 +175,6 @@ namespace DelphiMethod
         private void clearButton_Click(object sender, EventArgs e)
         {
             Hide();
-
             using (var form = new Form2(InitialMatrices))
             {
                 form.ShowDialog();
@@ -211,6 +214,7 @@ namespace DelphiMethod
         private void Calculate()
         {
             Utils.CalculateCoefficients(dataGridView2, CurrentMatrix);
+            tourNumberLabel.Text = $"Номер тура: {TourNumber}";
             concordLabel.Text = Math.Round(CurrentMatrix.W(), 3).ToString();
 
             var isConsensusReached = CurrentMatrix.IsConsensusReached(Config.PearsonCorrelationTable, Config.AlphaIndex);

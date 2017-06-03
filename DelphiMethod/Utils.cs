@@ -47,8 +47,10 @@ namespace DelphiMethod
         }
 
         // Инициализировать таблицу групповых оценок заданным количеством строк и столбцов
-        public static void InitResultDataGridView(DataGridView component, Config config, List<int> disabled)
+        public static void InitResultDataGridView(DataGridView component, MatrixList matrices, List<Matrix> disabled)
         {
+            var config = matrices.Configuration;
+
             for (var i = 0; i < config.L; i++)
             {
                 var indicator = config.Indicators[i].Title;
@@ -58,7 +60,7 @@ namespace DelphiMethod
                     ReadOnly = true,
                     DefaultCellStyle =
                     {
-                        BackColor = disabled.Contains(i)? Color.LawnGreen : Color.White,
+                        BackColor = disabled.Contains(matrices[i])? Color.LimeGreen : Color.White,
                     }
                 });
             }
