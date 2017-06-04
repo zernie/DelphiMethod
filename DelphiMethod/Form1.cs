@@ -100,14 +100,20 @@ namespace DelphiMethod
         // Импорт из файла
         private void importButton_Click(object sender, EventArgs e)
         {
-            if (configOpenFileDialog.ShowDialog() == DialogResult.Cancel) return;
+            try
+            {
+                if (configOpenFileDialog.ShowDialog() == DialogResult.Cancel) return;
+                var matrixList = Utils.ImportFromFile(configOpenFileDialog.FileName);
+                        if (matrixList == null) return;
 
-            var matrixList = Utils.ImportFromFile(configOpenFileDialog.FileName);
-            if (matrixList == null) return;
-
-            Hide();
-            var form = new Form2(matrixList, true);
-            if (form.ShowDialog() == DialogResult.Cancel) Show();
+                Hide();
+                var form = new Form2(matrixList, true);
+                if (form.ShowDialog() == DialogResult.Cancel) Show();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         // Удаление показателя из таблицы

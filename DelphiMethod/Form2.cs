@@ -125,9 +125,10 @@ namespace DelphiMethod
             {
                 _disableTrigger = true;
                 TourNumber++;
-                Utils.FillDataGridView(dataGridView2, CurrentMatrix.x);
                 Calculate();
+
                 Matrices.ClearWhereConsensusIsNotReached();
+                Utils.FillDataGridView(dataGridView2, CurrentMatrix.x);
 
 
                 ConsensusReachedMatrices = Matrices.ConsensusReachedMatrices();

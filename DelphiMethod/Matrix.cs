@@ -59,8 +59,8 @@ namespace DelphiMethod
         }
 
         // Средние оценки объектов
-        // xi = Σ(Ki * xij, i = 1..m), j = 1..n
-        public List<double> xi(List<double> Ki)
+        // xjt = Σ(Ki * xij, i = 1..m), j = 1..n
+        public List<double> xjt(List<double> Ki)
         {
             var list = new List<double>(n);
             for (var i = 0; i < n; i++)
@@ -79,15 +79,15 @@ namespace DelphiMethod
         }
 
         // Нормировочный коэффициент
-        // λ = Σ(Σ(xi * xij, i = 1..m), j = 1..n)
-        public double Lambda(List<double> xi)
+        // λ = Σ(Σ(xjt * xij, i = 1..m), j = 1..n)
+        public double Lambda(List<double> xjt)
         {
             var lambda = 0.0;
             for (var i = 0; i < n; i++)
             {
                 for (var j = 0; j < m; j++)
                 {
-                    lambda += x[i, j] * xi[i];
+                    lambda += x[i, j] * xjt[i];
                 }
             }
 
@@ -106,9 +106,9 @@ namespace DelphiMethod
             }
 
             var data = new List<double>(m);
-            // xi^t
-            var averageScores = xi(initialCoefficients);
-            // xi^t-1
+            // xjt^t
+            var averageScores = xjt(initialCoefficients);
+            // xjt^t-1
             List<double> previousAverageScores;
 
             do
@@ -132,7 +132,7 @@ namespace DelphiMethod
                 // xj^t-1
                 previousAverageScores = averageScores;
                 // xj^t
-                averageScores = xi(data);
+                averageScores = xjt(data);
                 // Признак окончания итерационного процесса
                 // max(|xj^t - xj^t-1|) < e
             } while (Math.Abs(Subtract(averageScores, previousAverageScores).Max()) >= e);
