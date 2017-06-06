@@ -130,9 +130,10 @@ namespace DelphiMethod
                 Matrices.ClearWhereConsensusIsNotReached();
                 Utils.FillDataGridView(dataGridView2, CurrentMatrix.x);
 
-
-                ConsensusReachedMatrices = Matrices.ConsensusReachedMatrices();
-                if (!ConsensusReachedMatrices.Any()) return;
+                var matrices = Matrices.ConsensusReachedMatrices();
+                // показатели, в которых была достигнута согласованность с прошлого тура
+                var matrices2 = matrices.Except(ConsensusReachedMatrices);
+                ConsensusReachedMatrices = matrices;
 
                 // Проверить, достигнута ли согласованность
                 if (IsConsensusReached)
@@ -148,13 +149,21 @@ namespace DelphiMethod
                     return;
                 }
 
-                var s = string.Join(", ", ConsensusReachedMatrices.Select(matrix => matrix.Indicator.Title).ToArray());
-                MessageBox.Show($"Оценки экспертов в показателях '{s}' были согласованы.");
+                if (matrices2.Any())
+                {
+                    var s = string.Join(", ", matrices2.Select(matrix => matrix.Indicator.Title).ToArray());
+                    MessageBox.Show($"Оценки экспертов в показателях '{s}' были согласованы. Переходим на следующий тур.");
+                }
+                else
+                {
+                    MessageBox.Show($"Ни один показатель не был согласован в {TourNumber-1} туре. Переходим на следующий тур.");
+                }
             }
             catch (ArithmeticException)
             {
                 MessageBox.Show("Заполните матрицу рангов");
             }
+            _disableTrigger = false;
         }
 
         // Посчитать
