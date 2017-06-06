@@ -99,15 +99,15 @@ namespace DelphiMethod
         public List<double> Ki()
         {
             // Начальные коэффициенты компетентности экспертов Ki^0 = 1 / m
-            var initialCoefficients = new List<double>(m);
+            var Ki0 = new List<double>(m);
             for (var i = 0; i < m; i++)
             {
-                initialCoefficients.Add(1.0 / m);
+                Ki0.Add(1.0 / m);
             }
 
             var data = new List<double>(m);
             // xjt^t
-            var averageScores = xjt(initialCoefficients);
+            var averageScores = xjt(Ki0);
             // xjt^t-1
             List<double> previousAverageScores;
 
@@ -214,7 +214,7 @@ namespace DelphiMethod
         // m(n - 1) * W
         public double X2() => m * (n - 1) * W();
 
-        // Согласованы ли мнения?
+        // Гипотеза согласованности мнений принята?
         public bool IsConsensusReached(PearsonCorrelation pearsonCorrelationTable, int alphaIndex)
         {
             var x2 = X2();

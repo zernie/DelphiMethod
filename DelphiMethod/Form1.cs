@@ -104,7 +104,9 @@ namespace DelphiMethod
             {
                 if (configOpenFileDialog.ShowDialog() == DialogResult.Cancel) return;
                 var matrixList = Utils.ImportFromFile(configOpenFileDialog.FileName);
-                        if (matrixList == null) return;
+                if (matrixList == null) return;
+
+                FillFormFromConfig(matrixList.Configuration);
 
                 Hide();
                 var form = new Form2(matrixList, true);
@@ -114,6 +116,31 @@ namespace DelphiMethod
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        // Заполнить данные формы из объекта настроек.
+        private void FillFormFromConfig(Config configuration)
+        {
+            // Альтернативы
+            alternativesRichTextBox.Lines = configuration.Alternatives.ToArray();
+            // Эксперты
+            expertsRichTextBox.Lines = configuration.Experts.ToArray();
+
+            // Коэффициентов весов показателей
+            indicatorsDataGridView.RowCount = configuration.Indicators.Count;
+            for (var i = 0; i < configuration.Indicators.Count; i++)
+            {
+                var indicator = configuration.Indicators[i];
+                indicatorsDataGridView[0, i].Value = indicator.Title;
+                indicatorsDataGridView[1, i].Value = indicator.Weight;
+            }
+
+            // Уровень значимости критерия α
+            alphaComboBox.SelectedIndex = configuration.AlphaIndex;
+            // Шкала оценок
+            if (configuration.RatingScale.End == 10.0)
+                radioButton1.Checked = true;
+            else radioButton2.Checked = true;
         }
 
         // Удаление показателя из таблицы

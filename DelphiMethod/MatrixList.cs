@@ -82,10 +82,10 @@ namespace DelphiMethod
         }
 
         // Ранжирование альтернатив
-        public List<string> Ranks(List<double> groupScoresSums)
+        public List<string> Ranks(List<double> xj)
         {
-            var sum = groupScoresSums.Sum();
-            var list = groupScoresSums.Select(x => x / sum).ToArray();
+            var sum = xj.Sum();
+            var list = xj.Select(x => x / sum).ToArray();
             var indexes = list.Select((x, i) => i).ToArray();
 
             Array.Sort(list, indexes);
