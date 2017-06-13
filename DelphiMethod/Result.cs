@@ -3,6 +3,7 @@ using System.Windows.Forms;
 
 namespace DelphiMethod
 {
+    // Форма вывода результатов
     public partial class Result : Form
     {
         public Result(MatrixList matrices)

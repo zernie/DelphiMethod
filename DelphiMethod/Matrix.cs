@@ -10,14 +10,19 @@ namespace DelphiMethod
     {
         // Матрица рангов xij^k
         public double[,] x { get; set; }
+
         // Кол-во экспертов (ширина)
         public int m;
+
         // Кол-во альтернатив (высота)
         public int n;
+
         // Вес коэффициента показателя
         public double qk => Indicator.Weight;
+
         // Точность вычисления коэффициентов компетентности
         public const double e = 0.001;
+
         // Показатель
         public Indicator Indicator;
 
@@ -71,7 +76,8 @@ namespace DelphiMethod
                     sum += x[i, j] * Ki[j];
                 }
 
-                if (sum == 0.0) throw new ArithmeticException($"Данные в показателе '{Indicator.Title}' введены неправильно");
+                if (sum == 0.0)
+                    throw new ArithmeticException($"Данные в показателе '{Indicator.Title}' введены неправильно");
 
                 list.Add(sum);
             }
@@ -114,11 +120,9 @@ namespace DelphiMethod
             do
             {
                 data.Clear();
-
                 for (var i = 0; i < m - 1; i++)
                 {
                     var sum = 0.0;
-
                     for (var j = 0; j < n; j++)
                     {
                         sum += x[j, i] * averageScores[j];
@@ -128,7 +132,6 @@ namespace DelphiMethod
 
                 // Km = 1 - sum(Ki, i=1..m-1)
                 data.Add(1.0 - data.Sum());
-
                 // xj^t-1
                 previousAverageScores = averageScores;
                 // xj^t
@@ -154,27 +157,41 @@ namespace DelphiMethod
 
         //                          Вычиcление согласованности экспертов
 
-        // Показатель рангов 
-        // Ti = Σ(hk^3 - hk, k = 1..Hi)
+
+        private List<int> H(int i)
+        {
+            var xi = new List<double>(n);
+
+            for (var j = 0; j < n; j++)
+            {
+                xi.Add(x[j, i]);
+            }
+
+            var H = xi
+                .GroupBy(y => y)           // группируем массив по одинаковым значениям
+                .Where(g => g.Count() > 1) // отсеиваем группы, где меньше 1 элемента
+                .Select(g => g.Count())    // берем количество элементов в группе
+                .ToList();
+
+            return H;
+        }
+
+        // Показатель рангов
+        // Ti = Σ(hk^3 - hk, k = 1..Hi), i=1..m
         public List<double> Ti()
         {
             var Ti = new List<double>(m);
             for (var i = 0; i < m; i++)
             {
-                var temp = new List<double>(n);
-                for (var j = 0; j < n; j++)
+                var H = this.H(i);
+                var Hi = H.Count;
+
+                for (var k = 0; k < Hi; k++)
                 {
-                    temp.Add(x[j, i]);
+                    Ti.Add(H.Sum(hk => (int)Math.Pow(hk, 3) - hk));
                 }
-
-                var H = temp
-                    .GroupBy(x => x) // группируем массив по одинаковым значениям
-                    .Where(g => g.Count() > 1) // отсеиваем группы, где меньше 1 элемента
-                    .Select(g => g.Count())   // берем количество элементов в группе
-                    .ToList();
-
-                Ti.Add(H.Sum(hk => (int)Math.Pow(hk, 3) - hk));
             }
+
             return Ti;
         }
 
@@ -182,24 +199,26 @@ namespace DelphiMethod
         // S = Σ((Σxij - ΣΣxij / n, i = 1..m)^2), j = 1..n)
         public double S()
         {
-            var sums = new List<double>(n);
             var s = 0.0;
             var sum = 0.0;
 
             for (var i = 0; i < n; i++)
             {
-                var temp = 0.0;
                 for (var j = 0; j < m; j++)
                 {
-                    temp += x[i, j];
+                    sum += x[i, j];
                 }
-                sum += temp;
-                sums.Add(temp);
             }
 
             for (var i = 0; i < n; i++)
             {
-                s += Math.Pow(sums[i] - sum / n, 2);
+                var temp = 0.0;
+
+                for (var j = 0; j < m; j++)
+                {
+                    temp += x[i, j];
+                }
+                s += Math.Pow(temp - sum / n, 2);
             }
 
             return s;
@@ -207,21 +226,21 @@ namespace DelphiMethod
 
         // Коэффициент конкордации Кенделла
         // W = 12S / (m^2 (n^3 - n) - m * Σ(Ti, i=1..m))
-        public double W() => 12 * S() /
-                             (Math.Pow(m, 2) * (Math.Pow(n, 3) - n) - m * Ti().Sum());
+        public double W(double S, List<double> Ti) =>
+            12 * S /
+            (Math.Pow(m, 2) * (Math.Pow(n, 3) - n) - m * Ti.Sum());
+
+        public double W() => W(S(), Ti());
 
         // Критерий согласования Пирсона 
         // m(n - 1) * W
-        public double X2() => m * (n - 1) * W();
+        public double X2(double W) => m * (n - 1) * W;
 
-        // Гипотеза согласованности мнений принята?
-        public bool IsConsensusReached(PearsonCorrelation pearsonCorrelationTable, int alphaIndex)
-        {
-            var x2 = X2();
-            var x2Alpha = pearsonCorrelationTable.P[n - 2, alphaIndex];
+        public double X2() => X2(W());
 
-            return x2Alpha < x2;
-        }
+
+        // Гипотеза о согласованности мнений
+        public bool IsConsensusReached(double x2, double x2Alpha) => x2Alpha < x2;
 
         // Заполнить матрицу случайными значениями
         public void FillWithRandomValues()

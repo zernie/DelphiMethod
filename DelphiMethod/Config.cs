@@ -23,6 +23,9 @@ namespace DelphiMethod
 
         // Уровень значимости критерия α
         public double Alpha => PearsonCorrelationTable.Alphas[AlphaIndex];
+
+        // Табличное значение x2
+        public double x2Alpha => PearsonCorrelationTable.P[n - 2, AlphaIndex];
         // Индекс уровня значимости критерия α
         public int AlphaIndex;
         // Шкала оценок

@@ -227,7 +227,7 @@ namespace DelphiMethod
             tourNumberLabel.Text = $"Номер тура: {TourNumber}";
             concordLabel.Text = Math.Round(CurrentMatrix.W(), 3).ToString();
 
-            var isConsensusReached = CurrentMatrix.IsConsensusReached(Config.PearsonCorrelationTable, Config.AlphaIndex);
+            var isConsensusReached = CurrentMatrix.IsConsensusReached(CurrentMatrix.X2(), Config.x2Alpha);
             isConsensusReachedLabel.Text = isConsensusReached ? "достигнута" : "не достигнута";
         }
 

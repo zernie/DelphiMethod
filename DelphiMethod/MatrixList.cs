@@ -41,7 +41,7 @@ namespace DelphiMethod
 
         // Согласованы ли мнения во всех показателях?
         public bool IsAnalysisDone =>
-            Matrices.All(rank => rank.IsConsensusReached(Configuration.PearsonCorrelationTable, Configuration.AlphaIndex));
+            Matrices.All(rank => rank.IsConsensusReached(rank.X2(), Configuration.x2Alpha));
 
         // xjk = Σ(q^k * Ki * xij^k), i=1..m), j=1..n
         // Матрица групповых оценок альтернатив по показателям
@@ -118,7 +118,7 @@ namespace DelphiMethod
         // Матрицы показателей, в которых достигнута согласованность мнений
         public List<Matrix> ConsensusReachedMatrices() => 
             Matrices
-            .Where(rank => rank.IsConsensusReached(Configuration.PearsonCorrelationTable, Configuration.AlphaIndex))
+            .Where(rank => rank.IsConsensusReached(rank.X2(), Configuration.x2Alpha))
             .ToList();
 
         // Очистить матрицы, где НЕ достигнута согласованность
