@@ -226,21 +226,29 @@ namespace DelphiMethod
 
         // Коэффициент конкордации Кенделла
         // W = 12S / (m^2 (n^3 - n) - m * Σ(Ti, i=1..m))
-        public double W(double S, List<double> Ti) =>
-            12 * S /
-            (Math.Pow(m, 2) * (Math.Pow(n, 3) - n) - m * Ti.Sum());
+        public double W(double S, List<double> Ti)
+        {
+            return 12 * S /
+                   (Math.Pow(m, 2) * (Math.Pow(n, 3) - n) - m * Ti.Sum());
+        }
 
         public double W() => W(S(), Ti());
 
         // Критерий согласования Пирсона 
         // m(n - 1) * W
-        public double X2(double W) => m * (n - 1) * W;
+        public double X2(double W)
+        {
+            return m * (n - 1) * W;
+        }
 
         public double X2() => X2(W());
 
 
         // Гипотеза о согласованности мнений
-        public bool IsConsensusReached(double x2, double x2Alpha) => x2Alpha < x2;
+        public bool IsConsensusReached(double x2, double x2Alpha)
+        {
+            return x2Alpha < x2;
+        }
 
         // Заполнить матрицу случайными значениями
         public void FillWithRandomValues()

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -61,22 +61,22 @@
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.BackgroundColor = System.Drawing.Color.PaleGoldenrod;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView2.GridColor = System.Drawing.Color.DimGray;
             this.dataGridView2.Location = new System.Drawing.Point(0, 281);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.Size = new System.Drawing.Size(1262, 472);
             this.dataGridView2.TabIndex = 12;
@@ -100,9 +100,9 @@
             // nextTourButton
             // 
             this.nextTourButton.Font = new System.Drawing.Font("Segoe UI", 10.8F);
-            this.nextTourButton.Location = new System.Drawing.Point(822, 92);
+            this.nextTourButton.Location = new System.Drawing.Point(806, 92);
             this.nextTourButton.Name = "nextTourButton";
-            this.nextTourButton.Size = new System.Drawing.Size(159, 58);
+            this.nextTourButton.Size = new System.Drawing.Size(175, 58);
             this.nextTourButton.TabIndex = 15;
             this.nextTourButton.Text = "Следующий тур";
             this.nextTourButton.UseVisualStyleBackColor = true;
@@ -134,9 +134,9 @@
             this.indicatorComboBox.DropDownWidth = 700;
             this.indicatorComboBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.indicatorComboBox.FormattingEnabled = true;
-            this.indicatorComboBox.Location = new System.Drawing.Point(405, 21);
+            this.indicatorComboBox.Location = new System.Drawing.Point(416, 21);
             this.indicatorComboBox.Name = "indicatorComboBox";
-            this.indicatorComboBox.Size = new System.Drawing.Size(370, 39);
+            this.indicatorComboBox.Size = new System.Drawing.Size(359, 39);
             this.indicatorComboBox.TabIndex = 21;
             // 
             // exportButton
@@ -154,9 +154,9 @@
             // 
             this.ratingScaleTextBox.Enabled = false;
             this.ratingScaleTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ratingScaleTextBox.Location = new System.Drawing.Point(396, 124);
+            this.ratingScaleTextBox.Location = new System.Drawing.Point(416, 124);
             this.ratingScaleTextBox.Name = "ratingScaleTextBox";
-            this.ratingScaleTextBox.Size = new System.Drawing.Size(151, 38);
+            this.ratingScaleTextBox.Size = new System.Drawing.Size(131, 38);
             this.ratingScaleTextBox.TabIndex = 25;
             // 
             // tourNumberLabel
@@ -172,9 +172,9 @@
             // calculateButton
             // 
             this.calculateButton.Font = new System.Drawing.Font("Segoe UI", 11.8F);
-            this.calculateButton.Location = new System.Drawing.Point(822, 21);
+            this.calculateButton.Location = new System.Drawing.Point(806, 21);
             this.calculateButton.Name = "calculateButton";
-            this.calculateButton.Size = new System.Drawing.Size(159, 58);
+            this.calculateButton.Size = new System.Drawing.Size(175, 58);
             this.calculateButton.TabIndex = 26;
             this.calculateButton.Text = "Посчитать";
             this.calculateButton.UseVisualStyleBackColor = true;
@@ -216,7 +216,7 @@
             // 
             this.isConsensusReachedLabel.AutoSize = true;
             this.isConsensusReachedLabel.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.isConsensusReachedLabel.Location = new System.Drawing.Point(698, 208);
+            this.isConsensusReachedLabel.Location = new System.Drawing.Point(723, 208);
             this.isConsensusReachedLabel.Name = "isConsensusReachedLabel";
             this.isConsensusReachedLabel.Size = new System.Drawing.Size(30, 32);
             this.isConsensusReachedLabel.TabIndex = 30;
@@ -263,9 +263,9 @@
             // 
             this.alphaTextBox.Enabled = false;
             this.alphaTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.alphaTextBox.Location = new System.Drawing.Point(397, 168);
+            this.alphaTextBox.Location = new System.Drawing.Point(416, 168);
             this.alphaTextBox.Name = "alphaTextBox";
-            this.alphaTextBox.Size = new System.Drawing.Size(150, 38);
+            this.alphaTextBox.Size = new System.Drawing.Size(131, 38);
             this.alphaTextBox.TabIndex = 37;
             // 
             // label6

@@ -125,7 +125,7 @@ namespace DelphiMethod
             expertsRichTextBox.Lines = configuration.Experts.ToArray();
 
             // Коэффициентов весов показателей
-            indicatorsDataGridView.RowCount = configuration.Indicators.Count;
+            indicatorsDataGridView.RowCount = configuration.Indicators.Count+1;
             for (var i = 0; i < configuration.Indicators.Count; i++)
             {
                 var indicator = configuration.Indicators[i];
